@@ -122,7 +122,6 @@ class PlayScene:
 
         # プレイヤーの移動範囲を制限する
         player.x = min(max(player.x, game.screen_x), 1020)   # mapの全幅-8
-    #    player.x = min(max(player.x, game.screen_x), 504)   # mapの全幅-8
         player.x = max(max(player.x, game.screen_x), 0)
         player.y = max(player.y, 0)
 

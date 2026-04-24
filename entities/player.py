@@ -34,8 +34,6 @@ class Player:
     def update(self):
         if self.isGoal == False:    # 着地していない
             if self.game.is_play == True:
-                # 強制前進
-                self.x += 1
                 # キー入力で自機を移動させる
                 if pyxel.btn(pyxel.KEY_LEFT):
                     self.x -= Player.MOVE_SPEED

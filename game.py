@@ -132,12 +132,14 @@ class Game:
 
     # ゲームを更新する
     def update(self):
+        """
         if self.player is not None:  # プレイヤーが存在する時
             # playerがgoalしていない
             if self.player.isGoal == False:
                 if self.is_play == True:
                     # 強制スクロール
                     self.screen_x += SCROLL_SPEED
+        """
         # 現在のシーンを更新する
         self.scenes[self.scene_name].update()
 
