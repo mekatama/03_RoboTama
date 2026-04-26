@@ -58,9 +58,6 @@ class PlayScene:
         game.score = 0          # スコア
         game.screen_x = 0
         game.player = Player(game, 16, 104)  # プレイヤー
-        #demo初期化
-        self.demo_time = 60 # start demo時間
-        game.is_play = False
         # 敵を出現させる
         self.spawn_enemy(0, 127)    #画面x座標0～127が表示されたら
 
@@ -112,10 +109,6 @@ class PlayScene:
         particleHits = game.particleHits
         bosses = game.bosses
 
-        # start demo制御
-        self.demo_time -= 1
-        if self.demo_time < 0:
-            game.is_play = True
         # プレイヤーを更新する
         if player is not None: #NONE使用時は判定方法が特殊
             player.update()
@@ -272,9 +265,6 @@ class PlayScene:
         # スコアを描画する
 #        pyxel.text(39, 4, f"SCORE {self.score:5}", 7)
 
-        if self.game.is_play == False:
-            # テキストを描画する
-            pyxel.text(36, 64, "- TAKE OFF! -", 1)
         if self.game.player.isGoal == True:
             # テキストを描画する
             pyxel.text(36, 64, "- CLEAR !!! -", 1)

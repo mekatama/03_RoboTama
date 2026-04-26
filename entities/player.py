@@ -33,26 +33,22 @@ class Player:
     # プレイヤーを更新する
     def update(self):
         if self.isGoal == False:    # 着地していない
-            if self.game.is_play == True:
-                # キー入力で自機を移動させる
-                if pyxel.btn(pyxel.KEY_LEFT):
-                    self.x -= Player.MOVE_SPEED
-                    self.dir2 = 0
-                if pyxel.btn(pyxel.KEY_RIGHT):
-                    self.x += Player.MOVE_SPEED
-                    self.dir = 1
-                    self.dir2 = 0
-                if pyxel.btn(pyxel.KEY_UP):
-                    self.y -= Player.MOVE_SPEED
-                    self.dir2 = -1
-                if pyxel.btn(pyxel.KEY_DOWN):
-                    self.y += Player.MOVE_SPEED
-                    self.dir2 = 1
-                if pyxel.btnr(pyxel.KEY_UP) or pyxel.btnr(pyxel.KEY_DOWN):
-                    self.dir2 = 0
-        else:
-            self.x += 0
-            self.y = 104        # 強制的にy座標固定
+            # キー入力で自機を移動させる
+            if pyxel.btn(pyxel.KEY_LEFT):
+                self.x -= Player.MOVE_SPEED
+                self.dir2 = 0
+            if pyxel.btn(pyxel.KEY_RIGHT):
+                self.x += Player.MOVE_SPEED
+                self.dir = 1
+                self.dir2 = 0
+            if pyxel.btn(pyxel.KEY_UP):
+                self.y -= Player.MOVE_SPEED
+                self.dir2 = -1
+            if pyxel.btn(pyxel.KEY_DOWN):
+                self.y += Player.MOVE_SPEED
+                self.dir2 = 1
+            if pyxel.btnr(pyxel.KEY_UP) or pyxel.btnr(pyxel.KEY_DOWN):
+                self.dir2 = 0
         
         # 弾の発射間隔timer制御
         if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
