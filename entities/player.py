@@ -1,8 +1,8 @@
 import pyxel
 from collision import get_tile_type, in_collision, push_back
-from constants import TILE_EXIT, TILE_GEM, TILE_BOMB, TILE_SPIKE, TILE_WALL, TILE_ROAD, SCROLL_SPEED
+from constants import TILE_EXIT, TILE_GEM, TILE_SPIKE, TILE_WALL, TILE_ROAD, SCROLL_SPEED
 
-from .bomb import Bomb                  # ボムクラス
+#from .bomb import Bomb                  # ボムクラス
 from .player_bullet import PlayerBullet # playerのBulletクラス 
 
 # プレイヤークラス
@@ -21,8 +21,8 @@ class Player:
         self.y = y              # Y座標
         self.dir = 1            # 1:right -1:left
         self.dir2 = 0           # 0:水平 1:down -1:up
-        self.bombState = 0      # Bombのflag 0:未所持 1:所持 2:投下
-        self.isBombGo = False   # Bomb使用flag
+ #       self.bombState = 0      # Bombのflag 0:未所持 1:所持 2:投下
+ #       self.isBombGo = False   # Bomb使用flag
         self.isGoal = False     # 着地flag
         self.isDead = False     # 死亡flag
         self.shot_timer = 0     # 弾発射までの残り時間
@@ -63,21 +63,6 @@ class Player:
                 # 次の弾発射までの残り時間を設定する
                 self.shot_timer = Player.SHOT_INTERVAL
 
-        # 爆弾所持
-        if self.bombState == 1:
-            self.game.player_bombs.append(
-                Bomb(self.game, self.x, self.y + 8)
-            )
-            self.bombState = 2
-        # 爆弾所持で、Sキー入力で爆弾発射
-        if pyxel.btnp(pyxel.KEY_S) and self.bombState == 2:
-            self.isBombGo = True    # Bombの方でfalseにして
-            self.bombState = 0
-
-        # 爆弾未所持で、Sキー入力で特殊移動
-#        if pyxel.btnp(pyxel.KEY_S) and self.isBombGo == False:
-#            pass
-
         """
         # 自機が画面外に出ないようにする(一画面用)
         self.x = max(self.x, 0)                 #大きい数値を使う
@@ -99,15 +84,6 @@ class Player:
                     pyxel.tilemaps[0].pset(x // 8, y // 8, (0, 0))
                     # 効果音を再生する
 #                    pyxel.play(3, 1)
-
-                if tile_type == TILE_BOMB:  # BOMBに触れた時
-                    self.bombState = 1
-                    # タイルを消す
-                    pyxel.tilemaps[0].pset(x // 8, y // 8, (0, 0))
-
-#                if tile_type == TILE_EXIT:  # ゴールに到達した時
-#                    self.game.change_scene("clear")
-#                    return
 
                 if tile_type == TILE_ROAD:  # 滑走路に触れた時
                     print("touch down")

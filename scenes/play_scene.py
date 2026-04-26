@@ -101,7 +101,7 @@ class PlayScene:
         game = self.game
         player = game.player
         player_bullets = game.player_bullets
-        player_bombs = game.player_bombs
+#        player_bombs = game.player_bombs
         enemies = game.enemies
         enemy_blasts = game.enemy_blasts
         enemy_bullets = game.enemy_bullets
@@ -137,8 +137,6 @@ class PlayScene:
             if player is not None:
                 if check_collision(enemy, player):
                     player.isDead == True
-                    for player_bomb in player_bombs.copy():
-                        player_bomb.add_damage()    # ボムにダメージを与える
                     game.change_scene("gameover")
                     return
 
@@ -159,8 +157,6 @@ class PlayScene:
                 player.isDead == True
                 if check_collision(boss, player):
                     player.isDead == True
-                    for player_bomb in player_bombs.copy():
-                        player_bomb.add_damage()    # ボムにダメージを与える
                     game.change_scene("gameover")
                     return
 
@@ -175,8 +171,6 @@ class PlayScene:
             if player is not None and check_collision(player, enemy_bullet):
                 player.isDead == True
                 enemy_bullet.add_damage()         # 敵の弾にダメージを与える
-                for player_bomb in player_bombs.copy():
-                    player_bomb.add_damage()    # ボムにダメージを与える
                 game.change_scene("gameover")
                 return
 
@@ -189,33 +183,7 @@ class PlayScene:
                 if enemy_bullet in enemy_bullets:  # 敵リストに登録されている時
                     enemy_bullets.remove(enemy_bullet)
 
-        # 爆弾を更新する
-        for player_bomb in player_bombs.copy():
-            player_bomb.update()
-            # ボムと敵が接触したら消去
-            for enemy in enemies.copy():
-                if check_collision(enemy, player_bomb):
-                    if self.game.player.isBombGo ==True:
-                        player_bomb.add_damage()    # ボムにダメージを与える
-                        enemy.add_damage()          # 敵にダメージを与える
-            # ボムとbossが接触したら消去
-            for boss in bosses.copy():
-                if check_collision(boss, player_bomb):
-                    if self.game.player.isBombGo ==True:
-                        player_bomb.add_damage()  # ボムにダメージを与える
-                        boss.add_damage()         # BOSSにダメージを与える
-                        print(boss.is_centerDead)
-                        if boss.is_centerDead == True:  # boss中央破壊
-                            for boss in bosses.copy():
-                                boss.boss_dead()
-            # playerがdeadしたら
-            if player is not None:
-                if player.isDead == True:
-                    player_bomb.add_damage()  # ボムにダメージを与える
-                    game.change_scene("gameover")
-                    return
-
-        # 破壊時particlesを更新する
+         # 破壊時particlesを更新する
         for particle in particles.copy():
             particle.update()
             # flag onで消す処理入れたい
@@ -247,8 +215,6 @@ class PlayScene:
         self.game.draw_player()
         # 弾(プレイヤー)を描画する
         self.game.draw_player_bullets()
-        # 爆弾を描画する
-        self.game.draw_player_bombs()
         # 敵を描画する
         self.game.draw_enemies()
         # 敵の爆発を描画する

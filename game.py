@@ -14,7 +14,7 @@ class Game:
         # ゲームの状態を初期化する
         self.player = None          # プレイヤー
         self.player_bullets = []    # 自機の弾のリスト
-        self.player_bombs = []      # 自機の爆弾
+#        self.player_bombs = []      # 自機の爆弾
         self.enemies = []           # 敵のリスト
         self.enemy_blasts = []      # 爆発エフェクトのリスト
         self.enemy_bullets = []     # 敵の弾のリスト
@@ -63,15 +63,6 @@ class Game:
         # 描画
         for player_bullet in self.player_bullets:
             player_bullet.draw()
-        # カメラ位置を戻す
-        pyxel.camera()
-    # 爆弾を描画する
-    def draw_player_bombs(self):
-        # カメラ位置(描画の原点)を変更する
-        pyxel.camera(self.screen_x, 0)
-        # 描画
-        for player_bomb in self.player_bombs:
-            player_bomb.draw()
         # カメラ位置を戻す
         pyxel.camera()
     # 敵を描画する
