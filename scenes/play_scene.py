@@ -3,15 +3,14 @@ from entities import Player, Zako1, Boss
 
 from collision import get_tile_type
 from constants import (
-    SCROLL_BORDER_X_RIGHT,
-    SCROLL_BORDER_X_LEFT,
+    SCROLL_BORDER_X,
     TILE_ZAKO1_POINT,
     TILE_ZAKO2_POINT,
     TILE_ZAKO3_POINT,
     TILE_ZAKO4_POINT,
     TILE_BOSS1_POINT,
     TILE_BOSS2_POINT,
-    TILE_BOSS3_POINT
+    TILE_BOSS3_POINT,
 )
 
 # 当たり判定用の関数
@@ -57,7 +56,7 @@ class PlayScene:
         game = self.game        # ゲームクラス
         game.score = 0          # スコア
         game.screen_x = 0
-        game.player = Player(game, 16, 104)  # プレイヤー
+        game.player = Player(game, 16, 54)  # プレイヤー
         # 敵を出現させる
         self.spawn_enemy(0, 127)    #画面x座標0～127が表示されたら
 
@@ -101,7 +100,6 @@ class PlayScene:
         game = self.game
         player = game.player
         player_bullets = game.player_bullets
-#        player_bombs = game.player_bombs
         enemies = game.enemies
         enemy_blasts = game.enemy_blasts
         enemy_bullets = game.enemy_bullets
@@ -115,8 +113,14 @@ class PlayScene:
 
         # プレイヤーの移動範囲を制限する
         player.x = min(max(player.x, game.screen_x), 1020)   # mapの全幅-8
-        player.x = max(max(player.x, game.screen_x), 0)
+ #       player.x = max(max(player.x, game.screen_x), 0)
         player.y = max(player.y, 0)
+
+        # プレイヤーがスクロール境界を越えたら画面をスクロールする
+        if player.x > game.screen_x + SCROLL_BORDER_X:
+            last_screen_x = game.screen_x
+            game.screen_x = min(player.x - SCROLL_BORDER_X, 240 * 8)
+            # 240タイル分以上は右にスクロールさせない
 
         # スクロールした幅に応じて敵を出現させる
         self.spawn_enemy(game.screen_x + 128, game.screen_x + 128)

@@ -2,8 +2,7 @@
 SCROLL_SPEED = 1  # スクロールspeed
 
 # プレイヤーがこの座標を超えたらスクロールさせる
-SCROLL_BORDER_X_RIGHT = 70      # スクロール境界X座標
-SCROLL_BORDER_X_LEFT = 128 - 70 # スクロール境界X座標
+SCROLL_BORDER_X = 80      # スクロール境界
 
 # タイル種別
 TILE_NONE = 0  # 何もない
