@@ -1,7 +1,7 @@
 import pyxel
 #from collision import in_collision, push_back
-from .enemy_blast import Enemy_Blast    # enemyの爆発effectクラス 
 from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス 
+from .particle import Particle          # 破壊時particle
 
 # 敵クラス
 class Zako1:
@@ -34,7 +34,7 @@ class Zako1:
             return                          # 処理終了
         # 爆発エフェクトを生成する
         self.game.enemy_blasts.append(
-           Enemy_Blast(self.game, self.x + 4, self.y + 4)
+            Particle(self.game, self.x + 8, self.y + 8, 0, 6)
         )
         """
         # アイテムを生成する

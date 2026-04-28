@@ -91,7 +91,6 @@ class PlayScene:
         player = game.player
         player_bullets = game.player_bullets
         enemies = game.enemies
-        enemy_blasts = game.enemy_blasts
         enemy_bullets = game.enemy_bullets
         particles = game.particles
 
@@ -141,10 +140,6 @@ class PlayScene:
                 if enemy in enemies:  # 敵リストに登録されている時
                     enemies.remove(enemy)
 
-        # 敵の爆発を更新する
-        for enemy_blast in enemy_blasts.copy():
-            enemy_blast.update()
-
         # 敵の弾を更新する
         for enemy_bullet in enemy_bullets.copy():
             enemy_bullet.update()
@@ -190,8 +185,6 @@ class PlayScene:
         self.game.draw_player_bullets()
         # 敵を描画する
         self.game.draw_enemies()
-        # 敵の爆発を描画する
-        self.game.draw_enemy_blasts()
         # 敵の弾を描画する
         self.game.draw_enemy_bullets()
         # 破壊時particleを描画する
