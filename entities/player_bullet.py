@@ -1,6 +1,5 @@
 import pyxel
 from .particle import Particle  # 破壊時particle
-# from .particle_hit import ParticleHit  # 破壊時particle
 
 # 弾クラス
 class PlayerBullet:
