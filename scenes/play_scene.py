@@ -1,5 +1,5 @@
 import pyxel
-from entities import Player, Zako1, Boss
+from entities import Player, Zako1
 
 from collision import get_tile_type
 from constants import (
@@ -8,9 +8,6 @@ from constants import (
     TILE_ZAKO2_POINT,
     TILE_ZAKO3_POINT,
     TILE_ZAKO4_POINT,
-    TILE_BOSS1_POINT,
-    TILE_BOSS2_POINT,
-    TILE_BOSS3_POINT,
 )
 
 # 当たり判定用の関数
@@ -64,7 +61,6 @@ class PlayScene:
     def spawn_enemy(self, left_x, right_x):
         game = self.game
         enemies = game.enemies
-        bosses = game.bosses
         # 判定範囲のタイルを計算する
         left_x = pyxel.ceil(left_x / 8)     # x 以上の最小の整数を返す
         right_x = pyxel.floor(right_x / 8)  # x 以下の最大の整数を返す
@@ -84,12 +80,6 @@ class PlayScene:
                     enemies.append(Zako1(game, x, y, 2))
                 elif tile_type == TILE_ZAKO4_POINT:  # 出現位置の時
                     enemies.append(Zako1(game, x, y, 3))
-                elif tile_type == TILE_BOSS1_POINT:  # 出現位置の時
-                    bosses.append(Boss(game, x, y, 0))
-                elif tile_type == TILE_BOSS2_POINT:  # 出現位置の時
-                    bosses.append(Boss(game, x, y, 1))
-                elif tile_type == TILE_BOSS3_POINT:  # 出現位置の時
-                    bosses.append(Boss(game, x, y, 2))
                 else:
                     continue
                 # 出現位置タイルを消す
@@ -105,7 +95,6 @@ class PlayScene:
         enemy_bullets = game.enemy_bullets
         particles = game.particles
         particleHits = game.particleHits
-        bosses = game.bosses
 
         # プレイヤーを更新する
         if player is not None: #NONE使用時は判定方法が特殊
@@ -152,17 +141,6 @@ class PlayScene:
             ):
                 if enemy in enemies:  # 敵リストに登録されている時
                     enemies.remove(enemy)
-
-        # ボスを更新する
-        for boss in bosses.copy():
-            boss.update()
-            # プレイヤーと敵が接触したらゲームオーバー
-            if player is not None:
-                player.isDead == True
-                if check_collision(boss, player):
-                    player.isDead == True
-                    game.change_scene("gameover")
-                    return
 
         # 敵の爆発を更新する
         for enemy_blast in enemy_blasts.copy():
@@ -229,8 +207,6 @@ class PlayScene:
         self.game.draw_particles()
         # Hit時particleを描画する
         self.game.draw_particleHits()
-        # ボスを描画する
-        self.game.draw_bosses()
 
         # スコアを描画する
 #        pyxel.text(39, 4, f"SCORE {self.score:5}", 7)

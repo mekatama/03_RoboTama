@@ -19,7 +19,6 @@ class Game:
         self.enemy_bullets = []     # 敵の弾のリスト
         self.particles = []         # 破壊時particleのリスト
         self.particleHits = []      # hit時particleのリスト
-        self.bosses = []            # ボスのリスト
 
         self.scenes = {                     # シーンの辞書
             "title": TitleScene(self),
@@ -107,15 +106,6 @@ class Game:
         # 描画
         for particleHit in self.particleHits:
             particleHit.draw()
-        # カメラ位置を戻す
-        pyxel.camera()
-    # ボスを描画する
-    def draw_bosses(self):
-        # カメラ位置(描画の原点)を変更する
-        pyxel.camera(self.screen_x, 0)
-        # 描画
-        for boss in self.bosses:
-            boss.draw()
         # カメラ位置を戻す
         pyxel.camera()
 
