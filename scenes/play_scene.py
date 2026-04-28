@@ -1,5 +1,5 @@
 import pyxel
-from entities import Player, Zako1
+from entities import Player, Enemy1
 
 from collision import get_tile_type
 from constants import (
@@ -73,13 +73,13 @@ class PlayScene:
                 tile_type = get_tile_type(x, y)
 
                 if tile_type == TILE_ZAKO1_POINT:  # 出現位置の時
-                    enemies.append(Zako1(game, x, y, 0))
+                    enemies.append(Enemy1(game, x, y, 0))
                 elif tile_type == TILE_ZAKO2_POINT:  # 出現位置の時
-                    enemies.append(Zako1(game, x, y, 1))
+                    enemies.append(Enemy1(game, x, y, 1))
                 elif tile_type == TILE_ZAKO3_POINT:  # 出現位置の時
-                    enemies.append(Zako1(game, x, y, 2))
+                    enemies.append(Enemy1(game, x, y, 2))
                 elif tile_type == TILE_ZAKO4_POINT:  # 出現位置の時
-                    enemies.append(Zako1(game, x, y, 3))
+                    enemies.append(Enemy1(game, x, y, 3))
                 else:
                     continue
                 # 出現位置タイルを消す

@@ -4,7 +4,7 @@ from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス
 from .particle import Particle          # 破壊時particle
 
 # 敵クラス
-class Zako1:
+class Enemy1:
     #定数
     KIND_A = 0  # 敵A(空中)
     KIND_B = 1  # 敵B(地上停止)
@@ -60,17 +60,17 @@ class Zako1:
             # プレイヤーの方向に向けて速度1で花粉を発射する
             dist = pyxel.sqrt(sq_dist)  # 
             # 敵typeで攻撃を分岐
-            if self.type == Zako1.KIND_A:
+            if self.type == Enemy1.KIND_A:
                 self.game.enemy_bullets.append(
                     Enemy_Bullet(self.game, self.x, self.y, -1, 0)
                 )
-            elif self.type == Zako1.KIND_B:
+            elif self.type == Enemy1.KIND_B:
                 self.game.enemy_bullets.append(
                     Enemy_Bullet(self.game, self.x, self.y, -1, -1)
                 )
-            elif self.type == Zako1.KIND_C:
+            elif self.type == Enemy1.KIND_C:
                 pass
-            elif self.type == Zako1.KIND_D:
+            elif self.type == Enemy1.KIND_D:
                 self.game.enemy_bullets.append(
                     Enemy_Bullet(self.game, self.x, self.y, dx / dist, dy / dist) 
                 )
@@ -79,16 +79,16 @@ class Zako1:
 
         # 移動処理
         # 敵A(空中)を更新する
-        if self.type == Zako1.KIND_A:
+        if self.type == Enemy1.KIND_A:
             self.x -= 0.5
         # 敵B(地上停止)を更新する
-        elif self.type == Zako1.KIND_B:
+        elif self.type == Enemy1.KIND_B:
             pass
         # 敵C(地上停止)を更新する
-        elif self.type == Zako1.KIND_C:
+        elif self.type == Enemy1.KIND_C:
             pass
         # 敵D(空中狙う攻撃)を更新する
-        elif self.type == Zako1.KIND_D:
+        elif self.type == Enemy1.KIND_D:
             self.x -= 0.1
 
     # 敵を描画する
