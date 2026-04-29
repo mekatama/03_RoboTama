@@ -1,5 +1,7 @@
 import pyxel
 from .particle import Particle  # 破壊時particle
+from collision import get_tile_type, in_collision, push_back
+from constants import TILE_SPIKE, TILE_WALL, TILE_ROAD
 
 # 弾クラス
 class PlayerBullet:
@@ -63,8 +65,7 @@ class PlayerBullet:
                 # 弾をリストから削除する
                 if self in self.game.player_bullets:    # 自機の弾リストに登録されている時
                     self.game.player_bullets.remove(self)
-
-
+        """
         # 弾が画面外に出たら弾リストから登録を削除する
         if (self.x <= -8 or
             self.x >= pyxel.width or
@@ -72,6 +73,25 @@ class PlayerBullet:
             self.y >= pyxel.height
         ):
             self.game.player_bullets.remove(self)
+        """
+        # タイルとの当たり判定
+        for i in [1, 6]:
+            for j in [1, 6]:
+                x = self.x + j
+                y = self.y + i
+                tile_type = get_tile_type(x, y)
+                if tile_type == TILE_ROAD:  # 滑走路に触れた時
+                    self.add_damage()
+                    return
+
+                if tile_type == TILE_SPIKE:  # トゲ又に触れた時
+                    self.add_damage()
+                    return
+
+                if tile_type == TILE_WALL:  # 壁に触れた時
+                    print("hit")
+                    self.add_damage()
+                    return
 
     # 弾を描画する
     def draw(self):
