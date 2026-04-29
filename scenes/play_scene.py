@@ -4,10 +4,10 @@ from entities import Player, Enemy1
 from collision import get_tile_type
 from constants import (
     SCROLL_BORDER_X,
-    TILE_ZAKO1_POINT,
-    TILE_ZAKO2_POINT,
-    TILE_ZAKO3_POINT,
-    TILE_ZAKO4_POINT,
+    TILE_ENEMY1_POINT,
+    TILE_ENEMY2_POINT,
+    TILE_ENEMY3_POINT,
+    TILE_ENEMY4_POINT,
 )
 
 # 当たり判定用の関数
@@ -72,13 +72,13 @@ class PlayScene:
                 y = ty * 8
                 tile_type = get_tile_type(x, y)
 
-                if tile_type == TILE_ZAKO1_POINT:  # 出現位置の時
+                if tile_type == TILE_ENEMY1_POINT:  # 出現位置の時
                     enemies.append(Enemy1(game, x, y, 0))
-                elif tile_type == TILE_ZAKO2_POINT:  # 出現位置の時
+                elif tile_type == TILE_ENEMY2_POINT:  # 出現位置の時
                     enemies.append(Enemy1(game, x, y, 1))
-                elif tile_type == TILE_ZAKO3_POINT:  # 出現位置の時
+                elif tile_type == TILE_ENEMY3_POINT:  # 出現位置の時
                     enemies.append(Enemy1(game, x, y, 2))
-                elif tile_type == TILE_ZAKO4_POINT:  # 出現位置の時
+                elif tile_type == TILE_ENEMY4_POINT:  # 出現位置の時
                     enemies.append(Enemy1(game, x, y, 3))
                 else:
                     continue
