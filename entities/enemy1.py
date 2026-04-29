@@ -20,7 +20,7 @@ class Enemy1:
         self.type = type
         self.fire_timer = 0             # 攻撃タイマー
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域
-        self.armor = 1                  # 装甲
+        self.armor = 3                  # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
 
@@ -33,8 +33,8 @@ class Enemy1:
 #            pyxel.play(2, 1, resume=True)   # チャンネル2で割り込み再生させる
             return                          # 処理終了
         # 爆発エフェクトを生成する
-        self.game.enemy_blasts.append(
-            Particle(self.game, self.x + 8, self.y + 8, 0, 6)
+        self.game.particles.append(
+            Particle(self.game, self.x + 4, self.y + 4, 0, 6)
         )
         """
         # アイテムを生成する

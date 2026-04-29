@@ -9,7 +9,7 @@ class Player:
     #定数
     MOVE_SPEED = 2          # 移動速度
     DASH_SPEED = 10         # 特殊移動速度
-    SHOT_INTERVAL = 6       # 弾の発射間隔
+    SHOT_INTERVAL = 20       # 弾の発射間隔
     DASH_INTERVAL = 2       # dash間隔
     HP = 3                  # 初期HP
 
@@ -54,7 +54,6 @@ class Player:
         if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
             self.shot_timer -= 1
         
-        """
         # auto攻撃
         if self.shot_timer == 0:
             self.game.player_bullets.append(
@@ -62,7 +61,6 @@ class Player:
             )
             # 次の弾発射までの残り時間を設定する
             self.shot_timer = Player.SHOT_INTERVAL
-        """
         """
         # 自機が画面外に出ないようにする(一画面用)
         self.x = max(self.x, 0)                 #大きい数値を使う
@@ -95,10 +93,6 @@ class Player:
                     self.game.change_scene("gameover")
                     return
 
-#                if tile_type == TILE_WALL:  # 壁に触れた時
-#                    self.isDead = True
-#                    self.game.change_scene("gameover")
-#                    return
         #goal処理
         if self.isGoal:
             self.goalDemo_time -= 1
