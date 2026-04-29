@@ -93,6 +93,9 @@ class Player:
                     self.game.change_scene("gameover")
                     return
 
+        # 横方向の移動を減速する
+        self.dx = int(self.dx * 0.8)
+
         #goal処理
         if self.isGoal:
             self.goalDemo_time -= 1
