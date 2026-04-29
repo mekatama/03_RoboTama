@@ -47,6 +47,15 @@ class Player:
         else:  # ジャンプしていない時
             self.dy = min(self.dy + 1, 4)  # 下方向に加速する
 
+        # ジャンプする
+            # 上昇中ではなく、プレイヤーの左下又は右下が床に接している状態で
+            # スペースキーまたはゲームパッドのBボタンが押された時
+        if (    self.dy >= 0 and
+                (in_collision(self.x, self.y + 8) or in_collision(self.x + 7, self.y + 8)) and
+                (pyxel.btnp(pyxel.KEY_SPACE) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B))):
+            self.dy = -6
+            self.jump_counter = 3
+
         # 押し戻し処理
         self.x, self.y = push_back(self.x, self.y, self.dx, self.dy)
         
@@ -90,11 +99,6 @@ class Player:
                     pyxel.tilemaps[0].pset(x // 8, y // 8, (0, 0))
                     # 効果音を再生する
 #                    pyxel.play(3, 1)
-
-                if tile_type == TILE_ROAD:  # 滑走路に触れた時
-                    print("touch down")
-                    self.isGoal = True  #
-                    return
 
                 if tile_type == TILE_SPIKE:  # トゲ又に触れた時
                     self.isDead = True
