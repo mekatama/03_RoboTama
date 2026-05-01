@@ -24,6 +24,7 @@ class Player:
         self.type = 0           # 0:通常弾 1:近接攻撃
         self.isGoal = False     # 着地flag
         self.isDead = False     # 死亡flag
+        self.isDown = False     # しゃがみflag
         self.shot_timer = 0     # 弾発射までの残り時間
         self.goalDemo_time = 60 # goal demo時間
         self.jump_counter = 0   # ジャンプ時間
@@ -33,13 +34,19 @@ class Player:
     # プレイヤーを更新する
     def update(self):
         if self.isGoal == False:    # 着地していない
-            # キー入力で自機を移動させる
+            # キー入力で左右移動させる
             if pyxel.btn(pyxel.KEY_LEFT):
                 self.dx = -1 * Player.MOVE_SPEED
                 self.dir = -1
             if pyxel.btn(pyxel.KEY_RIGHT):
                 self.dx = 1 * Player.MOVE_SPEED
                 self.dir = 1
+            # しゃがみ
+            if pyxel.btn(pyxel.KEY_DOWN):
+                self.dx = 0
+                self.isDown = True
+            elif pyxel.btnr(pyxel.KEY_DOWN):
+                self.isDown = False
 
         # 下方向に加速する
         if self.jump_counter > 0:  # ジャンプ中
@@ -118,5 +125,9 @@ class Player:
     def draw(self):
         # 4フレーム周期で0と8を交互に繰り返す
         u = pyxel.frame_count  // 4 % 2 * 8
-        pyxel.blt(self.x, self.y, 0, 0, 24 + u, 8 * self.dir, 8, 0)
+        if self.isDown == True:
+            pyxel.blt(self.x, self.y, 0, 8, 24 + u, 8 * self.dir, 8, 0)
+        elif self.isDown == False:
+            pyxel.blt(self.x, self.y, 0, 0, 24 + u, 8 * self.dir, 8, 0)
+
 #        pyxel.text(self.x - 4,  self.y - 6, "HP:%i" %self.hp, 7)
