@@ -40,7 +40,7 @@ class Game:
 
     # フィールドを描画する
     def draw_field(self):
-        pyxel.bltm(0, 0, 1, self.screen_x, 0, 128, 128)     # 奥BG
+#        pyxel.bltm(0, 0, 1, self.screen_x, 0, 128, 128)     # 奥BG
         pyxel.bltm(0, 0, 0, self.screen_x, 0, 128, 128, 0)  # 手前BG(0番抜け色)
 
     # プレイヤーを描画する
