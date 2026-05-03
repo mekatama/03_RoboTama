@@ -18,7 +18,7 @@ class PlayerBullet:
         self.type = type        # 0:通常弾 1:近接攻撃 2:連射弾
         self.life_time = 0      # 生存時間
         self.particle_time = 0  # particle発生タイマー
-        self.hit_area = (2, 2, 5, 5)  # 当たり判定領域
+        self.hit_area = (2, 3, 5, 4)  # 当たり判定領域
 
      # 弾にダメージを与える
     def add_damage(self):

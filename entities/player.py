@@ -74,15 +74,25 @@ class Player:
         if self.shot_timer == 0:
             # 向きで分岐
             if self.dir == 1:
-                self.game.player_bullets.append(
-                    PlayerBullet(self.game, self.x + 8, self.y, self.dir, self.type)
-                )
-                pass
+                if self.isDown == True:
+                    self.game.player_bullets.append(
+                        PlayerBullet(self.game, self.x + 8, self.y + 1, self.dir, self.type)
+                    )
+                else:
+                    self.game.player_bullets.append(
+                        PlayerBullet(self.game, self.x + 8, self.y -2, self.dir, self.type)
+                    )
+#                pass
             else:
-                self.game.player_bullets.append(
-                    PlayerBullet(self.game, self.x - 10, self.y, self.dir, self.type)
-                )
-                pass
+                if self.isDown == True:
+                    self.game.player_bullets.append(
+                        PlayerBullet(self.game, self.x - 10, self.y + 1, self.dir, self.type)
+                    )
+                else:
+                    self.game.player_bullets.append(
+                        PlayerBullet(self.game, self.x - 10, self.y - 2, self.dir, self.type)
+                    )
+#                pass
             # 次の弾発射までの残り時間を設定する
             self.shot_timer = Player.SHOT_INTERVAL
         """
