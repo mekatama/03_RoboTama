@@ -79,29 +79,35 @@ class Player:
         
         # auto攻撃
         if self.shot_timer == 0:
-            # 向きで分岐
-            if self.dir == 1:
-                # しゃがみ判定
-                if self.isDown == True:
-                    self.game.player_bullets.append(
-                        PlayerBullet(self.game, self.x + 8, self.y + 1, self.dir, 0, self.type)
-                    )
-                else:
-                    self.game.player_bullets.append(
-                        PlayerBullet(self.game, self.x + 8, self.y -2, self.dir, 0, self.type)
-                    )
-#                pass
+            if self.isUp == True:
+                self.game.player_bullets.append(
+                    PlayerBullet(self.game, self.x, self.y - 6, self.dir, -1, self.type)
+                )
             else:
-                # しゃがみ判定
-                if self.isDown == True:
-                    self.game.player_bullets.append(
-                        PlayerBullet(self.game, self.x - 10, self.y + 1, self.dir, 0, self.type)
-                    )
-                else:
-                    self.game.player_bullets.append(
-                        PlayerBullet(self.game, self.x - 10, self.y - 2, self.dir, 0, self.type)
-                    )
-#                pass
+                # 向きで分岐
+                if self.dir == 1:
+                    # しゃがみ判定
+                    if self.isDown == True:
+                        self.game.player_bullets.append(
+                            PlayerBullet(self.game, self.x + 8, self.y + 1, self.dir, 0, self.type)
+                        )
+                    else:
+                        self.game.player_bullets.append(
+                            PlayerBullet(self.game, self.x + 8, self.y -2, self.dir, 0, self.type)
+                        )
+    #                pass
+                elif self.dir == -1:
+                    # しゃがみ判定
+                    if self.isDown == True:
+                        self.game.player_bullets.append(
+                            PlayerBullet(self.game, self.x - 10, self.y + 1, self.dir, 0, self.type)
+                        )
+                    else:
+                        self.game.player_bullets.append(
+                            PlayerBullet(self.game, self.x - 10, self.y - 2, self.dir, 0, self.type)
+                        )
+    #                pass
+            
             # 次の弾発射までの残り時間を設定する
             self.shot_timer = Player.SHOT_INTERVAL
         """
