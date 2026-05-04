@@ -9,7 +9,7 @@ class Player:
     #定数
     MOVE_SPEED = 2          # 移動速度
     DASH_SPEED = 10         # 特殊移動速度
-    SHOT_INTERVAL = 20       # 弾の発射間隔
+    SHOT_INTERVAL = 20      # 弾の発射間隔
     DASH_INTERVAL = 2       # dash間隔
     HP = 3                  # 初期HP
 
@@ -25,6 +25,7 @@ class Player:
         self.isGoal = False     # 着地flag
         self.isDead = False     # 死亡flag
         self.isDown = False     # しゃがみflag
+        self.isUp = False       # 上向きflag
         self.shot_timer = 0     # 弾発射までの残り時間
         self.goalDemo_time = 60 # goal demo時間
         self.jump_counter = 0   # ジャンプ時間
@@ -47,6 +48,12 @@ class Player:
                 self.isDown = True
             elif pyxel.btnr(pyxel.KEY_DOWN):
                 self.isDown = False
+            # 上向き
+            if pyxel.btn(pyxel.KEY_UP):
+                self.dx = 0
+                self.isUp = True
+            elif pyxel.btnr(pyxel.KEY_UP):
+                self.isUp = False
 
         # 下方向に加速する
         if self.jump_counter > 0:  # ジャンプ中
@@ -74,23 +81,25 @@ class Player:
         if self.shot_timer == 0:
             # 向きで分岐
             if self.dir == 1:
+                # しゃがみ判定
                 if self.isDown == True:
                     self.game.player_bullets.append(
-                        PlayerBullet(self.game, self.x + 8, self.y + 1, self.dir, self.type)
+                        PlayerBullet(self.game, self.x + 8, self.y + 1, self.dir, 0, self.type)
                     )
                 else:
                     self.game.player_bullets.append(
-                        PlayerBullet(self.game, self.x + 8, self.y -2, self.dir, self.type)
+                        PlayerBullet(self.game, self.x + 8, self.y -2, self.dir, 0, self.type)
                     )
 #                pass
             else:
+                # しゃがみ判定
                 if self.isDown == True:
                     self.game.player_bullets.append(
-                        PlayerBullet(self.game, self.x - 10, self.y + 1, self.dir, self.type)
+                        PlayerBullet(self.game, self.x - 10, self.y + 1, self.dir, 0, self.type)
                     )
                 else:
                     self.game.player_bullets.append(
-                        PlayerBullet(self.game, self.x - 10, self.y - 2, self.dir, self.type)
+                        PlayerBullet(self.game, self.x - 10, self.y - 2, self.dir, 0, self.type)
                     )
 #                pass
             # 次の弾発射までの残り時間を設定する
@@ -135,9 +144,11 @@ class Player:
     def draw(self):
         # 4フレーム周期で0と8を交互に繰り返す
         u = pyxel.frame_count  // 4 % 2 * 8
+        if self.isUp == True:
+            pyxel.blt(self.x, self.y, 0, 16, 24 + u, 8 * self.dir, 8, 0)
         if self.isDown == True:
             pyxel.blt(self.x, self.y, 0, 8, 24 + u, 8 * self.dir, 8, 0)
-        elif self.isDown == False:
+        elif self.isDown == False and self.isUp == False:
             pyxel.blt(self.x, self.y, 0, 0, 24 + u, 8 * self.dir, 8, 0)
 
 #        pyxel.text(self.x - 4,  self.y - 6, "HP:%i" %self.hp, 7)
