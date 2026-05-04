@@ -50,7 +50,7 @@ class Player:
                 self.isDown = False
             # 上向き
             if pyxel.btn(pyxel.KEY_UP):
-                self.dx = 0
+#                self.dx = 0
                 self.isUp = True
             elif pyxel.btnr(pyxel.KEY_UP):
                 self.isUp = False
