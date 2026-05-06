@@ -93,6 +93,7 @@ class PlayScene:
         enemies = game.enemies
         enemy_bullets = game.enemy_bullets
         particles = game.particles
+        items = game.items
 
         # プレイヤーを更新する
         if player is not None: #NONE使用時は判定方法が特殊
@@ -167,6 +168,16 @@ class PlayScene:
                 if particle in particles:  # リストに登録されている時
                     particles.remove(particle)
 
+        # itemを更新する
+        for item in items.copy():
+            item.update()
+            # itemとplayerが接触したら消去
+            if player is not None and check_collision(player, item):
+                item.add_damage()         # itemにダメージを与える
+            # flag onで消す処理入れたい
+            if item.is_alive == False:
+                if item in items:  # リストに登録されている時
+                    items.remove(item)
 
         # [debug]キー入力をチェックする
         if pyxel.btnp(pyxel.KEY_RETURN) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B):
@@ -189,6 +200,8 @@ class PlayScene:
         self.game.draw_enemy_bullets()
         # 破壊時particleを描画する
         self.game.draw_particles()
+        # itemを描画する
+        self.game.draw_items()
 
         # スコアを描画する
 #        pyxel.text(39, 4, f"SCORE {self.score:5}", 7)
@@ -196,4 +209,3 @@ class PlayScene:
         if self.game.player.isGoal == True:
             # テキストを描画する
             pyxel.text(36, 64, "- CLEAR !!! -", 1)
-

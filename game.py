@@ -17,6 +17,7 @@ class Game:
         self.enemies = []           # 敵のリスト
         self.enemy_bullets = []     # 敵の弾のリスト
         self.particles = []         # 破壊時particleのリスト
+        self.items = []             # itemのリスト
 
         self.scenes = {                     # シーンの辞書
             "title": TitleScene(self),
@@ -86,6 +87,15 @@ class Game:
         # 描画
         for particle in self.particles:
             particle.draw()
+        # カメラ位置を戻す
+        pyxel.camera()
+    # itemを描画する
+    def draw_items(self):
+        # カメラ位置(描画の原点)を変更する
+        pyxel.camera(self.screen_x, 0)
+        # 描画
+        for item in self.items:
+            item.draw()
         # カメラ位置を戻す
         pyxel.camera()
 

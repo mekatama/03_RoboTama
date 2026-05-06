@@ -2,6 +2,7 @@ import pyxel
 #from collision import in_collision, push_back
 from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス 
 from .particle import Particle          # 破壊時particle
+from .item import Item                  # item
 
 # 敵クラス
 class Enemy1:
@@ -36,11 +37,11 @@ class Enemy1:
         self.game.particles.append(
             Particle(self.game, self.x + 4, self.y + 4, 0, 6)
         )
-        """
         # アイテムを生成する
         # ■■■■後からランダムにする■■■■
-        Item(self.game, self.x, self.y)
-        """
+        self.game.items.append(
+            Item(self.game, self.x, self.y)
+        )
         # 敵をリストから削除する
         if self in self.game.enemies:  # 敵リストに登録されている時
             self.game.enemies.remove(self)
