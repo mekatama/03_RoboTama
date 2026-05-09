@@ -26,7 +26,7 @@ class Player:
         self.isDead = False     # 死亡flag
         self.isDown = False     # しゃがみflag
         self.isUp = False       # 上向きflag
-        self.isFall = False     # 空中降下flag
+        self.isRise = False     # 上昇中flag
         self.shot_timer = 0     # 弾発射までの残り時間
         self.goalDemo_time = 60 # goal demo時間
         self.jump_counter = 0   # ジャンプ時間
@@ -62,9 +62,18 @@ class Player:
         else:  # ジャンプしていない時
             self.dy = min(self.dy + 1, 4)  # 下方向に加速する
 
+        # TILE_ROADと頭上当たり判定
+        if in_collision2(self.x, self.y - 1) or in_collision2(self.x + 7, self.y - 1):
+            if self.dy <= 0:
+                self.isRise = True
+        # 上昇flag off
+        if self.dy > 0:
+            self.isRise = False
+
         # ジャンプする
             # 上昇中ではなく、プレイヤーの左下又は右下が床に接している状態で
             # スペースキーまたはゲームパッドのBボタンが押された時
+            # WALLとROADを判定している
         if (    self.dy >= 0 and
                 ((in_collision(self.x, self.y + 8) or in_collision(self.x + 7, self.y + 8)) or
                  (in_collision2(self.x, self.y + 8) or in_collision2(self.x + 7, self.y + 8))) and
@@ -72,26 +81,8 @@ class Player:
             self.dy = -6
             self.jump_counter = 3
 
-        # 上昇中に頭上２点がすり抜け床に接触
-        if (    self.dy < 0 and
-                (in_collision2(self.x, self.y) or in_collision2(self.x + 7, self.y))):
-            self.isFall = False
- 
-        # 下降中に足元２点がすり抜け床に接触
-        if (    self.dy >= 0 and
-                (in_collision2(self.x, self.y + 8) or in_collision2(self.x + 7, self.y + 8))):
-            self.isFall = True
- 
-        """
-        # 空中の下降中
-        if self.dy >= 0:
-            self.isFall = True
-        else:
-            self.isFall = False
-        """
         # 押し戻し処理
-#        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isFall)
-        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy)
+        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
         
         # 弾の発射間隔timer制御
         if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
@@ -153,9 +144,7 @@ class Player:
 #                    pyxel.play(3, 1)
 
                 if tile_type == TILE_ROAD:  # すり抜け床に触れた時
-                    if self.isFall == True:
-                        pass
-#                        print("down")
+                    pass
 
                 if tile_type == TILE_SPIKE:  # トゲ又に触れた時
                     self.isDead = True
