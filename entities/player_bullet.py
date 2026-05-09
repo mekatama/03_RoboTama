@@ -98,16 +98,11 @@ class PlayerBullet:
                 x = self.x + j
                 y = self.y + i
                 tile_type = get_tile_type(x, y)
-                if tile_type == TILE_ROAD:  # 滑走路に触れた時
-                    self.add_damage()
-                    return
-
                 if tile_type == TILE_SPIKE:  # トゲ又に触れた時
                     self.add_damage()
                     return
 
                 if tile_type == TILE_WALL:  # 壁に触れた時
-                    print("hit")
                     self.add_damage()
                     return
 

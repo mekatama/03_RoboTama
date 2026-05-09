@@ -1,6 +1,6 @@
 # 衝突処理モジュール
 import pyxel
-from constants import TILE_NONE, TILE_TO_TILETYPE, TILE_WALL
+from constants import TILE_NONE, TILE_TO_TILETYPE, TILE_WALL, TILE_ROAD
 
 # 指定した座標のタイル種別を取得する
 def get_tile_type(x, y):
@@ -10,6 +10,10 @@ def get_tile_type(x, y):
 # 指定した座標が壁と重なっているか判定する
 def in_collision(x, y):
     return get_tile_type(x, y) == TILE_WALL
+
+# 指定した座標がすり抜け床と重なっているか判定する
+def in_collision2(x, y):
+    return get_tile_type(x, y) == TILE_ROAD
 
 # キャラクターが壁と重なっているか判定する
 def is_character_colliding(x, y):
@@ -24,6 +28,9 @@ def is_character_colliding(x, y):
         for xi in range(x1, x2 + 1):
             if in_collision(xi * 8, yi * 8):
                 return True  # 壁と衝突している
+        for xi in range(x1, x2 + 1):
+            if in_collision2(xi * 8, yi * 8):
+                return True  # すり抜け床と衝突している
 
     return False  # 壁と衝突していない
 
