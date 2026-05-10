@@ -10,6 +10,7 @@ class Player:
     MOVE_SPEED = 2          # 移動速度
     DASH_SPEED = 10         # 特殊移動速度
     SHOT_INTERVAL = 20      # 弾の発射間隔
+    SHOT_INTERVAL2 = 10     # 弾の発射間隔
     DASH_INTERVAL = 2       # dash間隔
     HP = 3                  # 初期HP
 
@@ -21,7 +22,7 @@ class Player:
         self.dx = 0             # X軸方向の移動距離
         self.dy = 0             # Y軸方向の移動距離
         self.dir = 1            # 1:right -1:left
-        self.type = 0           # 0:通常弾 1:近接攻撃
+        self.type = 0           # 0:通常弾 1:近接攻撃 2:連射弾
         self.isGoal = False     # 着地flag
         self.isDead = False     # 死亡flag
         self.isDown = False     # しゃがみflag
@@ -35,6 +36,7 @@ class Player:
 
     # プレイヤーを更新する
     def update(self):
+        print(self.type)
         if self.isGoal == False:    # 着地していない
             # キー入力で左右移動させる
             if pyxel.btn(pyxel.KEY_LEFT):
@@ -119,8 +121,11 @@ class Player:
                         )
     #                pass
             
-            # 次の弾発射までの残り時間を設定する
-            self.shot_timer = Player.SHOT_INTERVAL
+            # 次の弾発射までの残り時間をtypeで変更する
+            if self.type == 0:
+                self.shot_timer = Player.SHOT_INTERVAL
+            elif self.type == 2:
+                self.shot_timer = Player.SHOT_INTERVAL2
         """
         # 自機が画面外に出ないようにする(一画面用)
         self.x = max(self.x, 0)                 #大きい数値を使う

@@ -54,25 +54,3 @@ def push_back(x, y, dx, dy, isRise):
         dx -= step
 
     return x, y
-"""
-# 押し戻した座標を返す
-def push_back(x, y, dx, dy, isFall):
-    # 壁と衝突するまで垂直方向に移動する
-    for _ in range(pyxel.ceil(abs(dy))):
-        step = max(-1, min(1, dy))
-        if is_character_colliding(x, y + step):
-            break
-        y += step
-        dy -= step
-
-    # 壁と衝突するまで水平方向に移動する
-    for _ in range(pyxel.ceil(abs(dx))):
-        step = max(-1, min(1, dx))
-        if is_character_colliding(x + step, y):
-            break
-        x += step
-        dx -= step
-
-    return x, y
-
-"""

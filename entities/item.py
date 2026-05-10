@@ -4,7 +4,6 @@ from .particle import Particle  # particle
 # アイテムクラス
 class Item:
     #定数
-#    ADD_HP = 20     # playerHP回復量
     LIFE_TIME = 60  # 生存時間
 
     # アイテムを初期化してゲームに登録する
@@ -18,7 +17,7 @@ class Item:
 
     # アイテムにダメージを与える
     def add_damage(self):
-#        self.game.player.hp += Item.ADD_HP
+        self.game.player.type = 2
         # 爆発エフェクトを生成する
         self.game.particles.append(
             Particle(self.game, self.x + 4, self.y + 4, 0, 8)
