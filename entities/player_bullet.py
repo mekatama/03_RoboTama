@@ -8,7 +8,8 @@ class PlayerBullet:
     #定数
     SHOT_SPEED_X = 4        # shot speed x
     SHOT_SPEED_Y = 4        # shot speed y
-    PARTICLE_INTERVAL = 2  # particleの発生間隔
+    PARTICLE_INTERVAL = 2   # particleの発生間隔
+    
     # 弾を初期化してゲームに登録する
     def __init__(self, game, x, y, dir, dir2, type):
         self.game = game

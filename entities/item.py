@@ -4,7 +4,8 @@ from .particle import Particle  # particle
 # アイテムクラス
 class Item:
     #定数
-    LIFE_TIME = 60  # 生存時間
+    LIFE_TIME = 60          # 生存時間
+    BULLED_NUM_TYPE2 = 10   # type2の残弾数
 
     # アイテムを初期化してゲームに登録する
     def __init__(self, game, x, y):
@@ -17,7 +18,10 @@ class Item:
 
     # アイテムにダメージを与える
     def add_damage(self):
+        # ■■後でアイテムtypeで分岐させる予定■■
+        # playerの設定変更
         self.game.player.type = 2
+        self.game.player.bulletNum = Item.BULLED_NUM_TYPE2
         # 爆発エフェクトを生成する
         self.game.particles.append(
             Particle(self.game, self.x + 4, self.y + 4, 0, 8)

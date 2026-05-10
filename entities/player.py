@@ -13,7 +13,7 @@ class Player:
     SHOT_INTERVAL2 = 10     # 弾の発射間隔
     DASH_INTERVAL = 2       # dash間隔
     HP = 3                  # 初期HP
-
+    
     # プレイヤーを初期化する
     def __init__(self, game, x, y):
         self.game = game        # ゲームへの参照
@@ -32,6 +32,7 @@ class Player:
         self.goalDemo_time = 60 # goal demo時間
         self.jump_counter = 0   # ジャンプ時間
         self.hp = Player.HP     # HP
+        self.bulletNum = 0       # 残弾数
         self.hit_area = (0, 0, 7, 7)  # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # プレイヤーを更新する
@@ -119,8 +120,14 @@ class Player:
                         self.game.player_bullets.append(
                             PlayerBullet(self.game, self.x - 10, self.y - 2, self.dir, 0, self.type)
                         )
-    #                pass
-            
+            # 残弾の判定
+            if self.type == 2:
+                self.bulletNum -= 1
+                # 残弾数ゼロでtype0に戻す
+                if self.bulletNum <= 0:
+                    self.type = 0
+
+
             # 次の弾発射までの残り時間をtypeで変更する
             if self.type == 0:
                 self.shot_timer = Player.SHOT_INTERVAL
