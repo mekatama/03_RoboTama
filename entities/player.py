@@ -127,7 +127,6 @@ class Player:
                 if self.bulletNum <= 0:
                     self.type = 0
 
-
             # 次の弾発射までの残り時間をtypeで変更する
             if self.type == 0:
                 self.shot_timer = Player.SHOT_INTERVAL
@@ -182,5 +181,8 @@ class Player:
             pyxel.blt(self.x, self.y, 0, 8, 24 + u, 8 * self.dir, 8, 0)
         elif self.isDown == False and self.isUp == False:
             pyxel.blt(self.x, self.y, 0, 0, 24 + u, 8 * self.dir, 8, 0)
-
 #        pyxel.text(self.x - 4,  self.y - 6, "HP:%i" %self.hp, 7)
+
+        # 残弾数表示
+        if self.type == 2:
+            pyxel.text(self.x - 4,  self.y - 6, "%i" %self.bulletNum, 7)
