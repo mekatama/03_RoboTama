@@ -13,6 +13,9 @@ class Player:
     SHOT_INTERVAL2 = 10     # 弾の発射間隔
     DASH_INTERVAL = 2       # dash間隔
     HP = 3                  # 初期HP
+    # プレイヤーの目の前に 8x8 くらいの判定エリアを作る
+    RANGE_WIDTH = 12
+    RANGE_HEIGHT = 8
     
     # プレイヤーを初期化する
     def __init__(self, game, x, y):
@@ -32,7 +35,9 @@ class Player:
         self.goalDemo_time = 60 # goal demo時間
         self.jump_counter = 0   # ジャンプ時間
         self.hp = Player.HP     # HP
-        self.bulletNum = 0       # 残弾数
+        self.bulletNum = 0      # 残弾数
+        self.sensor_x = 0       # 近接攻撃判定座標
+        self.sensor_y = 0       # 近接攻撃判定座標
         self.hit_area = (0, 0, 7, 7)  # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # プレイヤーを更新する
@@ -43,9 +48,11 @@ class Player:
             if pyxel.btn(pyxel.KEY_LEFT):
                 self.dx = -1 * Player.MOVE_SPEED
                 self.dir = -1
+                self.sensor_x = self.x - Player.RANGE_WIDTH  # プレイヤーの左端から近接攻撃判定
             if pyxel.btn(pyxel.KEY_RIGHT):
                 self.dx = 1 * Player.MOVE_SPEED
                 self.dir = 1
+                self.sensor_x = self.x + 8  # プレイヤーの右端から近接攻撃判定
             # しゃがみ
             if pyxel.btn(pyxel.KEY_DOWN):
                 self.dx = 0
@@ -58,6 +65,8 @@ class Player:
                 self.isUp = True
             elif pyxel.btnr(pyxel.KEY_UP):
                 self.isUp = False
+            # 近接攻撃判定y座標
+            self.sensor_y = self.y  # プレイヤーの左端から近接攻撃判定
 
         # 下方向に加速する
         if self.jump_counter > 0:  # ジャンプ中
@@ -132,6 +141,9 @@ class Player:
                 self.shot_timer = Player.SHOT_INTERVAL
             elif self.type == 2:
                 self.shot_timer = Player.SHOT_INTERVAL2
+        
+        # 近接攻撃判定
+
         """
         # 自機が画面外に出ないようにする(一画面用)
         self.x = max(self.x, 0)                 #大きい数値を使う
@@ -186,3 +198,6 @@ class Player:
         # 残弾数表示
         if self.type == 2:
             pyxel.text(self.x - 4,  self.y - 6, "%i" %self.bulletNum, 7)
+
+        # デバッグ用：センサーの範囲を薄い赤で表示  
+        pyxel.rectb(self.sensor_x, self.sensor_y, Player.RANGE_WIDTH, Player.RANGE_HEIGHT, 8)
