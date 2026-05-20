@@ -105,8 +105,11 @@ class PlayScene:
                     player.sensor_x + Player.RANGE_WIDTH > enemy.x and
                     player.sensor_y < enemy.y + 8 and
                     player.sensor_y + Player.RANGE_HEIGHT > enemy.y):
-                    print("!!")
+#                    print("!!")
+                    player.isMelee = True
                     break # 1体見つけたら抜ける（1フレーム1攻撃の場合）
+                else:
+                    player.isMelee = False
 
 
         # プレイヤーの移動範囲を制限する
@@ -129,8 +132,9 @@ class PlayScene:
             # 弾(プレイヤー)と敵が接触したら消去
             for enemy in enemies.copy():
                 if check_collision(enemy, player_bullet):
-                    player_bullet.add_damage()  # 自機の弾にダメージを与える
-                    enemy.add_damage()          # 敵にダメージを与える
+#                    player_bullet.add_damage()  # 自機の弾にダメージを与える
+#                    enemy.add_damage()          # 敵にダメージを与える
+                    pass
 
         # 敵を更新する
         for enemy in enemies.copy():

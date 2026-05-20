@@ -9,7 +9,8 @@ class Player:
     #定数
     MOVE_SPEED = 2          # 移動速度
     DASH_SPEED = 10         # 特殊移動速度
-    SHOT_INTERVAL = 20      # 弾の発射間隔
+    SHOT_INTERVAL0 = 20     # 弾の発射間隔
+    SHOT_INTERVAL1 = 60     # 弾の発射間隔
     SHOT_INTERVAL2 = 10     # 弾の発射間隔
     DASH_INTERVAL = 2       # dash間隔
     HP = 3                  # 初期HP
@@ -26,11 +27,13 @@ class Player:
         self.dy = 0             # Y軸方向の移動距離
         self.dir = 1            # 1:right -1:left
         self.type = 0           # 0:通常弾 1:近接攻撃 2:連射弾
+        self.type_tmp = 0       # 攻撃type一時保存
         self.isGoal = False     # 着地flag
         self.isDead = False     # 死亡flag
         self.isDown = False     # しゃがみflag
         self.isUp = False       # 上向きflag
         self.isRise = False     # 上昇中flag
+        self.isMelee = False    # 近接攻撃flag
         self.shot_timer = 0     # 弾発射までの残り時間
         self.goalDemo_time = 60 # goal demo時間
         self.jump_counter = 0   # ジャンプ時間
@@ -42,7 +45,7 @@ class Player:
 
     # プレイヤーを更新する
     def update(self):
-        print(self.type)
+#        print(self.type)
         if self.isGoal == False:    # 着地していない
             # キー入力で左右移動させる
             if pyxel.btn(pyxel.KEY_LEFT):
@@ -102,48 +105,68 @@ class Player:
         
         # auto攻撃
         if self.shot_timer == 0:
-            if self.isUp == True:
-                self.game.player_bullets.append(
-                    PlayerBullet(self.game, self.x, self.y - 6, self.dir, -1, self.type)
-                )
-            else:
-                # 向きで分岐
-                if self.dir == 1:
-                    # しゃがみ判定
-                    if self.isDown == True:
-                        self.game.player_bullets.append(
-                            PlayerBullet(self.game, self.x + 8, self.y + 1, self.dir, 0, self.type)
-                        )
-                    else:
-                        self.game.player_bullets.append(
-                            PlayerBullet(self.game, self.x + 8, self.y -2, self.dir, 0, self.type)
-                        )
-    #                pass
-                elif self.dir == -1:
-                    # しゃがみ判定
-                    if self.isDown == True:
-                        self.game.player_bullets.append(
-                            PlayerBullet(self.game, self.x - 10, self.y + 1, self.dir, 0, self.type)
-                        )
-                    else:
-                        self.game.player_bullets.append(
-                            PlayerBullet(self.game, self.x - 10, self.y - 2, self.dir, 0, self.type)
-                        )
-            # 残弾の判定
-            if self.type == 2:
-                self.bulletNum -= 1
-                # 残弾数ゼロでtype0に戻す
-                if self.bulletNum <= 0:
-                    self.type = 0
+            # 近接攻撃出した後にもとに戻す
+            if self.type == 1:
+                self.type = self.type_tmp
+            # 近接攻撃
+            if self.isMelee == True:
+                self.type_tmp = self.type   # 近接攻撃直前のtypeを一時保存
+                self.type = 1
+                # しゃがみ判定
+                if self.isDown == True:
+                    self.game.player_bullets.append(
+                        PlayerBullet(self.game, self.x + 8, self.y + 1, self.dir, 0, self.type)
+                    )
+                else:
+                    self.game.player_bullets.append(
+                        PlayerBullet(self.game, self.x + 8, self.y -2, self.dir, 0, self.type)
+                    )
+                self.isMelee = False
 
+            # 射撃攻撃
+            else:
+                if self.isUp == True:
+                    self.game.player_bullets.append(
+                        PlayerBullet(self.game, self.x, self.y - 6, self.dir, -1, self.type)
+                    )
+                else:
+                    # 向きで分岐
+                    if self.dir == 1:
+                        # しゃがみ判定
+                        if self.isDown == True:
+                            self.game.player_bullets.append(
+                                PlayerBullet(self.game, self.x + 8, self.y + 1, self.dir, 0, self.type)
+                            )
+                        else:
+                            self.game.player_bullets.append(
+                                PlayerBullet(self.game, self.x + 8, self.y -2, self.dir, 0, self.type)
+                            )
+                    elif self.dir == -1:
+                        # しゃがみ判定
+                        if self.isDown == True:
+                            self.game.player_bullets.append(
+                                PlayerBullet(self.game, self.x - 10, self.y + 1, self.dir, 0, self.type)
+                            )
+                        else:
+                            self.game.player_bullets.append(
+                                PlayerBullet(self.game, self.x - 10, self.y - 2, self.dir, 0, self.type)
+                            )
+                # 残弾の判定
+                if self.type == 2:
+                    self.bulletNum -= 1
+                    # 残弾数ゼロでtype0に戻す
+                    if self.bulletNum <= 0:
+                        self.type = 0
+
+            print(self.type)
             # 次の弾発射までの残り時間をtypeで変更する
             if self.type == 0:
-                self.shot_timer = Player.SHOT_INTERVAL
+                self.shot_timer = Player.SHOT_INTERVAL0
+            elif self.type == 1:
+                self.shot_timer = Player.SHOT_INTERVAL1
             elif self.type == 2:
                 self.shot_timer = Player.SHOT_INTERVAL2
         
-        # 近接攻撃判定
-
         """
         # 自機が画面外に出ないようにする(一画面用)
         self.x = max(self.x, 0)                 #大きい数値を使う

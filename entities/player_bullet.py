@@ -80,7 +80,7 @@ class PlayerBullet:
             # 近接攻撃
             elif self.type == 1:
                 self.x = self.x
-                if self.life_time > 5:
+                if self.life_time > 2:
                     # 弾をリストから削除する
                     if self in self.game.player_bullets:    # 自機の弾リストに登録されている時
                         self.game.player_bullets.remove(self)
