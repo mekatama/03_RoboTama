@@ -1,5 +1,7 @@
 import pyxel
 import math
+import random
+from constants import GRAVITY, TERMINAL_VELOCITY
 
 #■Particle
 class Particle:
@@ -13,7 +15,7 @@ class Particle:
         self.x = x
         self.y = y
         self.dir = dir      # playerの方向
-        self.type = type    # 0:全方位 1:弾軌跡 2:dash 3:walk 4:破片 5:hit 6:敵爆発 7:敵爆発(ランダム) 8:item取得
+        self.type = type    # 0:全方位 1:弾軌跡 2:dash 3:walk 4:破片 5:hit 6:敵爆発 7:敵爆発(ランダム) 8:item取得 9:放物線
         self.timer = 0
         self.count = 0
         self.speed = 2.5    # 速度
@@ -24,6 +26,8 @@ class Particle:
         self.vy = -2         # 放物線用
         self.gravity = 0.2  # 放物線用
         self.is_alive = True
+        self.dx = -0.8   # new放物線用
+        self.dy = -2    # new放物線用
         self.radius = Particle.START_RADIUS         # 弾軌跡の半径
         self.radiusEB = Particle.START_RADIUS_EB    # 爆発の半径
 
@@ -120,6 +124,21 @@ class Particle:
             if self.radius > Particle.END_RADIUS_EB:
                 self.is_alive = False
 
+        # 放物線
+        elif self.type == 9:
+            if self.count == 1:
+                self.dx = pyxel.rndf(0.7, 0.9)
+                self.dy = pyxel.rndf(-2.4, -1.4)
+            self.count += 1
+            # 重力を加算して放物線にする
+            self.dy = min(self.dy + GRAVITY, TERMINAL_VELOCITY)
+            # 座標を更新
+            self.x += self.dx * self.dir
+            self.y += self.dy
+            # 寿命
+            if self.count >= 35 + pyxel.rndi(-5, 5):
+                self.is_alive = False
+
     def draw(self):
         self.rot += 10
         if self.type == 0 or self.type == 2 or self.type == 3:
@@ -138,6 +157,8 @@ class Particle:
             pyxel.circb(self.x, self.y, self.radius, 10)
         elif self.type == 8:
             pyxel.circb(self.x, self.y, self.radius, 10)
+        elif self.type == 9:
+            pyxel.circ(self.x, self.y, 2, 10)
 
 """
 import pyxel

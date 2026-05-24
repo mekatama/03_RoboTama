@@ -1,5 +1,7 @@
 # 定数モジュール
-SCROLL_SPEED = 1  # スクロールspeed
+SCROLL_SPEED = 1        # スクロールspeed
+GRAVITY = 0.12           # 
+TERMINAL_VELOCITY = 50  # 
 
 # プレイヤーがこの座標を超えたらスクロールさせる
 SCROLL_BORDER_X = 80      # スクロール境界

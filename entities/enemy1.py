@@ -37,6 +37,23 @@ class Enemy1:
         self.game.particles.append(
             Particle(self.game, self.x + 4, self.y + 4, 0, 6)
         )
+
+        # 爆発(ランダム)エフェクトを生成する
+        for i in range(4):
+            self.game.particles.append(
+                Particle(self.game, self.x + 8, self.y + 8, 0, 7)
+            )
+        # 破片
+        num_particles = pyxel.rndi(3, 6) # 飛び散る数をランダムに
+        for i in range(num_particles):
+            self.game.particles.append(
+                Particle(self.game, self.x + 4, self.y + 8, 1, 9)
+            )
+        num_particles = pyxel.rndi(3, 6) # 飛び散る数をランダムに
+        for i in range(num_particles):
+            self.game.particles.append(
+                Particle(self.game, self.x + 4, self.y + 8, -1, 9)
+            )
         # アイテムを生成する
         # ■■■■後からランダムにする■■■■
         self.game.items.append(

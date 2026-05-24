@@ -10,7 +10,7 @@ class Player:
     MOVE_SPEED = 2          # 移動速度
     DASH_SPEED = 10         # 特殊移動速度
     SHOT_INTERVAL0 = 20     # 弾の発射間隔
-    SHOT_INTERVAL1 = 60     # 弾の発射間隔
+    SHOT_INTERVAL1 = 40     # 弾の発射間隔
     SHOT_INTERVAL2 = 10     # 弾の発射間隔
     DASH_INTERVAL = 2       # dash間隔
     HP = 3                  # 初期HP
