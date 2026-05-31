@@ -1,5 +1,5 @@
 import pyxel
-from entities import Player, Enemy1
+from entities import Player, Enemy1, E_Maton
 
 from collision import get_tile_type
 from constants import (
@@ -73,7 +73,8 @@ class PlayScene:
                 tile_type = get_tile_type(x, y)
 
                 if tile_type == TILE_ENEMY1_POINT:  # 出現位置の時
-                    enemies.append(Enemy1(game, x, y, 0))
+                    enemies.append(E_Maton(game, x, y, 0))
+#                    enemies.append(Enemy1(game, x, y, 0))
                 elif tile_type == TILE_ENEMY2_POINT:  # 出現位置の時
                     enemies.append(Enemy1(game, x, y, 1))
                 elif tile_type == TILE_ENEMY3_POINT:  # 出現位置の時
@@ -219,6 +220,6 @@ class PlayScene:
         # スコアを描画する
 #        pyxel.text(39, 4, f"SCORE {self.score:5}", 7)
 
-        if self.game.player.isGoal == True:
-            # テキストを描画する
-            pyxel.text(36, 64, "- CLEAR !!! -", 1)
+#        if self.game.player.isGoal == True:
+#            # テキストを描画する
+#            pyxel.text(36, 64, "- CLEAR !!! -", 1)

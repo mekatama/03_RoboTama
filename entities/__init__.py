@@ -8,3 +8,4 @@
 
 from .player import Player          # プレイヤークラス
 from .enemy1 import Enemy1          # 敵クラス
+from .e_maton import E_Maton        # 敵クラス

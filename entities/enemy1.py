@@ -37,7 +37,6 @@ class Enemy1:
         self.game.particles.append(
             Particle(self.game, self.x + 4, self.y + 4, 0, 6)
         )
-
         # 爆発(ランダム)エフェクトを生成する
         for i in range(4):
             self.game.particles.append(
@@ -67,7 +66,7 @@ class Enemy1:
 
     # 敵を更新する
     def update(self):
-        # 弾の発射タイマーが0になったら花粉を発射する
+        # 弾の発射タイマーが0になったら攻撃
         if self.fire_timer > 0:
             self.fire_timer -= 1
         else:  # 弾を発射する
@@ -92,7 +91,7 @@ class Enemy1:
                 self.game.enemy_bullets.append(
                     Enemy_Bullet(self.game, self.x, self.y, dx / dist, dy / dist) 
                 )
-            # 花粉の発射タイマーをリセットする
+            # 攻撃タイマーをリセットする
             self.fire_timer = 90
 
         # 移動処理

@@ -75,7 +75,8 @@ class Player:
         if self.jump_counter > 0:  # ジャンプ中
             self.jump_counter -= 1  # ジャンプ時間を減らす
         else:  # ジャンプしていない時
-            self.dy = min(self.dy + 1, 4)  # 下方向に加速する
+            pass
+#            self.dy = min(self.dy + 1, 4)  # 下方向に加速する
 
         # TILE_ROADと頭上当たり判定
         if in_collision2(self.x, self.y - 1) or in_collision2(self.x + 7, self.y - 1):
