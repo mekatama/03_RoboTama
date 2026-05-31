@@ -45,7 +45,6 @@ class Player:
 
     # プレイヤーを更新する
     def update(self):
-#        print(self.type)
         if self.isGoal == False:    # 着地していない
             # キー入力で左右移動させる
             if pyxel.btn(pyxel.KEY_LEFT):
@@ -76,7 +75,7 @@ class Player:
             self.jump_counter -= 1  # ジャンプ時間を減らす
         else:  # ジャンプしていない時
             pass
-#            self.dy = min(self.dy + 1, 4)  # 下方向に加速する
+            self.dy = min(self.dy + 1, 4)  # 下方向に加速する
 
         # TILE_ROADと頭上当たり判定
         if in_collision2(self.x, self.y - 1) or in_collision2(self.x + 7, self.y - 1):
@@ -159,7 +158,6 @@ class Player:
                     if self.bulletNum <= 0:
                         self.type = 0
 
-            print(self.type)
             # 次の弾発射までの残り時間をtypeで変更する
             if self.type == 0:
                 self.shot_timer = Player.SHOT_INTERVAL0

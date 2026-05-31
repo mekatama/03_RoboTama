@@ -41,8 +41,8 @@ def push_back(x, y, dx, dy, isRise):
     for _ in range(pyxel.ceil(abs(dy))):
         step = max(-1, min(1, dy))
         if is_character_colliding(x, y + step, isRise):
-            print("hit")
             break
+        # ここで落下処理を実行している
         y += step
         dy -= step
 
