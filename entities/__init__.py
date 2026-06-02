@@ -12,3 +12,4 @@ from .e_maton import E_Maton                # 敵クラス(固定敵_攻撃な�
 from .e_maton_atk_n import E_Maton_ATK_N    # 敵クラス(固定敵_攻撃_横)
 from .e_maton_atk_h import E_Maton_ATK_H    # 敵クラス(固定敵_攻撃_狙う)
 from .e_maton_atk_p import E_Maton_ATK_P    # 敵クラス(固定敵_攻撃_放物線)
+from .e_ugokun import E_Ugokun              # 敵クラス(前進敵_攻撃なし)
