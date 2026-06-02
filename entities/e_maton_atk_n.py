@@ -9,13 +9,13 @@ class E_Maton_ATK_N:
     enemy_bullets = []     # 敵の弾のリスト
 
     # 敵を初期化してゲームに登録する
-    def __init__(self, game, x, y, type):
+    def __init__(self, game, x, y, type, dir):
         self.game = game
         self.x = x
         self.y = y
         self.dx = 0
         self.dy = 0
-        self.dir = -1                   # 初期の向き
+        self.dir = dir                  # 初期の向き(基本的に左向き)
         self.type = type
         self.fire_timer = 0             # 攻撃タイマー
         self.armor = 3                  # 装甲
@@ -101,4 +101,3 @@ class E_Maton_ATK_N:
             pyxel.pal() #カラーパレット元に戻す
         else:
             pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 88, 8 * self.dir, 8, 0)
-

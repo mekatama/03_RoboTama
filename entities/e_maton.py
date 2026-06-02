@@ -6,13 +6,14 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃なし)
 class E_Maton:
     # 敵を初期化してゲームに登録する
-    def __init__(self, game, x, y, type):
+    def __init__(self, game, x, y, type, dir):
         self.game = game
         self.x = x
         self.y = y
         self.dx = 0
         self.dy = 0
         self.type = type
+        self.dir = dir
         self.armor = 3                  # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
@@ -77,7 +78,7 @@ class E_Maton:
             self.is_damaged = False
             for i in range(1, 15):
                 pyxel.pal(i, 15)    #カラーパレットの色を置き換える
-            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 80, -8, 8, 0)
+            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 80, 8 * self.dir, 8, 0)
             pyxel.pal() #カラーパレット元に戻す
         else:
-            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 80, -8, 8, 0)
+            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 80, 8 * self.dir, 8, 0)
