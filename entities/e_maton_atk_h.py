@@ -79,7 +79,7 @@ class E_Maton_ATK_H:
             if sq_dist < 90**2:  # プレイヤーとの距離が90未満の時
                 self.game.enemy_bullets.append(
 #                    Enemy_Bullet(self.game, self.x, self.y, 1, 0, self.dir)
-                    Enemy_Bullet(self.game, self.x, self.y, dx / dist, dy / dist, 1)    # 敵の向き不問 
+                    Enemy_Bullet(self.game, self.x, self.y, dx / dist, dy / dist, 1, 0)    # 敵の向き不問 
                 )
             # 攻撃タイマーをリセットする
             self.fire_timer = 90
