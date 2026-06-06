@@ -75,7 +75,6 @@ class E_Maton_ATK_P:
             dx = self.game.player.x - self.x
             dy = self.game.player.y - self.y
             sq_dist = dx * dx + dy * dy
-            print("nofire")
             if sq_dist < 90**2:  # プレイヤーとの距離が90未満の時
                 self.game.enemy_bullets.append(
                     Enemy_Bullet(self.game, self.x, self.y, 1.3, -2.4, self.dir, 1)
@@ -97,7 +96,7 @@ class E_Maton_ATK_P:
             self.is_damaged = False
             for i in range(1, 15):
                 pyxel.pal(i, 15)    #カラーパレットの色を置き換える
-            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 88, 8 * self.dir, 8, 0)
+            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 112, 8 * self.dir, 8, 0)
             pyxel.pal() #カラーパレット元に戻す
         else:
-            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 88, 8 * self.dir, 8, 0)
+            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 112, 8 * self.dir, 8, 0)

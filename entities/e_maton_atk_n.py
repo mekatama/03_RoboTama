@@ -75,7 +75,6 @@ class E_Maton_ATK_N:
             dx = self.game.player.x - self.x
             dy = self.game.player.y - self.y
             sq_dist = dx * dx + dy * dy
-            print("nofire")
             if sq_dist < 90**2:  # プレイヤーとの距離が90未満の時
                 self.game.enemy_bullets.append(
                     Enemy_Bullet(self.game, self.x, self.y, 1, 0, self.dir, 0)

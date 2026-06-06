@@ -1,5 +1,5 @@
 import pyxel
-from entities import Player, Enemy1, E_Maton, E_Maton_ATK_N, E_Maton_ATK_H, E_Maton_ATK_P, E_Ugokun
+from entities import Player, Enemy1, E_Maton, E_Maton_ATK_N, E_Maton_ATK_H, E_Maton_ATK_P, E_Ugokun, E_Boss_1
 
 from collision import get_tile_type
 from constants import (
@@ -9,6 +9,7 @@ from constants import (
     TILE_ENEMY3_POINT,
     TILE_ENEMY4_POINT,
     TILE_ENEMY5_POINT,
+    TILE_BOSS1_POINT,
 )
 
 # 当たり判定用の関数
@@ -87,6 +88,8 @@ class PlayScene:
 #                    enemies.append(Enemy1(game, x, y, 3))
                 elif tile_type == TILE_ENEMY5_POINT:  # 出現位置の時
                     enemies.append(E_Maton_ATK_P(game, x, y, 0, -1))
+                elif tile_type == TILE_BOSS1_POINT:  # 出現位置の時
+                    enemies.append(E_Boss_1(game, x, y, 0, -1))
                 else:
                     continue
                 # 出現位置タイルを消す
@@ -126,8 +129,14 @@ class PlayScene:
         # プレイヤーがスクロール境界を越えたら画面をスクロールする
         if player.x > game.screen_x + SCROLL_BORDER_X:
             last_screen_x = game.screen_x
-            game.screen_x = min(player.x - SCROLL_BORDER_X, 240 * 8)
-            # 240タイル分以上は右にスクロールさせない
+            # 途中でスクロール停止処理
+            if game.isBoss1Kill == False:
+                game.screen_x = min(player.x - SCROLL_BORDER_X, 32 * 8)
+                # 32タイル分以上は右にスクロールさせない
+                # ↑32タイル目は、画面右端に位置する
+            else:
+                game.screen_x = min(player.x - SCROLL_BORDER_X, 240 * 8)
+                # 240タイル分以上は右にスクロールさせない
 
             # スクロールした幅に応じて敵を出現させる
             self.spawn_enemy(last_screen_x + 128, game.screen_x + 127)
