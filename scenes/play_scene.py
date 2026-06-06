@@ -129,8 +129,9 @@ class PlayScene:
             game.screen_x = min(player.x - SCROLL_BORDER_X, 240 * 8)
             # 240タイル分以上は右にスクロールさせない
 
-        # スクロールした幅に応じて敵を出現させる
-        self.spawn_enemy(game.screen_x + 128, game.screen_x + 128)
+            # スクロールした幅に応じて敵を出現させる
+            self.spawn_enemy(last_screen_x + 128, game.screen_x + 127)
+    #        self.spawn_enemy(game.screen_x + 128, game.screen_x + 128)
 
         # 弾(プレイヤー)を更新する
         for player_bullet in player_bullets.copy():

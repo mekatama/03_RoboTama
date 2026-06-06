@@ -4,7 +4,7 @@ GRAVITY = 0.12           #
 TERMINAL_VELOCITY = 50  # 
 
 # プレイヤーがこの座標を超えたらスクロールさせる
-SCROLL_BORDER_X = 80      # スクロール境界
+SCROLL_BORDER_X = 40      # スクロール境界
 
 # タイル種別
 TILE_NONE = 0  # 何もない
