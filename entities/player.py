@@ -45,6 +45,7 @@ class Player:
 
     # プレイヤーを更新する
     def update(self):
+        print(self.x)
         if self.isGoal == False:    # 着地していない
             # キー入力で左右移動させる
             if pyxel.btn(pyxel.KEY_LEFT):

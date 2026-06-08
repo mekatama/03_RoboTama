@@ -101,7 +101,6 @@ class Game:
 
     # ゲームを更新する
     def update(self):
-        print(self.isBoss1Kill)
         """
         if self.player is not None:  # プレイヤーが存在する時
             # playerがgoalしていない

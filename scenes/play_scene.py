@@ -131,17 +131,19 @@ class PlayScene:
             last_screen_x = game.screen_x
             # 途中でスクロール停止処理
             if game.isBoss1Kill == False:
-                game.screen_x = min(player.x - SCROLL_BORDER_X, 32 * 8)
-                # 32タイル分以上は右にスクロールさせない
-                # ↑32タイル目は、画面右端に位置する
+                # 16タイル分以上は右にスクロールさせない
+                # ↑16タイル目は、画面右端に位置する
+                game.screen_x = min(player.x - SCROLL_BORDER_X, 16 * 8)
+                # 
+                if player.x > 248:
+                    player.x = 248
             else:
                 game.screen_x = min(player.x - SCROLL_BORDER_X, 240 * 8)
                 # 240タイル分以上は右にスクロールさせない
 
             # スクロールした幅に応じて敵を出現させる
             self.spawn_enemy(last_screen_x + 128, game.screen_x + 127)
-    #        self.spawn_enemy(game.screen_x + 128, game.screen_x + 128)
-
+    
         # 弾(プレイヤー)を更新する
         for player_bullet in player_bullets.copy():
             player_bullet.update()
