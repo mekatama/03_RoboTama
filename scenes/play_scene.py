@@ -64,8 +64,10 @@ class PlayScene:
         game = self.game
         enemies = game.enemies
         # 判定範囲のタイルを計算する
-        left_x = pyxel.ceil(left_x / 8)     # x 以上の最小の整数を返す
-        right_x = pyxel.floor(right_x / 8)  # x 以下の最大の整数を返す
+        # 左右に少し余裕（8ピクセル＝1タイル分）を持たせる
+        margin = 8
+        left_x = pyxel.ceil((left_x - margin) / 8)     # x 以上の最小の整数を返す
+        right_x = pyxel.floor((right_x + margin) / 8)  # x 以下の最大の整数を返す
 
         # 判定範囲のタイルに応じて敵とボスを出現させる
         for tx in range(left_x, right_x + 1):
@@ -76,16 +78,12 @@ class PlayScene:
 
                 if tile_type == TILE_ENEMY1_POINT:  # 出現位置の時
                     enemies.append(E_Maton(game, x, y, 0, -1))
-#                    enemies.append(Enemy1(game, x, y, 0))
                 elif tile_type == TILE_ENEMY2_POINT:  # 出現位置の時
                     enemies.append(E_Maton_ATK_N(game, x, y, 0, -1))
-#                    enemies.append(Enemy1(game, x, y, 1))
                 elif tile_type == TILE_ENEMY3_POINT:  # 出現位置の時
                     enemies.append(E_Maton_ATK_H(game, x, y, 0, -1))
-#                    enemies.append(Enemy1(game, x, y, 2))
                 elif tile_type == TILE_ENEMY4_POINT:  # 出現位置の時
                     enemies.append(E_Ugokun(game, x, y, 0, -1))
-#                    enemies.append(Enemy1(game, x, y, 3))
                 elif tile_type == TILE_ENEMY5_POINT:  # 出現位置の時
                     enemies.append(E_Maton_ATK_P(game, x, y, 0, -1))
                 elif tile_type == TILE_BOSS1_POINT:  # 出現位置の時
@@ -133,13 +131,19 @@ class PlayScene:
             if game.isBoss1Kill == False:
                 # 16タイル分以上は右にスクロールさせない
                 # ↑16タイル目は、画面右端に位置する
-                game.screen_x = min(player.x - SCROLL_BORDER_X, 16 * 8)
-                # 
+                target_x = min(player.x - SCROLL_BORDER_X, 16 * 8)
+#                game.screen_x = min(player.x - SCROLL_BORDER_X, 16 * 8)
+                # スクロール停止時の右端でplayer停止処理(座標、直指定)
                 if player.x > 248:
                     player.x = 248
             else:
-                game.screen_x = min(player.x - SCROLL_BORDER_X, 240 * 8)
+                target_x = min(player.x - SCROLL_BORDER_X, 240 * 8)
+#                game.screen_x = min(player.x - SCROLL_BORDER_X, 240 * 8)
                 # 240タイル分以上は右にスクロールさせない
+
+            # 2. 現在地(game.screen_x) を ターゲット(target_x) に徐々に近づける
+            # 0.1 を変えると速さが変わります（0.05ならゆっくり、0.2ならキビキビ）
+            game.screen_x += (target_x - game.screen_x) * 0.2
 
             # スクロールした幅に応じて敵を出現させる
             self.spawn_enemy(last_screen_x + 128, game.screen_x + 127)
