@@ -18,7 +18,7 @@ class E_Maton_ATK_N:
         self.dir = dir                  # 初期の向き(基本的に左向き)
         self.type = type
         self.fire_timer = 0             # 攻撃タイマー
-        self.armor = 3                  # 装甲
+        self.armor = 30                  # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
@@ -77,7 +77,7 @@ class E_Maton_ATK_N:
             sq_dist = dx * dx + dy * dy
             if sq_dist < 90**2:  # プレイヤーとの距離が90未満の時
                 self.game.enemy_bullets.append(
-                    Enemy_Bullet(self.game, self.x, self.y - 4, 1, 0, self.dir, 0)
+                    Enemy_Bullet(self.game, self.x, self.y - 3, 1, 0, self.dir, 0)
                 )
             # 攻撃タイマーをリセットする
             self.fire_timer = 90

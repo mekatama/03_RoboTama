@@ -59,8 +59,10 @@ class Player:
             # しゃがみ
             if pyxel.btn(pyxel.KEY_DOWN):
                 self.dx = 0
+                self.hit_area = (0, 4, 7, 7)  # しゃがみ当たり判定の領域 (x1,y1,x2,y2) 
                 self.isDown = True
             elif pyxel.btnr(pyxel.KEY_DOWN):
+                self.hit_area = (0, 0, 7, 7)  # 立ち当たり判定の領域 (x1,y1,x2,y2) 
                 self.isDown = False
             # 上向き
             if pyxel.btn(pyxel.KEY_UP):
