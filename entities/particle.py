@@ -7,7 +7,7 @@ from constants import GRAVITY, TERMINAL_VELOCITY
 class Particle:
     #定数
     START_RADIUS = 3    # 弾軌跡開始時の半径
-    END_RADIUS = 1      # 弾軌跡終了時の半径
+    END_RADIUS = 0.8      # 弾軌跡終了時の半径
     START_RADIUS_EB = 1 # 敵破壊開始時の半径
     END_RADIUS_EB = 7   # 敵破壊終了時の半径
 
@@ -46,7 +46,7 @@ class Particle:
         # 弾の軌跡
         elif self.type == 1:
             # 半径を小さくする
-            self.radius -= 0.3
+            self.radius -= 0.5
             # 半径が最小になったらエフェクトリストから登録を削除する
             if self.radius < Particle.END_RADIUS:
                  self.is_alive = False
