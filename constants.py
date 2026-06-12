@@ -30,6 +30,7 @@ TILE_TO_TILETYPE = {
     (2, 2): TILE_WALL,
     (3, 2): TILE_WALL,
     (4, 2): TILE_WALL,
+    (5, 2): TILE_WALL,
     (1, 3): TILE_WALL,
     (2, 3): TILE_WALL,
     (1, 4): TILE_WALL,

@@ -14,6 +14,7 @@ class Player:
     SHOT_INTERVAL2 = 5     # 弾の発射間隔
     DASH_INTERVAL = 2       # dash間隔
     HP = 3                  # 初期HP
+    IS_ATK = False          # 攻撃flag
     # プレイヤーの目の前に 8x8 くらいの判定エリアを作る
     RANGE_WIDTH = 12
     RANGE_HEIGHT = 8
@@ -28,6 +29,7 @@ class Player:
         self.dir = 1            # 1:right -1:left
         self.type = 0           # 0:通常弾 1:近接攻撃 2:連射弾
         self.type_tmp = 0       # 攻撃type一時保存
+        self.isAtk = Player.IS_ATK  # 攻撃flag
         self.isGoal = False     # 着地flag
         self.isDead = False     # 死亡flag
         self.isDown = False     # しゃがみflag
@@ -107,7 +109,7 @@ class Player:
             self.shot_timer -= 1
         
         # auto攻撃
-        if self.shot_timer == 0:
+        if self.shot_timer == 0 and self.isAtk == True:
             # 近接攻撃出した後にもとに戻す
             if self.type == 1:
                 self.type = self.type_tmp
