@@ -47,7 +47,6 @@ class Player:
 
     # プレイヤーを更新する
     def update(self):
-        print(self.x)
         if self.isGoal == False:    # 着地していない
             # キー入力で左右移動させる
             if pyxel.btn(pyxel.KEY_LEFT):
@@ -227,4 +226,4 @@ class Player:
             pyxel.text(self.x - 4,  self.y - 6, "%i" %self.bulletNum, 7)
 
         # デバッグ用：センサーの範囲を薄い赤で表示  
-        pyxel.rectb(self.sensor_x, self.sensor_y, Player.RANGE_WIDTH, Player.RANGE_HEIGHT, 8)
+#        pyxel.rectb(self.sensor_x, self.sensor_y, Player.RANGE_WIDTH, Player.RANGE_HEIGHT, 8)
