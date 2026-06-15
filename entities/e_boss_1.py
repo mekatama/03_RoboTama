@@ -1,10 +1,13 @@
 import pyxel
 from collision import in_collision, push_back
+from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス 
 from .particle import Particle          # 破壊時particle
 from .item import Item                  # item
 
 # 敵クラス(固定敵_攻撃なし)
 class E_Boss_1:
+    enemy_bullets = []     # 敵の弾のリスト
+
     # 敵を初期化してゲームに登録する
     def __init__(self, game, x, y, type, dir):
         self.game = game
@@ -13,8 +16,9 @@ class E_Boss_1:
         self.dx = 1
         self.dy = 1
         self.type = type
-        self.dir = dir                  # 移動制御用のカウント
-        self.countMove = 0
+        self.dir = dir    
+        self.fire_timer = 0             # 攻撃タイマー
+        self.countMove = 0              # 移動制御用のカウント
         self.armor = 20                 # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
@@ -76,7 +80,6 @@ class E_Boss_1:
             self.y += self.dy
             if self.y > 40:
                 self.dy = 0
-
         # 左右移動
         if self.y > 40:
             if self.x >= 224:   # ここは実測した値を入れる
@@ -86,7 +89,15 @@ class E_Boss_1:
             # 移動
             self.x += self.dx * self.dir
 
-        # Y方向の移動はpush_backで制御している
+        # 弾の発射タイマーが0になったら攻撃
+        if self.fire_timer > 0:
+            self.fire_timer -= 1
+        else:  # 弾を発射する
+            self.game.enemy_bullets.append(
+                Enemy_Bullet(self.game, self.x, self.y - 3, 1, 0, self.dir, 0)
+            )
+            # 攻撃タイマーをリセットする
+            self.fire_timer = 90
 
     # 敵を描画する
     def draw(self):
