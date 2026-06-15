@@ -93,7 +93,11 @@ class E_Boss_1:
                 Enemy_Bullet(self.game, self.x + 16, self.y + 16, 0, 1, self.dir, 0)
             )
             # 攻撃タイマーをリセットする
-            self.fire_timer = 10
+            if self.armor > 10:
+                self.fire_timer = 20
+            elif self.armor <= 10:
+                self.fire_timer = 10
+
 
     # 敵を描画する
     def draw(self):

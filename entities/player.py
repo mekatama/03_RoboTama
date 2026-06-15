@@ -11,10 +11,10 @@ class Player:
     DASH_SPEED = 10         # 特殊移動速度
     SHOT_INTERVAL0 = 8      # 弾の発射間隔
     SHOT_INTERVAL1 = 40     # 弾の発射間隔
-    SHOT_INTERVAL2 = 5     # 弾の発射間隔
+    SHOT_INTERVAL2 = 5      # 弾の発射間隔
     DASH_INTERVAL = 2       # dash間隔
     HP = 3                  # 初期HP
-    IS_ATK = False          # 攻撃flag
+    IS_ATK = True           # 攻撃flag
     # プレイヤーの目の前に 8x8 くらいの判定エリアを作る
     RANGE_WIDTH = 12
     RANGE_HEIGHT = 8
