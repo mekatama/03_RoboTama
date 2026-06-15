@@ -68,13 +68,9 @@ class E_Boss_1:
 
     # 敵を更新する
     def update(self):
-        print(self.x)
         self.countMove += 1
         # 移動単位
         self.dx = 1
-#        self.dy = min(self.dy + 1, 3)
-        # 押し戻し処理
-#        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
         # 登場
         if self.countMove > 60:
             self.y += self.dy
@@ -94,10 +90,10 @@ class E_Boss_1:
             self.fire_timer -= 1
         else:  # 弾を発射する
             self.game.enemy_bullets.append(
-                Enemy_Bullet(self.game, self.x, self.y - 3, 1, 0, self.dir, 0)
+                Enemy_Bullet(self.game, self.x + 16, self.y + 16, 0, 1, self.dir, 0)
             )
             # 攻撃タイマーをリセットする
-            self.fire_timer = 90
+            self.fire_timer = 10
 
     # 敵を描画する
     def draw(self):
