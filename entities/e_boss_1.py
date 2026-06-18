@@ -6,6 +6,9 @@ from .item import Item                  # item
 
 # 敵クラス(固定敵_攻撃なし)
 class E_Boss_1:
+    #定数
+    FIRE1 = 10      # 攻撃間隔前半
+    FIRE2 = 5       # 攻撃間隔後半
     enemy_bullets = []     # 敵の弾のリスト
 
     # 敵を初期化してゲームに登録する
@@ -18,8 +21,11 @@ class E_Boss_1:
         self.type = type
         self.dir = dir    
         self.fire_timer = 0             # 攻撃タイマー
+        self.suki_timer = 0             # 攻撃の隙タイマー
         self.countMove = 0              # 移動制御用のカウント
+        self.countShot = 4              # 弾数のカウント
         self.armor = 20                 # 装甲
+        self.isAtk = False               # 
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
         self.hit_area = (0, 0, 32, 16)    # 当たり判定の領域 (x1,y1,x2,y2) 
@@ -68,6 +74,7 @@ class E_Boss_1:
 
     # 敵を更新する
     def update(self):
+        print(self.suki_timer)
         self.countMove += 1
         # 移動単位
         self.dx = 1
@@ -76,6 +83,7 @@ class E_Boss_1:
             self.y += self.dy
             if self.y > 40:
                 self.dy = 0
+                self.isAtk = True
         # 左右移動
         if self.y > 40:
             if self.x >= 224:   # ここは実測した値を入れる
@@ -85,19 +93,47 @@ class E_Boss_1:
             # 移動
             self.x += self.dx * self.dir
 
-        # 弾の発射タイマーが0になったら攻撃
-        if self.fire_timer > 0:
-            self.fire_timer -= 1
-        else:  # 弾を発射する
-            self.game.enemy_bullets.append(
-                Enemy_Bullet(self.game, self.x + 16, self.y + 16, 0, 1, self.dir, 0)
-            )
-            # 攻撃タイマーをリセットする
-            if self.armor > 10:
-                self.fire_timer = 20
-            elif self.armor <= 10:
-                self.fire_timer = 10
+        # 攻撃flag
+        if self.countShot < 0:
+            self.isAtk = False
+            # 隙の間隔
+            if self.suki_timer > 0:
+                self.suki_timer -= 1
+            else:
+                self.isAtk = True
+                self.countShot = 4
 
+        if self.isAtk == True:
+            # 弾の発射タイマーが0になったら攻撃
+            if self.fire_timer > 0:
+                self.fire_timer -= 1
+            else:  # 弾を発射する
+                self.game.enemy_bullets.append(
+                    Enemy_Bullet(self.game, self.x + 16, self.y + 16, 0, 1, self.dir, 0)
+                )
+                self.countShot -= 1
+                # 攻撃タイマーをリセットする
+                if self.armor > 10:
+                    self.fire_timer = E_Boss_1.FIRE1
+                    self.suki_timer = E_Boss_1.FIRE1
+                elif self.armor <= 10:
+                    self.fire_timer = E_Boss_1.FIRE2
+                    self.suki_timer = E_Boss_1.FIRE2
+            """
+            # 隙の間隔
+            if self.suki_timer > 0:
+                self.suki_timer -= 1
+            else:
+                self.isAtk = True
+                # タイマーをリセットする
+                if self.armor > 10:
+                    self.suki_timer = 20
+                elif self.armor <= 10:
+                    self.suki_timer = 10
+            """
+#            if self.countShot > 0:
+#                self.countShot -= 1
+#            else:
 
     # 敵を描画する
     def draw(self):
