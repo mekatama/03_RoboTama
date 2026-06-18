@@ -7,8 +7,10 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃なし)
 class E_Boss_1:
     #定数
-    FIRE1 = 10      # 攻撃間隔前半
-    FIRE2 = 5       # 攻撃間隔後半
+    MOVE_RIGHT = 224    # 移動右端
+    MOVE_LEFT = 128     # 移動左端
+    FIRE1 = 10          # 攻撃間隔前半
+    FIRE2 = 5           # 攻撃間隔後半
     enemy_bullets = []     # 敵の弾のリスト
 
     # 敵を初期化してゲームに登録する
@@ -25,7 +27,8 @@ class E_Boss_1:
         self.countMove = 0              # 移動制御用のカウント
         self.countShot = 4              # 弾数のカウント
         self.armor = 20                 # 装甲
-        self.isAtk = False               # 
+        self.isStart = False            # 
+        self.isAtk = False              # 
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
         self.hit_area = (0, 0, 32, 16)    # 当たり判定の領域 (x1,y1,x2,y2) 
@@ -74,21 +77,24 @@ class E_Boss_1:
 
     # 敵を更新する
     def update(self):
-        print(self.suki_timer)
+        print(self.game.player.x)
         self.countMove += 1
         # 移動単位
         self.dx = 1
+        # 起動
+        if self.game.player.x > 180 and self.isStart == False:
+            self.isStart = True
         # 登場
-        if self.countMove > 60:
+        if self.countMove > 60 and self.isStart == True:
             self.y += self.dy
             if self.y > 40:
                 self.dy = 0
                 self.isAtk = True
         # 左右移動
         if self.y > 40:
-            if self.x >= 224:   # ここは実測した値を入れる
+            if self.x >= E_Boss_1.MOVE_RIGHT:   # ここは実測した値を入れる
                 self.dir = -1
-            elif self.x <= 128:   # ここは実測した値を入れる
+            elif self.x <= E_Boss_1.MOVE_LEFT:  # ここは実測した値を入れる
                 self.dir = 1
             # 移動
             self.x += self.dx * self.dir
