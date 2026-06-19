@@ -46,6 +46,6 @@ class Item:
         # 4フレーム周期で0と8を交互に繰り返す
         u = pyxel.frame_count  // 6 % 2 * 8
         if self.life_time >= Item.LIFE_TIME:
-            pyxel.blt(self.x, self.y, 0, 0 + u, 40, 8, 8, 0)
+            pyxel.blt(self.x, self.y, 0, 8 + u, 16, 8, 8, 0)
         else:
-            pyxel.blt(self.x, self.y, 0, 0, 40, 8, 8, 0)
+            pyxel.blt(self.x, self.y, 0, 8, 16, 8, 8, 0)

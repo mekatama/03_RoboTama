@@ -26,7 +26,7 @@ class E_Boss_1:
         self.suki_timer = 0             # 攻撃の隙タイマー
         self.countMove = 0              # 移動制御用のカウント
         self.countShot = 4              # 弾数のカウント
-        self.armor = 20                 # 装甲
+        self.armor = 10                 # 装甲
         self.isStart = False            # 
         self.isAtk = False              # 
         self.is_damaged = False         # ダメージを受けたかどうか
