@@ -6,6 +6,8 @@ from constants import TILE_SPIKE, TILE_WALL, TILE_ROAD
 # 弾クラス
 class PlayerBullet:
     #定数
+    ATK_POWER_N = 1         # 
+    ATK_POWER_MELLE = 30    # 
     SHOT_SPEED_X = 4        # shot speed x
     SHOT_SPEED_Y = 4        # shot speed y
     PARTICLE_INTERVAL = 2   # particleの発生間隔
@@ -109,15 +111,15 @@ class PlayerBullet:
 
     # 弾を描画する
     def draw(self):
-        if self.type == 0 or self.type == 1:
+        if self.type == 0 or self.type == 2:
             # 左右
             if self.dir2 == 0:
                 pyxel.blt(self.x, self.y, 0, 0, 8, 8 * self.dir , 8, 0)
             else:
             # 上
                 pyxel.blt(self.x, self.y, 0, 0, 8, 8 * self.dir , 8, 0, -90)
-        elif self.type == 2:
-            pyxel.blt(self.x, self.y, 0, 8, 8, 8 * self.dir , 8, 0)
+        elif self.type == 1:
+            pyxel.blt(self.x, self.y, 0, 16, 16, 8 * self.dir , 8, 0)
 
 """
 import pyxel

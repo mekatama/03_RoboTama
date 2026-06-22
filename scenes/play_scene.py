@@ -155,7 +155,12 @@ class PlayScene:
             for enemy in enemies.copy():
                 if check_collision(enemy, player_bullet):
                     player_bullet.add_damage()  # 自機の弾にダメージを与える
-                    enemy.add_damage()          # 敵にダメージを与える
+                    if player_bullet.type == 1:
+                        enemy.add_damage(player_bullet.ATK_POWER_MELLE)
+                        print(player_bullet.ATK_POWER_MELLE)
+                    else:
+                        enemy.add_damage(player_bullet.ATK_POWER_N)          # 敵にダメージを与える
+                        print("shot hit")
                     pass
 
         # 敵を更新する

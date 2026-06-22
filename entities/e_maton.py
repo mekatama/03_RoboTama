@@ -5,6 +5,9 @@ from .item import Item                  # item
 
 # 敵クラス(固定敵_攻撃なし)
 class E_Maton:
+    #定数
+    ARMER = 20
+
     # 敵を初期化してゲームに登録する
     def __init__(self, game, x, y, type, dir):
         self.game = game
@@ -14,15 +17,15 @@ class E_Maton:
         self.dy = 0
         self.type = type
         self.dir = dir
-        self.armor = 3                  # 装甲
+        self.armor = E_Maton.ARMER      # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # 敵にダメージを与える
-    def add_damage(self):
+    def add_damage(self, power):
         if self.armor > 1:  # 装甲が残っている時
-            self.armor -= 1
+            self.armor -= power
             self.is_damaged = True
             # ダメージ音を再生する
 #            pyxel.play(2, 1, resume=True)   # チャンネル2で割り込み再生させる

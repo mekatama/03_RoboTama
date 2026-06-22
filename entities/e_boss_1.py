@@ -34,9 +34,9 @@ class E_Boss_1:
         self.hit_area = (0, 0, 32, 16)    # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # 敵にダメージを与える
-    def add_damage(self):
+    def add_damage(self, power):
         if self.armor > 1:  # 装甲が残っている時
-            self.armor -= 1
+            self.armor -= power
             self.is_damaged = True
             # ダメージ音を再生する
 #            pyxel.play(2, 1, resume=True)   # チャンネル2で割り込み再生させる
