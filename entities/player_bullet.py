@@ -7,7 +7,7 @@ from constants import TILE_SPIKE, TILE_WALL, TILE_ROAD
 class PlayerBullet:
     #定数
     ATK_POWER_N = 1         # 
-    ATK_POWER_MELLE = 30    # 
+    ATK_POWER_MELLE = 10    # 
     SHOT_SPEED_X = 4        # shot speed x
     SHOT_SPEED_Y = 4        # shot speed y
     PARTICLE_INTERVAL = 2   # particleの発生間隔
@@ -83,6 +83,9 @@ class PlayerBullet:
             elif self.type == 1:
                 self.x = self.x
                 if self.life_time > 2:
+                    self.game.particles.append(
+                        Particle(self.game, self.x, self.y + 1, self.dir, 10)
+                    )
                     # 弾をリストから削除する
                     if self in self.game.player_bullets:    # 自機の弾リストに登録されている時
                         self.game.player_bullets.remove(self)
@@ -119,7 +122,7 @@ class PlayerBullet:
             # 上
                 pyxel.blt(self.x, self.y, 0, 0, 8, 8 * self.dir , 8, 0, -90)
         elif self.type == 1:
-            pyxel.blt(self.x, self.y, 0, 16, 16, 8 * self.dir , 8, 0)
+            pyxel.blt(self.x, self.y + 1, 0, 16, 16, 8 * self.dir , 8, 0)
 
 """
 import pyxel

@@ -16,7 +16,7 @@ class Player:
     HP = 3                  # 初期HP
     IS_ATK = True           # 攻撃flag
     # プレイヤーの目の前に 8x8 くらいの判定エリアを作る
-    RANGE_WIDTH = 12
+    RANGE_WIDTH = 20
     RANGE_HEIGHT = 8
     
     # プレイヤーを初期化する
@@ -209,7 +209,7 @@ class Player:
             if self.goalDemo_time < 0: 
                 self.game.change_scene("title")
 
-    # プレイヤーを描画する
+    # 描画
     def draw(self):
         # 4フレーム周期で0と8を交互に繰り返す
         u = pyxel.frame_count  // 4 % 2 * 8
@@ -226,4 +226,4 @@ class Player:
             pyxel.text(self.x - 4,  self.y - 6, "%i" %self.bulletNum, 7)
 
         # デバッグ用：センサーの範囲を薄い赤で表示  
-#        pyxel.rectb(self.sensor_x, self.sensor_y, Player.RANGE_WIDTH, Player.RANGE_HEIGHT, 8)
+        pyxel.rectb(self.sensor_x, self.sensor_y, Player.RANGE_WIDTH, Player.RANGE_HEIGHT, 8)
