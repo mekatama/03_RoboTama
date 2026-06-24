@@ -8,20 +8,25 @@ class Item:
     BULLED_NUM_TYPE2 = 10   # type2の残弾数
 
     # アイテムを初期化してゲームに登録する
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, type):
         self.game = game
         self.x = x
         self.y = y
+        self.type = type        # 0:PowerUp 1:Point 
         self.life_time = 0
         self.is_alive = True
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域
 
     # アイテムにダメージを与える
     def add_damage(self):
-        # ■■後でアイテムtypeで分岐させる予定■■
-        # playerの設定変更
-        self.game.player.type = 2
-        self.game.player.bulletNum = Item.BULLED_NUM_TYPE2
+        if self.type == 0:
+            # playerの設定変更
+            self.game.player.type = 2
+            self.game.player.bulletNum = Item.BULLED_NUM_TYPE2
+        elif self.type == 1:
+            # スコアを加算する
+            # ■■■スコア計算未定■■■
+            self.game.score += 10
         # 爆発エフェクトを生成する
         self.game.particles.append(
             Particle(self.game, self.x + 4, self.y + 4, 0, 8)

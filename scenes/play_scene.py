@@ -157,10 +157,8 @@ class PlayScene:
                     player_bullet.add_damage()  # 自機の弾にダメージを与える
                     if player_bullet.type == 1:
                         enemy.add_damage(player_bullet.ATK_POWER_MELLE)
-                        print(player_bullet.ATK_POWER_MELLE)
                     else:
                         enemy.add_damage(player_bullet.ATK_POWER_N)          # 敵にダメージを与える
-                        print("shot hit")
                     pass
 
         # 敵を更新する
@@ -180,6 +178,7 @@ class PlayScene:
                 or enemy.y > 160
             ):
                 if enemy in enemies:  # 敵リストに登録されている時
+                    print("dead")
                     enemies.remove(enemy)
 
         # 敵の弾を更新する
@@ -245,7 +244,7 @@ class PlayScene:
         self.game.draw_items()
 
         # スコアを描画する
-#        pyxel.text(39, 4, f"SCORE {self.score:5}", 7)
+        pyxel.text(39, 4, f"SCORE {self.game.score:5}", 7)
 
 #        if self.game.player.isGoal == True:
 #            # テキストを描画する

@@ -77,7 +77,6 @@ class E_Boss_1:
 
     # 敵を更新する
     def update(self):
-        print(self.game.player.x)
         self.countMove += 1
         # 移動単位
         self.dx = 1
