@@ -1,5 +1,6 @@
 import pyxel
 from .particle import Particle  # particle
+from .ui_point import Ui_Point  # particle
 
 # アイテムクラス
 class Item:
@@ -27,6 +28,11 @@ class Item:
             # スコアを加算する
             # ■■■スコア計算未定■■■
             self.game.score += 10
+            # 爆発エフェクトを生成する
+            self.game.ui_points.append(
+                Ui_Point(self.game, self.x + 4, self.y + 4, 11)
+            )
+
         # 爆発エフェクトを生成する
         self.game.particles.append(
             Particle(self.game, self.x + 4, self.y + 4, 0, 8)

@@ -18,6 +18,7 @@ class Game:
         self.enemy_bullets = []     # 敵の弾のリスト
         self.particles = []         # 破壊時particleのリスト
         self.items = []             # itemのリスト
+        self.ui_points = []         # UIポイント表示のリスト
 
         self.scenes = {                     # シーンの辞書
             "title": TitleScene(self),
@@ -96,6 +97,15 @@ class Game:
         # 描画
         for item in self.items:
             item.draw()
+        # カメラ位置を戻す
+        pyxel.camera()
+    # ui_pointを描画する
+    def draw_ui_points(self):
+        # カメラ位置(描画の原点)を変更する
+        pyxel.camera(self.screen_x, 0)
+        # 描画
+        for ui_point in self.ui_points:
+            ui_point.draw()
         # カメラ位置を戻す
         pyxel.camera()
 

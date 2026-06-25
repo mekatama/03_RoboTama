@@ -102,6 +102,7 @@ class PlayScene:
         enemy_bullets = game.enemy_bullets
         particles = game.particles
         items = game.items
+        ui_points = game.ui_points
 
         # プレイヤーを更新する
         if player is not None: #NONE使用時は判定方法が特殊
@@ -219,6 +220,14 @@ class PlayScene:
                 if item in items:  # リストに登録されている時
                     items.remove(item)
 
+        # ui_pointを更新する
+        for ui_point in ui_points.copy():
+            ui_point.update()
+            # flag onで消す処理入れたい
+            if ui_point.is_alive == False:
+                if ui_point in ui_points:  # リストに登録されている時
+                    ui_points.remove(ui_point)
+
         # [debug]キー入力をチェックする
         if pyxel.btnp(pyxel.KEY_RETURN) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B):
             # プレイ画面に切り替える
@@ -242,6 +251,8 @@ class PlayScene:
         self.game.draw_particles()
         # itemを描画する
         self.game.draw_items()
+        # ui_pointを描画する
+        self.game.draw_ui_points()
 
         # スコアを描画する
         pyxel.text(39, 4, f"SCORE {self.game.score:5}", 7)
