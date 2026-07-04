@@ -1,5 +1,5 @@
 import pyxel
-from entities import Player, Enemy1, E_Maton, E_Maton_ATK_N, E_Maton_ATK_H, E_Maton_ATK_P, E_Ugokun, E_Boss_1
+from entities import Player, Player2, Enemy1, E_Maton, E_Maton_ATK_N, E_Maton_ATK_H, E_Maton_ATK_P, E_Ugokun, E_Boss_1
 
 from collision import get_tile_type
 from constants import (
@@ -55,7 +55,7 @@ class PlayScene:
         game = self.game        # ゲームクラス
         game.score = 0          # スコア
         game.screen_x = 0
-        game.player = Player(game, 16, 54)  # プレイヤー
+        game.player = Player2(game, 16, 54)  # プレイヤー
         # 敵を出現させる
         self.spawn_enemy(0, 127)    #画面x座標0～127が表示されたら
 

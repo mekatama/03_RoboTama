@@ -63,9 +63,9 @@ class E_Boss_1:
             )
         # アイテムを生成する
         # ■■■■後からランダムにする■■■■
-        self.game.items.append(
-            Item(self.game, self.x, self.y)
-        )
+#        self.game.items.append(
+#            Item(self.game, self.x, self.y)
+#        )
         # BOSS1死亡flag立てる
         if self.game.isBoss1Kill == False:
             self.game.isBoss1Kill = True

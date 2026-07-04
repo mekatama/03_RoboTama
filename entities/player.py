@@ -36,6 +36,8 @@ class Player:
         self.isUp = False       # 上向きflag
         self.isRise = False     # 上昇中flag
         self.isMelee = False    # 近接攻撃flag
+        self.isTileRoad = False # 下から登れる床との接触判定flag
+        self.isJump = False     # ジャンプ中flag
         self.shot_timer = 0     # 弾発射までの残り時間
         self.goalDemo_time = 60 # goal demo時間
         self.jump_counter = 0   # ジャンプ時間
@@ -47,6 +49,7 @@ class Player:
 
     # プレイヤーを更新する
     def update(self):
+#        print(self.dy)
         if self.isGoal == False:    # 着地していない
             # キー入力で左右移動させる
             if pyxel.btn(pyxel.KEY_LEFT):
@@ -67,7 +70,7 @@ class Player:
                 self.isDown = False
             # 上向き
             if pyxel.btn(pyxel.KEY_UP):
-#                self.dx = 0
+                self.dx = 0
                 self.isUp = True
             elif pyxel.btnr(pyxel.KEY_UP):
                 self.isUp = False
@@ -78,15 +81,18 @@ class Player:
         if self.jump_counter > 0:  # ジャンプ中
             self.jump_counter -= 1  # ジャンプ時間を減らす
         else:  # ジャンプしていない時
-            pass
             self.dy = min(self.dy + 1, 4)  # 下方向に加速する
 
         # TILE_ROADと頭上当たり判定
         if in_collision2(self.x, self.y - 1) or in_collision2(self.x + 7, self.y - 1):
             if self.dy <= 0:
+#                print("head hit")
                 self.isRise = True
+
         # 上昇flag off
+#        if self.dy > 0 and self.isTileRoad == False:
         if self.dy > 0:
+#            print(self.dy)
             self.isRise = False
 
         # ジャンプする
@@ -97,11 +103,14 @@ class Player:
                 ((in_collision(self.x, self.y + 8) or in_collision(self.x + 7, self.y + 8)) or
                  (in_collision2(self.x, self.y + 8) or in_collision2(self.x + 7, self.y + 8))) and
                 (pyxel.btnp(pyxel.KEY_SPACE) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B))):
-            self.dy = -6
+            self.isJump = True
+            print("jump")
+            self.dy = -4.5
             self.jump_counter = 3
 
         # 押し戻し処理
-        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
+#        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
+        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise, self.isTileRoad)
         
         # 弾の発射間隔timer制御
         if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
@@ -193,7 +202,11 @@ class Player:
 #                    pyxel.play(3, 1)
 
                 if tile_type == TILE_ROAD:  # すり抜け床に触れた時
-                    pass
+                    self.isTileRoad = True
+#                    print(self.isTileRoad)
+                else:
+                    self.isTileRoad = False
+#                    print(self.isTileRoad)
 
                 if tile_type == TILE_SPIKE:  # トゲ又に触れた時
                     self.isDead = True
@@ -226,4 +239,4 @@ class Player:
             pyxel.text(self.x - 4,  self.y - 6, "%i" %self.bulletNum, 7)
 
         # デバッグ用：センサーの範囲を薄い赤で表示  
-        pyxel.rectb(self.sensor_x, self.sensor_y, Player.RANGE_WIDTH, Player.RANGE_HEIGHT, 8)
+#        pyxel.rectb(self.sensor_x, self.sensor_y, Player.RANGE_WIDTH, Player.RANGE_HEIGHT, 8)
