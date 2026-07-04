@@ -30,17 +30,14 @@ class Player2:
         self.type = 0           # 0:通常弾 1:近接攻撃 2:連射弾
         self.type_tmp = 0       # 攻撃type一時保存
         self.isAtk = Player2.IS_ATK  # 攻撃flag
-        self.isGoal = False     # 着地flag
         self.isDead = False     # 死亡flag
         self.isDown = False     # しゃがみflag
         self.isUp = False       # 上向きflag
         self.isFalling = False  # 落下中flag
         self.isMelee = False    # 近接攻撃flag
-        self.isJump = False     # ジャンプ中flag
         self.shot_timer = 0     # 弾発射までの残り時間
-        self.goalDemo_time = 60 # goal demo時間
         self.jump_counter = 0   # ジャンプ時間
-        self.hp = Player2.HP     # HP
+        self.hp = Player2.HP    # HP
         self.bulletNum = 0      # 残弾数
         self.sensor_x = 0       # 近接攻撃判定座標
         self.sensor_y = 0       # 近接攻撃判定座標
@@ -85,14 +82,12 @@ class Player2:
             self.dy = min(self.dy + 1, 4)  # 下方向に加速する
 
         # ジャンプする
-            # 上昇中ではなく、プレイヤーの左下又は右下が床に接している状態で
             # スペースキーまたはゲームパッドのBボタンが押された時
-            # 
         if (    self.dy >= 0 and
+                self.isFalling == False and
                 (pyxel.btnp(pyxel.KEY_SPACE) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B))):
             self.dy = -4.5
             self.jump_counter = 3
-
 
         # 押し戻し処理
         self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isFalling)
@@ -106,42 +101,6 @@ class Player2:
         else:
             self.isFalling = False
 
-    """
-        # 下方向に加速する
-        if self.jump_counter > 0:  # ジャンプ中
-            self.jump_counter -= 1  # ジャンプ時間を減らす
-        else:  # ジャンプしていない時
-            self.dy = min(self.dy + 1, 4)  # 下方向に加速する
-
-        # TILE_ROADと頭上当たり判定
-        if in_collision2(self.x, self.y - 1) or in_collision2(self.x + 7, self.y - 1):
-            if self.dy <= 0:
-#                print("head hit")
-                self.isRise = True
-
-        # 上昇flag off
-#        if self.dy > 0 and self.isTileRoad == False:
-        if self.dy > 0:
-#            print(self.dy)
-            self.isRise = False
-
-        # ジャンプする
-            # 上昇中ではなく、プレイヤーの左下又は右下が床に接している状態で
-            # スペースキーまたはゲームパッドのBボタンが押された時
-            # WALLとROADを判定している
-        if (    self.dy >= 0 and
-                ((in_collision(self.x, self.y + 8) or in_collision(self.x + 7, self.y + 8)) or
-                 (in_collision2(self.x, self.y + 8) or in_collision2(self.x + 7, self.y + 8))) and
-                (pyxel.btnp(pyxel.KEY_SPACE) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B))):
-            self.isJump = True
-            print("jump")
-            self.dy = -4.5
-            self.jump_counter = 3
-
-        # 押し戻し処理
-#        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
-        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise, self.isTileRoad)
-        
         # 弾の発射間隔timer制御
         if self.shot_timer > 0:  # 弾発射までの残り時間を減らす
             self.shot_timer -= 1
@@ -203,11 +162,11 @@ class Player2:
 
             # 次の弾発射までの残り時間をtypeで変更する
             if self.type == 0:
-                self.shot_timer = Player.SHOT_INTERVAL0
+                self.shot_timer = Player2.SHOT_INTERVAL0
             elif self.type == 1:
-                self.shot_timer = Player.SHOT_INTERVAL1
+                self.shot_timer = Player2.SHOT_INTERVAL1
             elif self.type == 2:
-                self.shot_timer = Player.SHOT_INTERVAL2
+                self.shot_timer = Player2.SHOT_INTERVAL2
         
         # タイルとの当たり判定
         for i in [1, 6]:
@@ -225,27 +184,13 @@ class Player2:
 #                    pyxel.play(3, 1)
 
                 if tile_type == TILE_ROAD:  # すり抜け床に触れた時
-                    self.isTileRoad = True
-#                    print(self.isTileRoad)
-                else:
-                    self.isTileRoad = False
-#                    print(self.isTileRoad)
+                    pass
 
                 if tile_type == TILE_SPIKE:  # トゲ又に触れた時
                     self.isDead = True
                     self.game.change_scene("gameover")
                     return
 
-        # 横方向の移動を減速する
-        self.dx = int(self.dx * 0.8)
-
-        #goal処理
-        if self.isGoal:
-            self.goalDemo_time -= 1
-            if self.goalDemo_time < 0: 
-                self.game.change_scene("title")
-
-    """
     # 描画
     def draw(self):
         # 4フレーム周期で0と8を交互に繰り返す
