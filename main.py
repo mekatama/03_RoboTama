@@ -5,4 +5,5 @@
 from game import Game
 
 # ゲームを開始する
+
 Game()

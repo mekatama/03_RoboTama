@@ -80,11 +80,12 @@ class Player2:
             self.jump_counter -= 1  # ジャンプ時間を減らす
         else:  # ジャンプしていない時
             self.dy = min(self.dy + 1, 4)  # 下方向に加速する
-
+        
         # ジャンプする
             # スペースキーまたはゲームパッドのBボタンが押された時
         if (    self.dy >= 0 and
-                self.isFalling == False and
+                ((in_collision(self.x, self.y + 8) or in_collision(self.x + 7, self.y + 8)) or
+                 (in_collision2(self.x, self.y + 8) or in_collision2(self.x + 7, self.y + 8))) and
                 (pyxel.btnp(pyxel.KEY_SPACE) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B))):
             self.dy = -4.5
             self.jump_counter = 3
