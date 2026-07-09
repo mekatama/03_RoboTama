@@ -130,7 +130,7 @@ class Player2:
             else:
                 if self.isUp == True:
                     self.game.player_bullets.append(
-                        PlayerBullet(self.game, self.x, self.y - 6, self.dir, -1, self.type)
+                        PlayerBullet(self.game, self.x, self.y - 2, self.dir, -1, self.type)
                     )
                 else:
                     # 向きで分岐
@@ -138,21 +138,21 @@ class Player2:
                         # しゃがみ判定
                         if self.isDown == True:
                             self.game.player_bullets.append(
-                                PlayerBullet(self.game, self.x + 8, self.y + 1, self.dir, 0, self.type)
+                                PlayerBullet(self.game, self.x + 2, self.y + 1, self.dir, 0, self.type)
                             )
                         else:
                             self.game.player_bullets.append(
-                                PlayerBullet(self.game, self.x + 8, self.y -2, self.dir, 0, self.type)
+                                PlayerBullet(self.game, self.x + 2, self.y -2, self.dir, 0, self.type)
                             )
                     elif self.dir == -1:
                         # しゃがみ判定
                         if self.isDown == True:
                             self.game.player_bullets.append(
-                                PlayerBullet(self.game, self.x - 10, self.y + 1, self.dir, 0, self.type)
+                                PlayerBullet(self.game, self.x - 2, self.y + 1, self.dir, 0, self.type)
                             )
                         else:
                             self.game.player_bullets.append(
-                                PlayerBullet(self.game, self.x - 10, self.y - 2, self.dir, 0, self.type)
+                                PlayerBullet(self.game, self.x - 2, self.y - 2, self.dir, 0, self.type)
                             )
                 # 残弾の判定
                 if self.type == 2:
