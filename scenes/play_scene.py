@@ -160,7 +160,7 @@ class PlayScene:
                         enemy.add_damage(player_bullet.ATK_POWER_MELLE)
                     else:
                         enemy.add_damage(player_bullet.ATK_POWER_N)          # 敵にダメージを与える
-                    pass
+#                    pass
 
         # 敵を更新する
         for enemy in enemies.copy():
