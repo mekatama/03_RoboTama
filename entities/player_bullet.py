@@ -22,7 +22,6 @@ class PlayerBullet:
         self.type = type        # 0:通常弾 1:近接攻撃 2:連射弾
         self.life_time = 0      # 生存時間
         self.particle_time = 0  # particle発生タイマー
-        self.hit_area = (3, 3, 4, 4)  # 当たり判定領域
 
      # 弾にダメージを与える
     def add_damage(self):
@@ -48,6 +47,7 @@ class PlayerBullet:
             self.particle_time -= 1
         # 上攻撃の時
         if self.dir2 == -1:
+            self.hit_area = (3, 3, 4, 4)  # 当たり判定領域
             # 弾の座標を更新する
             if self.type == 0 or self.type == 2:
                 self.y += PlayerBullet.SHOT_SPEED_Y * self.dir2
@@ -64,6 +64,7 @@ class PlayerBullet:
                 """
         # 左右攻撃の時
         elif self.dir2 == 0:
+            self.hit_area = (3, 3, 4, 4)  # 当たり判定領域
             # 弾の座標を更新する
             if self.type == 0 or self.type == 2:
                 self.x += PlayerBullet.SHOT_SPEED_X * self.dir
@@ -85,6 +86,7 @@ class PlayerBullet:
                 """
             # 近接攻撃
             elif self.type == 1:
+                self.hit_area = (0, 0, 7, 7)  # 当たり判定領域
                 self.x = self.x
                 if self.life_time > 2:
                     self.game.particles.append(
