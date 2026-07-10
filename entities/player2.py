@@ -16,7 +16,7 @@ class Player2:
     HP = 3                  # 初期HP
     IS_ATK = True           # 攻撃flag
     # プレイヤーの目の前に 8x8 くらいの判定エリアを作る
-    RANGE_WIDTH = 9
+    RANGE_WIDTH = 20
     RANGE_HEIGHT = 8
     
     # プレイヤーを初期化する
@@ -115,15 +115,27 @@ class Player2:
             if self.isMelee == True:
                 self.type_tmp = self.type   # 近接攻撃直前のtypeを一時保存
                 self.type = 1
-                # しゃがみ判定
-                if self.isDown == True:
-                    self.game.player_bullets.append(
-                        PlayerBullet(self.game, self.x + 8, self.y + 1, self.dir, 0, self.type)
-                    )
-                else:
-                    self.game.player_bullets.append(
-                        PlayerBullet(self.game, self.x + 8, self.y -2, self.dir, 0, self.type)
-                    )
+                # 向きで分岐
+                if self.dir == 1:
+                    # しゃがみ判定
+                    if self.isDown == True:
+                        self.game.player_bullets.append(
+                            PlayerBullet(self.game, self.x + 8, self.y + 1, self.dir, 0, self.type)
+                        )
+                    else:
+                        self.game.player_bullets.append(
+                            PlayerBullet(self.game, self.x + 8, self.y - 2, self.dir, 0, self.type)
+                        )
+                elif self.dir == -1:
+                    # しゃがみ判定
+                    if self.isDown == True:
+                        self.game.player_bullets.append(
+                            PlayerBullet(self.game, self.x - 8, self.y + 1, self.dir, 0, self.type)
+                        )
+                    else:
+                        self.game.player_bullets.append(
+                            PlayerBullet(self.game, self.x - 8, self.y - 2, self.dir, 0, self.type)
+                        )
                 self.isMelee = False
 
             # 射撃攻撃

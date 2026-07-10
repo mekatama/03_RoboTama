@@ -6,7 +6,7 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃なし)
 class E_Maton:
     #定数
-    ARMER = 3
+    ARMER = 100
 
     # 敵を初期化してゲームに登録する
     def __init__(self, game, x, y, type, dir):
@@ -26,7 +26,6 @@ class E_Maton:
     def add_damage(self, power):
         self.armor -= power
         if self.armor <= 0:  # 
-            print("hit1")
             # 爆発エフェクトを生成する
             self.game.particles.append(
                 Particle(self.game, self.x + 4, self.y + 4, 0, 6)
@@ -58,7 +57,6 @@ class E_Maton:
             # スコアを加算する
     #        self.game.score += self.level * 10
         else:
-            print("hit2")
             self.is_damaged = True
             # ダメージ音を再生する
 #            pyxel.play(2, 1, resume=True)   # チャンネル2で割り込み再生させる
