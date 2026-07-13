@@ -12,6 +12,7 @@ class Particle:
     END_RADIUS_EB = 7   # 敵破壊終了時の半径
 
     def __init__(self, game, x, y, dir, type):
+        self.game = game
         self.x = x
         self.y = y
         self.dir = dir      # playerの方向
@@ -139,9 +140,11 @@ class Particle:
             # 寿命
             if self.count >= 35 + pyxel.rndi(-5, 5):
                 self.is_alive = False
-        # 放物線
+        # 近接攻撃見た目
         elif self.type == 10:
             self.count += 1
+            self.x = self.x
+            self.y = self.y
             # 寿命
             if self.count >= 5:
                 self.is_alive = False

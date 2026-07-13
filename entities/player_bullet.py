@@ -88,7 +88,7 @@ class PlayerBullet:
             elif self.type == 1:
                 self.hit_area = (0, 0, 7, 7)  # 当たり判定領域
                 self.x = self.x
-                if self.life_time > 2:
+                if self.life_time > 1:
                     self.game.particles.append(
                         Particle(self.game, self.x, self.y + 1, self.dir, 10)
                     )

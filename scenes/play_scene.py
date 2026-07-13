@@ -155,10 +155,11 @@ class PlayScene:
             # 弾(プレイヤー)と敵が接触したら消去
             for enemy in enemies.copy():
                 if check_collision(enemy, player_bullet):
-                    player_bullet.add_damage()  # 自機の弾にダメージを与える
+ #                   player_bullet.add_damage()  # 自機の弾にダメージを与える
                     if player_bullet.type == 1:
                         enemy.add_damage(player_bullet.ATK_POWER_MELLE)
                     else:
+                        player_bullet.add_damage()  # 自機の弾にダメージを与える
                         enemy.add_damage(player_bullet.ATK_POWER_N)          # 敵にダメージを与える
 #                    pass
 

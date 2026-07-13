@@ -6,7 +6,7 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃なし)
 class E_Maton:
     #定数
-    ARMER = 100
+    ARMER = 3
 
     # 敵を初期化してゲームに登録する
     def __init__(self, game, x, y, type, dir):
