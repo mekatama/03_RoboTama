@@ -108,6 +108,7 @@ class PlayScene:
         if player is not None: #NONE使用時は判定方法が特殊
             player.update()
             # プレイヤー近接攻撃判定と敵が接触したら
+            """
             for enemy in enemies.copy():
                 # センサーの四角形と、敵の四角形が重なっているか判定
                 if (player.sensor_x < enemy.x + 8 and
@@ -118,7 +119,7 @@ class PlayScene:
                     break # 1体見つけたら抜ける（1フレーム1攻撃の場合）
                 else:
                     player.isMelee = False
-
+            """
 
         # プレイヤーの移動範囲を制限する
         player.x = min(max(player.x, game.screen_x), 1020)   # mapの全幅-8

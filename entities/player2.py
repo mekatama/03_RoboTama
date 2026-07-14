@@ -221,4 +221,4 @@ class Player2:
             pyxel.text(self.x - 4,  self.y - 6, "%i" %self.bulletNum, 7)
 
         # デバッグ用：センサーの範囲を薄い赤で表示  
-        pyxel.rectb(self.sensor_x, self.sensor_y, Player2.RANGE_WIDTH, Player2.RANGE_HEIGHT, 8)
+#        pyxel.rectb(self.sensor_x, self.sensor_y, Player2.RANGE_WIDTH, Player2.RANGE_HEIGHT, 8)
