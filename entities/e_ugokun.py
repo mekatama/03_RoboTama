@@ -5,6 +5,8 @@ from .item import Item                  # item
 
 # 敵クラス(固定敵_攻撃なし)
 class E_Ugokun:
+    #定数
+    ARMER = 3
     # 敵を初期化してゲームに登録する
     def __init__(self, game, x, y, type, dir):
         self.game = game
@@ -14,7 +16,7 @@ class E_Ugokun:
         self.dy = 0
         self.type = type
         self.dir = dir
-        self.armor = 3                  # 装甲
+        self.armor = E_Ugokun.ARMER     # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
@@ -46,7 +48,7 @@ class E_Ugokun:
             # アイテムを生成する
             # ■■■■後からランダムにする■■■■
             self.game.items.append(
-                Item(self.game, self.x, self.y)
+                Item(self.game, self.x, self.y, 1)
             )
             # 敵をリストから削除する
             if self in self.game.enemies:  # 敵リストに登録されている時

@@ -7,6 +7,7 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃なし)
 class E_Boss_1:
     #定数
+    ARMER = 20
     MOVE_RIGHT = 224    # 移動右端
     MOVE_LEFT = 128     # 移動左端
     FIRE1 = 10          # 攻撃間隔前半
@@ -26,7 +27,7 @@ class E_Boss_1:
         self.suki_timer = 0             # 攻撃の隙タイマー
         self.countMove = 0              # 移動制御用のカウント
         self.countShot = 4              # 弾数のカウント
-        self.armor = 10                 # 装甲
+        self.armor = E_Boss_1.ARMER     # 装甲
         self.isStart = False            # 
         self.isAtk = False              # 
         self.is_damaged = False         # ダメージを受けたかどうか
@@ -59,9 +60,9 @@ class E_Boss_1:
                 )
             # アイテムを生成する
             # ■■■■後からランダムにする■■■■
-    #        self.game.items.append(
-    #            Item(self.game, self.x, self.y)
-    #        )
+            self.game.items.append(
+                Item(self.game, self.x, self.y, 1)
+            )
             # BOSS1死亡flag立てる
             if self.game.isBoss1Kill == False:
                 self.game.isBoss1Kill = True

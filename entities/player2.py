@@ -9,14 +9,14 @@ class Player2:
     #定数
     MOVE_SPEED = 2          # 移動速度
     DASH_SPEED = 10         # 特殊移動速度
-    SHOT_INTERVAL0 = 4      # 通常弾の発射間隔
+    SHOT_INTERVAL0 = 6      # 通常弾の発射間隔
     SHOT_INTERVAL1 = 40     # 近接の発射間隔
     SHOT_INTERVAL2 = 4      # 連射弾の発射間隔
     DASH_INTERVAL = 2       # dash間隔
     HP = 3                  # 初期HP
     IS_ATK = True           # 攻撃flag
     # プレイヤーの目の前に 8x8 くらいの判定エリアを作る
-    RANGE_WIDTH = 20
+    RANGE_WIDTH = 10
     RANGE_HEIGHT = 8
     
     # プレイヤーを初期化する
