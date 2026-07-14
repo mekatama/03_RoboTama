@@ -25,43 +25,44 @@ class E_Maton_ATK_P:
 
     # 敵にダメージを与える
     def add_damage(self, power):
-        if self.armor > 1:  # 装甲が残っている時
-            self.armor -= power
-            self.is_damaged = True
+        self.armor -= power
+        if self.armor <= 0:  # 
+            # 爆発エフェクトを生成する
+            self.game.particles.append(
+                Particle(self.game, self.x + 4, self.y + 4, 0, 6)
+            )
+            # 爆発(ランダム)エフェクトを生成する
+            for i in range(4):
+                self.game.particles.append(
+                    Particle(self.game, self.x + 8, self.y + 8, 0, 7)
+                )
+            # 破片
+            num_particles = pyxel.rndi(3, 6) # 飛び散る数をランダムに
+            for i in range(num_particles):
+                self.game.particles.append(
+                    Particle(self.game, self.x + 4, self.y + 8, 1, 9)
+                )
+            num_particles = pyxel.rndi(3, 6) # 飛び散る数をランダムに
+            for i in range(num_particles):
+                self.game.particles.append(
+                    Particle(self.game, self.x + 4, self.y + 8, -1, 9)
+                )
+            # アイテムを生成する
+            # ■■■■後からランダムにする■■■■
+            self.game.items.append(
+                Item(self.game, self.x, self.y)
+            )
+            # 敵をリストから削除する
+            if self in self.game.enemies:  # 敵リストに登録されている時
+                self.game.enemies.remove(self)
+            # スコアを加算する
+    #        self.game.score += self.level * 10
+        else:
+           self.is_damaged = True
             # ダメージ音を再生する
 #            pyxel.play(2, 1, resume=True)   # チャンネル2で割り込み再生させる
-            return                          # 処理終了
-        # 爆発エフェクトを生成する
-        self.game.particles.append(
-            Particle(self.game, self.x + 4, self.y + 4, 0, 6)
-        )
-        # 爆発(ランダム)エフェクトを生成する
-        for i in range(4):
-            self.game.particles.append(
-                Particle(self.game, self.x + 8, self.y + 8, 0, 7)
-            )
-        # 破片
-        num_particles = pyxel.rndi(3, 6) # 飛び散る数をランダムに
-        for i in range(num_particles):
-            self.game.particles.append(
-                Particle(self.game, self.x + 4, self.y + 8, 1, 9)
-            )
-        num_particles = pyxel.rndi(3, 6) # 飛び散る数をランダムに
-        for i in range(num_particles):
-            self.game.particles.append(
-                Particle(self.game, self.x + 4, self.y + 8, -1, 9)
-            )
-        # アイテムを生成する
-        # ■■■■後からランダムにする■■■■
-        self.game.items.append(
-            Item(self.game, self.x, self.y)
-        )
-        # 敵をリストから削除する
-        if self in self.game.enemies:  # 敵リストに登録されている時
-            self.game.enemies.remove(self)
-        # スコアを加算する
-#        self.game.score += self.level * 10
-
+           return                          # 処理終了
+ 
     # 敵を更新する
     def update(self):
         # 移動単位
