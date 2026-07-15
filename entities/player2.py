@@ -1,13 +1,12 @@
 import pyxel
 from collision import get_tile_type, in_collision, in_collision2, push_back
 from constants import TILE_EXIT, TILE_GEM, TILE_SPIKE, TILE_WALL, TILE_ROAD, SCROLL_SPEED
-
 from .player_bullet import PlayerBullet # playerのBulletクラス 
 
 # プレイヤークラス
 class Player2:
     #定数
-    MOVE_SPEED = 2          # 移動速度
+    MOVE_SPEED = 1.4          # 移動速度
     DASH_SPEED = 10         # 特殊移動速度
     SHOT_INTERVAL0 = 6      # 通常弾の発射間隔
     SHOT_INTERVAL1 = 40     # 近接の発射間隔
