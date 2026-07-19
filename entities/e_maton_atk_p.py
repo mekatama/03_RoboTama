@@ -50,7 +50,7 @@ class E_Maton_ATK_P:
             # アイテムを生成する
             # ■■■■後からランダムにする■■■■
             self.game.items.append(
-                Item(self.game, self.x, self.y, 1)
+                Item(self.game, self.x, self.y - 8, 1)
             )
             # 敵をリストから削除する
             if self in self.game.enemies:  # 敵リストに登録されている時

@@ -13,6 +13,7 @@ class Item:
         self.game = game
         self.x = x
         self.y = y
+        self.y_ini = y          # 生成時のy座標
         self.type = type        # 0:PowerUp 1:Point 
         self.life_time = 0
         self.is_alive = True
@@ -28,12 +29,12 @@ class Item:
             # スコアを加算する
             # ■■■スコア計算未定■■■
             self.game.score += 10
-            # 爆発エフェクトを生成する
+            # スコア表示を生成する
             self.game.ui_points.append(
                 Ui_Point(self.game, self.x + 4, self.y + 4, 11)
             )
 
-        # 爆発エフェクトを生成する
+        # 取得エフェクトを生成する
         self.game.particles.append(
             Particle(self.game, self.x + 4, self.y + 4, 0, 8)
         )
@@ -46,17 +47,19 @@ class Item:
         #生存時間カウント
         self.life_time += 1
         # 座標を更新する
-#        self.x += 2
-#        self.y += 2
+        if self.y - self.y_ini < 8:
+            self.y += 2
+        else:
+            pass
         # 削除する
         if self.life_time >= Item.LIFE_TIME + 32:
             self.is_alive = False
 
     # アイテムを描画する
     def draw(self):
-        # 4フレーム周期で0と8を交互に繰り返す
-        u = pyxel.frame_count  // 6 % 2 * 8
+        # 4フレーム周期で0と1を交互に繰り返す
+        u = pyxel.frame_count  // 6 % 2 * 1
         if self.life_time >= Item.LIFE_TIME:
-            pyxel.blt(self.x, self.y, 0, 8 + u, 16, 8, 8, 0)
+            pyxel.blt(self.x, self.y, 0, 8, 16, 8, 8, 0, 0,  u)
         else:
             pyxel.blt(self.x, self.y, 0, 8, 16, 8, 8, 0)
