@@ -9,7 +9,7 @@ class Particle:
     START_RADIUS = 3    # 弾軌跡開始時の半径
     END_RADIUS = 0.8      # 弾軌跡終了時の半径
     START_RADIUS_EB = 1 # 敵破壊開始時の半径
-    END_RADIUS_EB = 7   # 敵破壊終了時の半径
+    END_RADIUS_EB = 10   # 敵破壊終了時の半径
 
     def __init__(self, game, x, y, dir, type):
         self.game = game
@@ -101,7 +101,7 @@ class Particle:
         elif self.type == 6:
             self.count += 1
             # 半径を大きくする
-            self.radius += 1
+            self.radius += 1.3
             # 半径が最大になったら爆発エフェクトリストから登録を削除する
             if self.radius > Particle.END_RADIUS_EB:
                 self.is_alive = False
@@ -109,8 +109,8 @@ class Particle:
         elif self.type == 7:
             if self.count == 0:
                 #座標
-                self.x += pyxel.rndi(-6, 6)
-                self.y += pyxel.rndi(-6, 6)
+                self.x += pyxel.rndi(-3, 3)
+                self.y += pyxel.rndi(-3, 3)
             self.count += 1
             # 半径を大きくする
             self.radiusEB += 1
@@ -129,8 +129,10 @@ class Particle:
         # 放物線
         elif self.type == 9:
             if self.count == 1:
-                self.dx = pyxel.rndf(0.7, 0.9)
-                self.dy = pyxel.rndf(-2.4, -1.4)
+                self.dx = pyxel.rndf(-0.9, 0.9)
+                self.dy = pyxel.rndf(-3.3, -1.8)
+#                self.dx = pyxel.rndf(0.7, 0.9)
+#                self.dy = pyxel.rndf(-2.4, -1.4)
             self.count += 1
             # 重力を加算して放物線にする
             self.dy = min(self.dy + GRAVITY, TERMINAL_VELOCITY)
@@ -138,7 +140,7 @@ class Particle:
             self.x += self.dx * self.dir
             self.y += self.dy
             # 寿命
-            if self.count >= 35 + pyxel.rndi(-5, 5):
+            if self.count >= 45 + pyxel.rndi(-5, 5):
                 self.is_alive = False
         # 近接攻撃見た目
         elif self.type == 10:
@@ -168,7 +170,8 @@ class Particle:
         elif self.type == 8:
             pyxel.circb(self.x, self.y, self.radius, 10)
         elif self.type == 9:
-            pyxel.circ(self.x, self.y, 2, 10)
+            pyxel.pset(self.x, self.y, 10)
+#            pyxel.circ(self.x, self.y, 2, 10)
         elif self.type == 10:
             pyxel.blt(self.x, self.y, 0, 24, 16, 8 * self.dir , 8, 0)
 
