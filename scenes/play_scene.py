@@ -107,8 +107,8 @@ class PlayScene:
         # プレイヤーを更新する
         if player is not None: #NONE使用時は判定方法が特殊
             player.update()
-            # プレイヤー近接攻撃判定と敵が接触したら
             """
+            # プレイヤー近接攻撃判定と敵が接触したら
             for enemy in enemies.copy():
                 # センサーの四角形と、敵の四角形が重なっているか判定
                 if (player.sensor_x < enemy.x + 8 and
@@ -170,9 +170,8 @@ class PlayScene:
             # プレイヤーと敵が接触したらゲームオーバー
             if player is not None:
                 if check_collision(enemy, player):
-                    player.isDead == True
-                    game.change_scene("gameover")
-                    return
+                    if player.isDead == False:
+                        player.isDead = True
 
             # 敵が画面の左端または下端から外に出たら削除する
             if (

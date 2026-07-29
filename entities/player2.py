@@ -2,6 +2,7 @@ import pyxel
 from collision import get_tile_type, in_collision, in_collision2, push_back
 from constants import TILE_EXIT, TILE_GEM, TILE_SPIKE, TILE_WALL, TILE_ROAD, SCROLL_SPEED
 from .player_bullet import PlayerBullet # playerのBulletクラス 
+from .particle import Particle          # 破壊時particle
 
 # プレイヤークラス
 class Player2:
@@ -41,9 +42,64 @@ class Player2:
         self.sensor_x = 0       # 近接攻撃判定座標
         self.sensor_y = 0       # 近接攻撃判定座標
         self.hit_area = (0, 0, 7, 7)  # 当たり判定の領域 (x1,y1,x2,y2) 
+        self.count_dead = 0     # gameover待ちcount
+#        self.isOnce = False     # gameover待ち一回だけ処理用
 
+    """
+    # playerにダメージを与える
+    def add_damage(self):
+        # 爆発エフェクトを生成する
+        self.game.particles.append(
+            Particle(self.game, self.x + 4, self.y + 4, 0, 6)
+        )
+        self.game.particles.append(
+            Particle(self.game, self.x + 4, self.y + 4, 0, 8)
+        )
+        # 破片
+        num_particles = pyxel.rndi(5, 10) # 飛び散る数をランダムに
+        for i in range(num_particles):
+            self.game.particles.append(
+                Particle(self.game, self.x + 4, self.y + 14, 1, 9)
+            )
+        num_particles = pyxel.rndi(5, 10) # 飛び散る数をランダムに
+        for i in range(num_particles):
+            self.game.particles.append(
+                Particle(self.game, self.x + 4, self.y + 14, -1, 9)
+            )
+        # 削除する
+        print("player_dead")
+    """
     # プレイヤーを更新する
     def update(self):
+        # gameover処理
+        if self.isDead == True:
+            if self.count_dead == 0:
+                print("【デバッグ】死んだ瞬間の処理が走りました")
+                # 爆発エフェクトを生成する
+                self.game.particles.append(
+                    Particle(self.game, self.x + 4, self.y + 4, 0, 6)
+                )
+                self.game.particles.append(
+                    Particle(self.game, self.x + 4, self.y + 4, 0, 8)
+                )
+                # 破片
+                num_particles = pyxel.rndi(5, 10) # 飛び散る数をランダムに
+                for i in range(num_particles):
+                    self.game.particles.append(
+                        Particle(self.game, self.x + 4, self.y + 14, 1, 9)
+                    )
+                num_particles = pyxel.rndi(5, 10) # 飛び散る数をランダムに
+                for i in range(num_particles):
+                    self.game.particles.append(
+                        Particle(self.game, self.x + 4, self.y + 14, -1, 9)
+                    )
+
+            self.count_dead += 1
+            print(f"【デバッグ】count_dead = {self.count_dead}") # カウントが増えているか確認
+
+            if self.count_dead > 40:
+                self.game.change_scene("gameover")
+            
         last_y = self.y     # 落下中判定用
 
         # キー入力で左右移動させる
@@ -205,19 +261,20 @@ class Player2:
 
     # 描画
     def draw(self):
-        # 4フレーム周期で0と8を交互に繰り返す
-        u = pyxel.frame_count  // 4 % 2 * 8
-        if self.isUp == True:
-            pyxel.blt(self.x, self.y, 0, 16, 24 + u, 8 * self.dir, 8, 0)
-        if self.isDown == True:
-            pyxel.blt(self.x, self.y, 0, 8, 24 + u, 8 * self.dir, 8, 0)
-        elif self.isDown == False and self.isUp == False:
-            pyxel.blt(self.x, self.y, 0, 0, 24 + u, 8 * self.dir, 8, 0)
-#        pyxel.text(self.x - 4,  self.y - 6, "HP:%i" %self.hp, 7)
+        if self.isDead == False:
+            # 4フレーム周期で0と8を交互に繰り返す
+            u = pyxel.frame_count  // 4 % 2 * 8
+            if self.isUp == True:
+                pyxel.blt(self.x, self.y, 0, 16, 24 + u, 8 * self.dir, 8, 0)
+            if self.isDown == True:
+                pyxel.blt(self.x, self.y, 0, 8, 24 + u, 8 * self.dir, 8, 0)
+            elif self.isDown == False and self.isUp == False:
+                pyxel.blt(self.x, self.y, 0, 0, 24 + u, 8 * self.dir, 8, 0)
+    #        pyxel.text(self.x - 4,  self.y - 6, "HP:%i" %self.hp, 7)
 
-        # 残弾数表示
-        if self.type == 2:
-            pyxel.text(self.x - 4,  self.y - 6, "%i" %self.bulletNum, 7)
+            # 残弾数表示
+            if self.type == 2:
+                pyxel.text(self.x - 4,  self.y - 6, "%i" %self.bulletNum, 7)
 
         # デバッグ用：センサーの範囲を薄い赤で表示  
 #        pyxel.rectb(self.sensor_x, self.sensor_y, Player2.RANGE_WIDTH, Player2.RANGE_HEIGHT, 8)
