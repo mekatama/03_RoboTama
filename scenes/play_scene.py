@@ -194,10 +194,10 @@ class PlayScene:
             enemy_bullet.update()
             # 弾(enemy)とplayerが接触したら消去
             if player is not None and check_collision(player, enemy_bullet):
-                player.isDead == True
+                player.isDead = True
                 enemy_bullet.add_damage()         # 敵の弾にダメージを与える
-                game.change_scene("gameover")
-                return
+#                game.change_scene("gameover")
+#                return
 
             # 敵の弾が画面の左端または下端から外に出たら削除する
             if (
