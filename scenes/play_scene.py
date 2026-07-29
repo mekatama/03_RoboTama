@@ -149,7 +149,13 @@ class PlayScene:
 
             # スクロールした幅に応じて敵を出現させる
             self.spawn_enemy(last_screen_x + 128, game.screen_x + 127)
-    
+
+        # プレイヤーが画面の下に落ちたらゲームオーバーにする
+        if player.y >= pyxel.height:
+            player.isDead = True
+#            pyxel.play(3, 4)
+#            game.change_scene("gameover")
+
         # 弾(プレイヤー)を更新する
         for player_bullet in player_bullets.copy():
             player_bullet.update()
