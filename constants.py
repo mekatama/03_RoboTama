@@ -14,11 +14,12 @@ TILE_EXIT = 2  # 出口
 TILE_SPIKE = 4  # ダメージ
 TILE_WALL = 5  # ダメージ
 TILE_ROAD = 6  # すり抜け床
-TILE_ENEMY1_POINT = 7  # ENEMY1出現位置
-TILE_ENEMY2_POINT = 8  # ENEMY2出現位置
-TILE_ENEMY3_POINT = 9  # ENEMY3出現位置
-TILE_ENEMY4_POINT = 10 # ENEMY4出現位置
-TILE_ENEMY5_POINT = 11 # ENEMY5出現位置
+TILE_ENEMY1_POINT = 7  # E_Maton出現位置
+TILE_ENEMY2_POINT = 8  # E_Maton_ATK_N出現位置
+TILE_ENEMY3_POINT = 9  # E_Maton_ATK_H出現位置
+TILE_ENEMY4_POINT = 10 # E_Ugokun出現位置
+TILE_ENEMY5_POINT = 11 # E_Maton_ATK_P出現位置
+TILE_ENEMY6_POINT = 12 # E_Noppo出現位置
 TILE_BOSS1_POINT = 20  # BOSS1出現位置
 
 # タイル→タイル種別変換テーブル
@@ -42,6 +43,8 @@ TILE_TO_TILETYPE = {
     (0, 12): TILE_ENEMY3_POINT,
     (0, 13): TILE_ENEMY4_POINT,
     (0, 14): TILE_ENEMY5_POINT,
-    (0, 15): TILE_BOSS1_POINT,
+    (0, 15): TILE_ENEMY6_POINT,
+    (0, 16): TILE_BOSS1_POINT,
+
 }
 # このテーブルにないタイルはTILE_NONEとして判定する

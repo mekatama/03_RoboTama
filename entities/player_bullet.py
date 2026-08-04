@@ -129,3 +129,6 @@ class PlayerBullet:
                 pyxel.blt(self.x, self.y, 0, 0, 8, 8 * self.dir , 8, 0, -90)
         elif self.type == 1:
             pyxel.blt(self.x, self.y + 1, 0, 16, 16, 8 * self.dir , 8, 0)
+
+        # デバッグ用：センサーの範囲を薄い赤で表示  
+#        pyxel.rectb(self.x+3, self.y+4, 2, 1, 8)

@@ -1,5 +1,5 @@
 import pyxel
-from entities import Player, Player2, Enemy1, E_Maton, E_Maton_ATK_N, E_Maton_ATK_H, E_Maton_ATK_P, E_Ugokun, E_Boss_1
+from entities import Player, Player2, Enemy1, E_Maton, E_Maton_ATK_N, E_Maton_ATK_H, E_Maton_ATK_P, E_Ugokun, E_Noppo, E_Boss_1
 
 from collision import get_tile_type
 from constants import (
@@ -9,6 +9,7 @@ from constants import (
     TILE_ENEMY3_POINT,
     TILE_ENEMY4_POINT,
     TILE_ENEMY5_POINT,
+    TILE_ENEMY6_POINT,
     TILE_BOSS1_POINT,
 )
 
@@ -86,6 +87,8 @@ class PlayScene:
                     enemies.append(E_Ugokun(game, x, y, 0, -1))
                 elif tile_type == TILE_ENEMY5_POINT:  # 出現位置の時
                     enemies.append(E_Maton_ATK_P(game, x, y, 0, -1))
+                elif tile_type == TILE_ENEMY6_POINT:  # 出現位置の時
+                    enemies.append(E_Noppo(game, x, y, 0, -1))
                 elif tile_type == TILE_BOSS1_POINT:  # 出現位置の時
                     enemies.append(E_Boss_1(game, x, y, 0, -1))
                 else:
