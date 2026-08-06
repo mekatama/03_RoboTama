@@ -7,6 +7,7 @@ from .item import Item                  # item
 class E_Noppo:
     #定数
     ARMER = 6
+    WALK_SPEED = 0.1
 
     # 敵を初期化してゲームに登録する
     def __init__(self, game, x, y, type, dir):
@@ -63,8 +64,21 @@ class E_Noppo:
     # 敵を更新する
     def update(self):
         # 移動単位
-        self.dx = 0
+        self.dx = E_Noppo.WALK_SPEED * self.dir
         self.dy = min(self.dy + 1, 3)
+
+        # 移動方向を反転させる
+        # 床の上にいる時(足元の左右端で判定)
+        if in_collision(self.x, self.y + 8) or in_collision(self.x + 7, self.y + 8):
+            # 移動先に壁(y+4)があるまたは床(y+8)がない時
+            # 左側判定
+            if  self.dir < 0 and (in_collision(self.x - 1, self.y + 4) or not in_collision(self.x - 1, self.y + 8)):
+                self.dir = 1  # 右に移動する
+            # 右側判定
+            elif self.dir > 0 and (in_collision(self.x + 8, self.y + 4) or not in_collision(self.x + 8, self.y + 8)):
+                self.dir = -1  # 左に移動する
+
+
         # 押し戻し処理
         self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
         # 移動
