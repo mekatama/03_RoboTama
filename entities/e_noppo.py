@@ -2,12 +2,14 @@ import pyxel
 from collision import in_collision, push_back
 from .particle import Particle          # 破壊時particle
 from .item import Item                  # item
+from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス 
 
 # 敵クラス(固定敵_攻撃なし)
 class E_Noppo:
     #定数
     ARMER = 6
     WALK_SPEED = 0.1
+    enemy_bullets = []     # 敵の弾のリスト
 
     # 敵を初期化してゲームに登録する
     def __init__(self, game, x, y, type, dir):
@@ -19,6 +21,7 @@ class E_Noppo:
         self.type = type
         self.dir = dir
         self.armor = E_Noppo.ARMER      # 装甲
+        self.fire_timer = 0             # 攻撃タイマー
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
         self.hit_area = (0, -7, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
@@ -78,6 +81,22 @@ class E_Noppo:
             elif self.dir > 0 and (in_collision(self.x + 8, self.y + 4) or not in_collision(self.x + 8, self.y + 8)):
                 self.dir = -1  # 左に移動する
 
+        # 弾の発射タイマーが0になったら攻撃
+        if self.fire_timer > 0:
+            self.fire_timer -= 1
+        else:  # 弾を発射する
+            # playerとの距離
+            dx = self.game.player.x - self.x
+            dy = self.game.player.y - self.y
+            sq_dist = dx * dx + dy * dy
+            dist = pyxel.sqrt(sq_dist)  # プレイヤーの方向速度1の値
+            if sq_dist < 90**2:  # プレイヤーとの距離が90未満の時
+                self.game.enemy_bullets.append(
+#                    Enemy_Bullet(self.game, self.x, self.y, 1, 0, self.dir)
+                    Enemy_Bullet(self.game, self.x, self.y, dx / dist, dy / dist, 1, 0)    # 敵の向き不問 
+                )
+            # 攻撃タイマーをリセットする
+            self.fire_timer = 90
 
         # 押し戻し処理
         self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
