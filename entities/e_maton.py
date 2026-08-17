@@ -77,7 +77,9 @@ class E_Maton:
         dy = self.game.player.y - self.y
         sq_dist = dx * dx + dy * dy
         if sq_dist < 60**2 and self.isFind == False:  # プレイヤーとの距離が60未満の時
-            print("!!")
+            self.game.particles.append(
+                Particle(self.game, self.x + 3, self.y - 6, 0, 11)
+            )
             self.isFind = True
 
 

@@ -17,7 +17,7 @@ class Particle:
         self.y = y
         self.dir = dir      # playerの方向
         self.type = type    # 0:全方位 1:弾軌跡 2:dash 3:walk 4:破片 5:hit 6:敵爆発 7:敵爆発(ランダム)
-                            # 8:item取得 9:放物線 10:近接攻撃用
+                            # 8:item取得 9:放物線 10:近接攻撃用 11:player発見
         self.timer = 0
         self.count = 0
         self.speed = 2.5    # 速度
@@ -150,6 +150,14 @@ class Particle:
             # 寿命
             if self.count >= 5:
                 self.is_alive = False
+        # player発見
+        elif self.type == 11:
+            self.count += 1
+            self.x = self.x
+            self.y = self.y
+            # 寿命
+            if self.count >= 12:
+                self.is_alive = False
 
     def draw(self):
         self.rot += 10
@@ -174,6 +182,9 @@ class Particle:
 #            pyxel.circ(self.x, self.y, 2, 10)
         elif self.type == 10:
             pyxel.blt(self.x, self.y, 0, 24, 16, 8 * self.dir , 8, 0)
+        elif self.type == 11:
+            pyxel.text(self.x,  self.y, "!", 7)
+
 
 """
 import pyxel
