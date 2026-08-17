@@ -20,6 +20,7 @@ class E_Maton:
         self.armor = E_Maton.ARMER      # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
+        self.isFind = False             # player発見flag
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # 敵にダメージを与える
@@ -70,6 +71,15 @@ class E_Maton:
         # 移動
         self.x += self.dx
         # Y方向の移動はpush_backで制御している
+
+        # playerとの距離
+        dx = self.game.player.x - self.x
+        dy = self.game.player.y - self.y
+        sq_dist = dx * dx + dy * dy
+        if sq_dist < 60**2 and self.isFind == False:  # プレイヤーとの距離が60未満の時
+            print("!!")
+            self.isFind = True
+
 
     # 敵を描画する
     def draw(self):
