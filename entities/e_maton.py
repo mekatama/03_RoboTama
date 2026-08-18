@@ -7,6 +7,7 @@ from .item import Item                  # item
 class E_Maton:
     #定数
     ARMER = 3
+    FIND_DISTANCE = 90
 
     # 敵を初期化してゲームに登録する
     def __init__(self, game, x, y, type, dir):
@@ -76,12 +77,11 @@ class E_Maton:
         dx = self.game.player.x - self.x
         dy = self.game.player.y - self.y
         sq_dist = dx * dx + dy * dy
-        if sq_dist < 60**2 and self.isFind == False:  # プレイヤーとの距離が60未満の時
+        if sq_dist < E_Maton.FIND_DISTANCE ** 2 and self.isFind == False:  # プレイヤーとの距離がFIND_DISTANCE未満の時
             self.game.particles.append(
                 Particle(self.game, self.x + 3, self.y - 6, 0, 11)
             )
             self.isFind = True
-
 
     # 敵を描画する
     def draw(self):
