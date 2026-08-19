@@ -62,7 +62,7 @@ class E_Ugokun:
     # 敵を更新する
     def update(self):
         # 移動単位
-#        self.dx = 0
+#        self.dx = 0    # 強制停止
         self.dy = min(self.dy + 1, 3)
         # 押し戻し処理
         self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)

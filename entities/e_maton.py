@@ -7,14 +7,14 @@ from .item import Item                  # item
 class E_Maton:
     #定数
     ARMER = 3
-    FIND_DISTANCE = 90
+    FIND_DISTANCE = 40
 
     # 敵を初期化してゲームに登録する
     def __init__(self, game, x, y, type, dir):
         self.game = game
         self.x = x
         self.y = y
-        self.dx = 0
+        self.dx = 0.2 * dir
         self.dy = 0
         self.type = type
         self.dir = dir
@@ -64,13 +64,18 @@ class E_Maton:
 
     # 敵を更新する
     def update(self):
+        # plater発見で移動開始
+        if self.isFind == True:
+            dx_tmp = self.dx
+        else:
+            dx_tmp = 0    # 強制停止
+
         # 移動単位
-        self.dx = 0
         self.dy = min(self.dy + 1, 3)
         # 押し戻し処理
-        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
+        self.x, self.y = push_back(self.x, self.y, dx_tmp, self.dy, self.isRise)
         # 移動
-        self.x += self.dx
+        self.x += dx_tmp
         # Y方向の移動はpush_backで制御している
 
         # playerとの距離
