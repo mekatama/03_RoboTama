@@ -7,8 +7,9 @@ from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス
 # 敵クラス(固定敵_攻撃なし)
 class E_Noppo:
     #定数
-    ARMER = 6
+    ARMER = 60
     WALK_SPEED = 0.1
+    FIND_DISTANCE = 60
     enemy_bullets = []     # 敵の弾のリスト
 
     # 敵を初期化してゲームに登録する
@@ -16,7 +17,7 @@ class E_Noppo:
         self.game = game
         self.x = x
         self.y = y
-        self.dx = 0
+        self.dx = E_Noppo.WALK_SPEED * dir
         self.dy = 0
         self.type = type
         self.dir = dir
@@ -24,6 +25,7 @@ class E_Noppo:
         self.fire_timer = 0             # 攻撃タイマー
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
+        self.isFind = False             # player発見flag
         self.hit_area = (0, -7, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # 敵にダメージを与える
@@ -66,8 +68,14 @@ class E_Noppo:
 
     # 敵を更新する
     def update(self):
+        # plater発見で移動開始
+        if self.isFind == True:
+            dx_tmp = self.dx
+        else:
+            dx_tmp = 0    # 強制停止
+
         # 移動単位
-        self.dx = E_Noppo.WALK_SPEED * self.dir
+#        self.dx = E_Noppo.WALK_SPEED * self.dir
         self.dy = min(self.dy + 1, 3)
 
         # 移動方向を反転させる
@@ -81,28 +89,33 @@ class E_Noppo:
             elif self.dir > 0 and (in_collision(self.x + 8, self.y + 4) or not in_collision(self.x + 8, self.y + 8)):
                 self.dir = -1  # 左に移動する
 
-        # 弾の発射タイマーが0になったら攻撃
-        if self.fire_timer > 0:
-            self.fire_timer -= 1
-        else:  # 弾を発射する
-            # playerとの距離
-            dx = self.game.player.x - self.x
-            dy = self.game.player.y - self.y
-            sq_dist = dx * dx + dy * dy
-            dist = pyxel.sqrt(sq_dist)  # プレイヤーの方向速度1の値
-            if sq_dist < 90**2:  # プレイヤーとの距離が90未満の時
+        # player発見して弾の発射タイマーが0になったら攻撃
+        if self.isFind == True:
+            if self.fire_timer > 0:
+                self.fire_timer -= 1
+            else:  # 弾を発射する
                 self.game.enemy_bullets.append(
-#                    Enemy_Bullet(self.game, self.x, self.y, 1, 0, self.dir)
-                    Enemy_Bullet(self.game, self.x, self.y, dx / dist, dy / dist, 1, 0)    # 敵の向き不問 
+                    Enemy_Bullet(self.game, self.x, self.y - 3, 1, 0, self.dir, 0)
                 )
-            # 攻撃タイマーをリセットする
-            self.fire_timer = 90
+                # 攻撃タイマーをリセットする
+                self.fire_timer = 90
 
         # 押し戻し処理
-        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
+        self.x, self.y = push_back(self.x, self.y, dx_tmp, self.dy, self.isRise)
         # 移動
-        self.x += self.dx
+        self.x += dx_tmp
         # Y方向の移動はpush_backで制御している
+
+        # playerとの距離
+        dx = self.game.player.x - self.x
+        dy = self.game.player.y - self.y
+        sq_dist = dx * dx + dy * dy
+        dist = pyxel.sqrt(sq_dist)  # プレイヤーの方向速度1の値
+        if sq_dist < E_Noppo.FIND_DISTANCE ** 2 and self.isFind == False:  # プレイヤーとの距離がFIND_DISTANCE未満の時
+            self.game.particles.append(
+                Particle(self.game, self.x + 3, self.y - 14, 0, 11)
+            )
+            self.isFind = True
 
     # 敵を描画する
     def draw(self):

@@ -7,6 +7,7 @@ from .item import Item                  # item
 class E_Maton:
     #定数
     ARMER = 3
+    WALK_SPEED = 0.2
     FIND_DISTANCE = 40
 
     # 敵を初期化してゲームに登録する
@@ -14,7 +15,7 @@ class E_Maton:
         self.game = game
         self.x = x
         self.y = y
-        self.dx = 0.2 * dir
+        self.dx = E_Maton.WALK_SPEED * dir
         self.dy = 0
         self.type = type
         self.dir = dir
