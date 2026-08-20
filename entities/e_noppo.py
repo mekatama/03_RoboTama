@@ -95,7 +95,7 @@ class E_Noppo:
                 self.fire_timer -= 1
             else:  # 弾を発射する
                 self.game.enemy_bullets.append(
-                    Enemy_Bullet(self.game, self.x, self.y - 3, 1, 0, self.dir, 0)
+                    Enemy_Bullet(self.game, self.x, self.y - 4, 0.8, 0, self.dir, 2)
                 )
                 # 攻撃タイマーをリセットする
                 self.fire_timer = 90

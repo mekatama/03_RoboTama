@@ -13,7 +13,7 @@ class Enemy_Bullet:
         self.dx = dx        # x方向の移動量
         self.dy = dy        # y方向の移動量
         self.dir = dir      # 敵の向き
-        self.type = type    # 0:等速直進 1:放物線 2:
+        self.type = type    # 0:等速直進 1:放物線 2:等速直進(大)
         self.bullet_speed = 1.5           # 弾のspeed
         self.life_time = 0  # 生存時間
         self.hit_area = (2, 2, 5, 5)  # 当たり判定領域
@@ -38,7 +38,16 @@ class Enemy_Bullet:
             # 座標を更新
             self.x += self.dx * self.dir
             self.y += self.dy
+        if self.type == 2:
+            # 当たり判定領域
+            self.hit_area = (1, 1, 6, 6)
+            # 位置を更新する
+            self.x += self.dx * self.bullet_speed * self.dir
+            self.y += self.dy * self.bullet_speed
        
     # 弾を描画する
     def draw(self):
-        pyxel.blt(self.x, self.y, 0, 0, 16, 8, 8, 0)
+        if self.type == 2:
+            pyxel.blt(self.x, self.y, 0, 24, 16, 8, 8, 0)
+        else:
+            pyxel.blt(self.x, self.y, 0, 0, 16, 8, 8, 0)
