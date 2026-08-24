@@ -16,4 +16,5 @@ from .e_maton_atk_p import E_Maton_ATK_P    # 敵クラス(固定敵_攻撃_放�
 from .e_ugokun import E_Ugokun              # 敵クラス(前進敵_攻撃なし)
 from .e_noppo import E_Noppo                # 敵クラス(縦長敵_攻撃なし)
 from .e_tobun import E_Tobun                # 敵クラス(飛行敵_攻撃なし)
+from .e_hakobun import E_Hakobun            # 敵クラス(輸送敵_攻撃なし)
 from .e_boss_1 import E_Boss_1              # 敵クラス(ボス1)
