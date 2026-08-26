@@ -3,6 +3,7 @@ from collision import in_collision, push_back
 from .particle import Particle          # 破壊時particle
 from .item import Item                  # item
 from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス 
+from entities import E_Maton
 
 # 敵クラス(輸送機)
 class E_Hakobun:
@@ -15,12 +16,15 @@ class E_Hakobun:
         self.y = y
         self.dx = 0.2 * dir
         self.dy = 0
-        self.type = type
+        self.type = type                # 運ぶ敵 0:e_matonn 1:
         self.dir = dir
-        self.armor = E_Hakobun.ARMER     # 装甲
+        self.armor = E_Hakobun.ARMER    # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
+        # 輸送する敵を生成
+        enemies = game.enemies
+        enemies.append(E_Maton(game, self.x, self.y + 8, 0, -1))
 
     # 敵にダメージを与える
     def add_damage(self, power):
