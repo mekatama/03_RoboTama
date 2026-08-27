@@ -1,5 +1,5 @@
 import pyxel
-from entities import Player, Player2, Enemy1, E_Maton, E_Maton_ATK_N, E_Maton_ATK_H, E_Maton_ATK_P, E_Ugokun, E_Noppo, E_Tobun, E_Hakobun,E_Boss_1
+from entities import Player, Player2, Enemy1, E_Maton, E_Maton_ATK_N, E_Maton_ATK_H, E_Maton_ATK_P, E_Ugokun, E_Noppo, E_Tobun, E_Hakobun, E_Maton_Carry, E_Boss_1
 
 from collision import get_tile_type
 from constants import (

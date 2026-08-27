@@ -1,9 +1,9 @@
 import pyxel
 from collision import in_collision, push_back
-from .particle import Particle          # 破壊時particle
-from .item import Item                  # item
-from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス 
-from entities import E_Maton
+from .particle import Particle              # 破壊時particle
+from .item import Item                      # item
+from .enemy_bullet import Enemy_Bullet      # enemyのBulletクラス 
+from .e_maton_carry import E_Maton_Carry    # ここだけ個別インポート
 
 # 敵クラス(輸送機)
 class E_Hakobun:
@@ -24,7 +24,7 @@ class E_Hakobun:
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
         # 輸送する敵を生成
         enemies = game.enemies
-        enemies.append(E_Maton(game, self.x, self.y + 8, 0, -1))
+        enemies.append(E_Maton_Carry(game, self.x, self.y + 8, 0, -1))
 
     # 敵にダメージを与える
     def add_damage(self, power):
