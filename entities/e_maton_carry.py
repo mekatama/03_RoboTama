@@ -11,7 +11,7 @@ class E_Maton_Carry:
     FIND_DISTANCE = 40
 
     # 敵を初期化してゲームに登録する
-    def __init__(self, game, x, y, type, dir):
+    def __init__(self, game, x, y, type, dir, parent):
         self.game = game
         self.x = x
         self.y = y
@@ -19,10 +19,12 @@ class E_Maton_Carry:
         self.dy = 0
         self.type = type
         self.dir = dir
+        self.parent = parent            # 生成先の輸送機
         self.armor = E_Maton_Carry.ARMER      # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
         self.isFind = False             # player発見flag
+        self.isCarry = True            # 輸送中flag
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
         print("carry")
 
@@ -66,29 +68,38 @@ class E_Maton_Carry:
 
     # 敵を更新する
     def update(self):
-        # player発見で移動開始
-        if self.isFind == True:
-            dx_tmp = self.dx
+        # 輸送機の切り離しflagを監視
+        if self.parent.isReleased == False:
+
+        # 輸送中flagで分岐
+#        if self.isCarry == True:
+            self.x = self.parent.x
+            self.y = self.parent.y + 8
+            pass
         else:
-            dx_tmp = 0    # 強制停止
+            # player発見で移動開始
+            if self.isFind == True:
+                dx_tmp = self.dx
+            else:
+                dx_tmp = 0    # 強制停止
 
-        # 移動単位
-        self.dy = min(self.dy + 1, 3)
-        # 押し戻し処理
-        self.x, self.y = push_back(self.x, self.y, dx_tmp, self.dy, self.isRise)
-        # 移動
-        self.x += dx_tmp
-        # Y方向の移動はpush_backで制御している
+            # 移動単位
+            self.dy = min(self.dy + 1, 3)
+            # 押し戻し処理
+            self.x, self.y = push_back(self.x, self.y, dx_tmp, self.dy, self.isRise)
+            # 移動
+            self.x += dx_tmp
+            # Y方向の移動はpush_backで制御している
 
-        # playerとの距離
-        dx = self.game.player.x - self.x
-        dy = self.game.player.y - self.y
-        sq_dist = dx * dx + dy * dy
-        if sq_dist < E_Maton_Carry.FIND_DISTANCE ** 2 and self.isFind == False:  # プレイヤーとの距離がFIND_DISTANCE未満の時
-            self.game.particles.append(
-                Particle(self.game, self.x + 3, self.y - 6, 0, 11)
-            )
-            self.isFind = True
+            # playerとの距離
+            dx = self.game.player.x - self.x
+            dy = self.game.player.y - self.y
+            sq_dist = dx * dx + dy * dy
+            if sq_dist < E_Maton_Carry.FIND_DISTANCE ** 2 and self.isFind == False:  # プレイヤーとの距離がFIND_DISTANCE未満の時
+                self.game.particles.append(
+                    Particle(self.game, self.x + 3, self.y - 6, 0, 11)
+                )
+                self.isFind = True
 
     # 敵を描画する
     def draw(self):

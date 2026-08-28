@@ -21,10 +21,12 @@ class E_Hakobun:
         self.armor = E_Hakobun.ARMER    # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
+        self.isReleased = False         # 運んでいる敵との接続flag
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
         # 輸送する敵を生成
         enemies = game.enemies
-        enemies.append(E_Maton_Carry(game, self.x, self.y + 8, 0, -1))
+        # 自分自身＝self を親として渡す
+        enemies.append(E_Maton_Carry(game, self.x, self.y + 8, 0, -1 ,self))
 
     # 敵にダメージを与える
     def add_damage(self, power):
@@ -66,6 +68,8 @@ class E_Hakobun:
 
     # 敵を更新する
     def update(self):
+#        if self.isReleased == False:
+#            self.isReleased = True
         pass
         # 移動単位
 #        self.dx = 0
