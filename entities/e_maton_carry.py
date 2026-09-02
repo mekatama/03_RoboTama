@@ -1,5 +1,5 @@
 import pyxel
-from collision import in_collision, push_back
+from collision import in_collision, in_collision2, push_back
 from .particle import Particle          # 破壊時particle
 from .item import Item                  # item
 
@@ -20,13 +20,12 @@ class E_Maton_Carry:
         self.type = type
         self.dir = dir
         self.parent = parent            # 生成先の輸送機
-        self.armor = E_Maton_Carry.ARMER      # 装甲
+        self.armor = E_Maton_Carry.ARMER# 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
         self.isFind = False             # player発見flag
-        self.isCarry = True            # 輸送中flag
+        self.isLanding = False          # 着地flag
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
-        print("carry")
 
     # 敵にダメージを与える
     def add_damage(self, power):
@@ -70,18 +69,21 @@ class E_Maton_Carry:
     def update(self):
         # 輸送機の切り離しflagを監視
         if self.parent.isReleased == False:
-
-        # 輸送中flagで分岐
-#        if self.isCarry == True:
+            # 輸送中
             self.x = self.parent.x
             self.y = self.parent.y + 8
-            pass
         else:
-            # player発見で移動開始
-            if self.isFind == True:
-                dx_tmp = self.dx
+            # 着地判定したい(敵の足元中央で簡易判定)
+            if self.isLanding == False:
+                if in_collision(self.x + 4, self.y + 8) or in_collision2(self.x + 4, self.y + 8):
+                    self.isLanding = True
+                    print("landing")
+            # 切り離し、空中
+            if self.isLanding == False:
+                dx_tmp = 0    # 真下に投下
+            # 着地後、移動
             else:
-                dx_tmp = 0    # 強制停止
+                dx_tmp = self.dx
 
             # 移動単位
             self.dy = min(self.dy + 1, 3)

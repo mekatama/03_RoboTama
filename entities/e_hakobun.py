@@ -14,7 +14,7 @@ class E_Hakobun:
         self.game = game
         self.x = x
         self.y = y
-        self.dx = 0.2 * dir
+        self.dx = 0.4 * dir
         self.dy = 0
         self.type = type                # 運ぶ敵 0:e_matonn 1:
         self.dir = dir
@@ -26,7 +26,7 @@ class E_Hakobun:
         # 輸送する敵を生成
         enemies = game.enemies
         # 自分自身＝self を親として渡す
-        enemies.append(E_Maton_Carry(game, self.x, self.y + 8, 0, -1 ,self))
+        enemies.append(E_Maton_Carry(game, self.x, self.y + 8, 0, 1 ,self))
 
     # 敵にダメージを与える
     def add_damage(self, power):
@@ -68,8 +68,6 @@ class E_Hakobun:
 
     # 敵を更新する
     def update(self):
-#        if self.isReleased == False:
-#            self.isReleased = True
         pass
         # 移動単位
 #        self.dx = 0
@@ -77,8 +75,13 @@ class E_Hakobun:
         # 押し戻し処理
 #        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
         # 移動
-#        self.x += self.dx
+        self.x += self.dx
         # Y方向の移動はpush_backで制御している
+
+        # 分離判定
+        if self.x < self.game.player.x - 10 and self.isReleased == False:
+            self.isReleased = True
+
 
     # 敵を描画する
     def draw(self):
