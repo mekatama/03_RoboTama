@@ -105,8 +105,13 @@ class E_Maton_Carry:
 
     # 敵を描画する
     def draw(self):
-        # 4フレーム周期で0と8を交互に繰り返す
-        u = pyxel.frame_count  // 4 % 2 * 8
+        # 着地したらアニメーション再生
+        if self.isLanding == False:
+            u = 0
+        else:
+            # 4フレーム周期で0と8を交互に繰り返す
+            u = pyxel.frame_count  // 4 % 2 * 8
+
         if self.is_damaged:
             #ダメージ演出
             self.is_damaged = False
