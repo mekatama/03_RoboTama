@@ -7,7 +7,7 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃_狙う)
 class E_Maton_ATK_H:
     #定数
-    ARMER = 10
+    ARMER = 3
     WALK_SPEED = 0
     FIND_DISTANCE = 40
     enemy_bullets = []     # 敵の弾のリスト

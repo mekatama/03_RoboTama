@@ -7,7 +7,9 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃_横)
 class E_Maton_ATK_N:
     #定数
-    ARMER = 3
+    ARMER = 10
+    WALK_SPEED = 0
+    FIND_DISTANCE = 40
     enemy_bullets = []     # 敵の弾のリスト
 
     # 敵を初期化してゲームに登録する
@@ -15,7 +17,7 @@ class E_Maton_ATK_N:
         self.game = game
         self.x = x
         self.y = y
-        self.dx = 0
+        self.dx = E_Maton_ATK_N.WALK_SPEED * dir
         self.dy = 0
         self.dir = dir                  # 初期の向き(基本的に左向き)
         self.type = type
@@ -23,6 +25,7 @@ class E_Maton_ATK_N:
         self.armor = E_Maton_ATK_N.ARMER# 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
+        self.isFind = False             # player発見flag
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # 敵にダメージを与える
@@ -65,27 +68,45 @@ class E_Maton_ATK_N:
 
     # 敵を更新する
     def update(self):
+        # playerとの距離
+        dx = self.game.player.x - self.x
+        dy = self.game.player.y - self.y
+        sq_dist = dx * dx + dy * dy
+        dist = pyxel.sqrt(sq_dist)  # プレイヤーの方向速度1の値
+        if sq_dist < E_Maton_ATK_N.FIND_DISTANCE ** 2 and self.isFind == False:  # プレイヤーとの距離がFIND_DISTANCE未満の時
+            self.game.particles.append(
+                Particle(self.game, self.x + 3, self.y - 6, 0, 11)
+            )
+            self.isFind = True
+        # plater発見で移動開始
+        if self.isFind == True:
+            dx_tmp = self.dx
+        else:
+            dx_tmp = 0    # 強制停止
+
         # 移動単位
-        self.dx = 0
         self.dy = min(self.dy + 1, 3)
-        # 弾の発射タイマーが0になったら攻撃
-        if self.fire_timer > 0:
-            self.fire_timer -= 1
-        else:  # 弾を発射する
-            # playerとの距離
-            dx = self.game.player.x - self.x
-            dy = self.game.player.y - self.y
-            sq_dist = dx * dx + dy * dy
-            if sq_dist < 90**2:  # プレイヤーとの距離が90未満の時
-                self.game.enemy_bullets.append(
-                    Enemy_Bullet(self.game, self.x, self.y - 3, 1, 0, self.dir, 0)
-                )
-            # 攻撃タイマーをリセットする
-            self.fire_timer = 90
+
+        # player発見して弾の発射タイマーが0になったら攻撃
+        if self.isFind == True:
+            if self.fire_timer > 0:
+                self.fire_timer -= 1
+            else:  # 弾を発射する
+                # playerとの距離
+                dx = self.game.player.x - self.x
+                dy = self.game.player.y - self.y
+                sq_dist = dx * dx + dy * dy
+                if sq_dist < 90**2:  # プレイヤーとの距離が90未満の時
+                    self.game.enemy_bullets.append(
+                        Enemy_Bullet(self.game, self.x, self.y - 3, 1, 0, self.dir, 0)
+                    )
+                # 攻撃タイマーをリセットする
+                self.fire_timer = 90
+
         # 押し戻し処理
-        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
+        self.x, self.y = push_back(self.x, self.y, dx_tmp, self.dy, self.isRise)
         # 移動
-        self.x += self.dx
+        self.x += dx_tmp
         # Y方向の移動はpush_backで制御している
 
     # 敵を描画する
