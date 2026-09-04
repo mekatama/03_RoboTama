@@ -6,19 +6,23 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃なし)
 class E_Ugokun:
     #定数
-    ARMER = 3
+    ARMER = 6
+    WALK_SPEED = 0.2
+    FIND_DISTANCE = 40
+
     # 敵を初期化してゲームに登録する
     def __init__(self, game, x, y, type, dir):
         self.game = game
         self.x = x
         self.y = y
-        self.dx = 0.2 * dir
+        self.dx = E_Ugokun.WALK_SPEED * dir
         self.dy = 0
         self.type = type
         self.dir = dir
         self.armor = E_Ugokun.ARMER     # 装甲
         self.is_damaged = False         # ダメージを受けたかどうか
         self.isRise = False             # 上昇中flag
+        self.isFind = False             # player発見flag
         self.hit_area = (0, 0, 7, 7)    # 当たり判定の領域 (x1,y1,x2,y2) 
 
     # 敵にダメージを与える
@@ -61,13 +65,29 @@ class E_Ugokun:
 
     # 敵を更新する
     def update(self):
+        # playerとの距離
+        dx = self.game.player.x - self.x
+        dy = self.game.player.y - self.y
+        sq_dist = dx * dx + dy * dy
+        if sq_dist < E_Ugokun.FIND_DISTANCE ** 2 and self.isFind == False:  # プレイヤーとの距離がFIND_DISTANCE未満の時
+            self.game.particles.append(
+                Particle(self.game, self.x + 3, self.y - 6, 0, 11)
+            )
+            self.isFind = True
+
+        # plater発見で移動開始
+        if self.isFind == True:
+            dx_tmp = self.dx
+        else:
+            dx_tmp = 0    # 強制停止
+
         # 移動単位
 #        self.dx = 0    # 強制停止
         self.dy = min(self.dy + 1, 3)
         # 押し戻し処理
-        self.x, self.y = push_back(self.x, self.y, self.dx, self.dy, self.isRise)
+        self.x, self.y = push_back(self.x, self.y, dx_tmp, self.dy, self.isRise)
         # 移動
-        self.x += self.dx
+        self.x += dx_tmp
         # Y方向の移動はpush_backで制御している
 
     # 敵を描画する

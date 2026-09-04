@@ -4,7 +4,7 @@ from constants import TILE_NONE, TILE_TO_TILETYPE, TILE_WALL, TILE_ROAD
 
 # 指定した座標のタイル種別を取得する
 def get_tile_type(x, y):
-    tile = pyxel.tilemaps[0].pget(x // 8, y // 8)
+    tile = pyxel.tilemaps[3].pget(x // 8, y // 8)
     return TILE_TO_TILETYPE.get(tile, TILE_NONE)
 
 # 指定した座標が壁と重なっているか判定する

@@ -65,6 +65,16 @@ class E_Maton:
 
     # 敵を更新する
     def update(self):
+        # playerとの距離
+        dx = self.game.player.x - self.x
+        dy = self.game.player.y - self.y
+        sq_dist = dx * dx + dy * dy
+        if sq_dist < E_Maton.FIND_DISTANCE ** 2 and self.isFind == False:  # プレイヤーとの距離がFIND_DISTANCE未満の時
+            self.game.particles.append(
+                Particle(self.game, self.x + 3, self.y - 6, 0, 11)
+            )
+            self.isFind = True
+
         # plater発見で移動開始
         if self.isFind == True:
             dx_tmp = self.dx
@@ -78,16 +88,6 @@ class E_Maton:
         # 移動
         self.x += dx_tmp
         # Y方向の移動はpush_backで制御している
-
-        # playerとの距離
-        dx = self.game.player.x - self.x
-        dy = self.game.player.y - self.y
-        sq_dist = dx * dx + dy * dy
-        if sq_dist < E_Maton.FIND_DISTANCE ** 2 and self.isFind == False:  # プレイヤーとの距離がFIND_DISTANCE未満の時
-            self.game.particles.append(
-                Particle(self.game, self.x + 3, self.y - 6, 0, 11)
-            )
-            self.isFind = True
 
     # 敵を描画する
     def draw(self):
