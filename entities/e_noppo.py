@@ -85,7 +85,6 @@ class E_Noppo:
             dx_tmp = 0    # 強制停止
 
         # 移動単位
-#        self.dx = E_Noppo.WALK_SPEED * self.dir
         self.dy = min(self.dy + 1, 3)
 
         # 移動方向を反転させる

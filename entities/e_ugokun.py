@@ -82,7 +82,6 @@ class E_Ugokun:
             dx_tmp = 0    # 強制停止
 
         # 移動単位
-#        self.dx = 0    # 強制停止
         self.dy = min(self.dy + 1, 3)
         # 押し戻し処理
         self.x, self.y = push_back(self.x, self.y, dx_tmp, self.dy, self.isRise)
