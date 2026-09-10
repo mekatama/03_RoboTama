@@ -7,9 +7,9 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃_放物線)
 class E_Maton_ATK_P:
     #定数
-    ARMER = 3
+    ARMER = 5
     WALK_SPEED = 0
-    FIND_DISTANCE = 40
+    FIND_DISTANCE = 100
     enemy_bullets = []     # 敵の弾のリスト
 
     # 敵を初期化してゲームに登録する
@@ -95,9 +95,9 @@ class E_Maton_ATK_P:
             dx = self.game.player.x - self.x
             dy = self.game.player.y - self.y
             sq_dist = dx * dx + dy * dy
-            if sq_dist < 90**2:  # プレイヤーとの距離が90未満の時
+            if sq_dist < 100**2:  # プレイヤーとの距離が90未満の時
                 self.game.enemy_bullets.append(
-                    Enemy_Bullet(self.game, self.x, self.y, 1.3, -2.4, self.dir, 1)
+                    Enemy_Bullet(self.game, self.x, self.y, 1.0, -2.4, self.dir, 1)
                 )
             # 攻撃タイマーをリセットする
             self.fire_timer = 90

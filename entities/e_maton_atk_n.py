@@ -9,7 +9,7 @@ class E_Maton_ATK_N:
     #定数
     ARMER = 10
     WALK_SPEED = 0
-    FIND_DISTANCE = 40
+    FIND_DISTANCE = 80
     enemy_bullets = []     # 敵の弾のリスト
 
     # 敵を初期化してゲームに登録する

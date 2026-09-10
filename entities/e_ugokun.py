@@ -6,9 +6,9 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃なし)
 class E_Ugokun:
     #定数
-    ARMER = 6
-    WALK_SPEED = 0.2
-    FIND_DISTANCE = 40
+    ARMER = 5
+    WALK_SPEED = 0.3
+    FIND_DISTANCE = 80
 
     # 敵を初期化してゲームに登録する
     def __init__(self, game, x, y, type, dir):

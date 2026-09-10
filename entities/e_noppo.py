@@ -7,7 +7,7 @@ from .enemy_bullet import Enemy_Bullet  # enemyのBulletクラス
 # 敵クラス(固定敵_攻撃なし)
 class E_Noppo:
     #定数
-    ARMER = 60
+    ARMER = 20
     WALK_SPEED = 0.1
     FIND_DISTANCE = 60
     enemy_bullets = []     # 敵の弾のリスト

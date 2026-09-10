@@ -6,8 +6,8 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃なし)
 class E_Maton:
     #定数
-    ARMER = 3
-    WALK_SPEED = 0.2
+    ARMER = 5
+    WALK_SPEED = 0
     FIND_DISTANCE = 40
 
     # 敵を初期化してゲームに登録する

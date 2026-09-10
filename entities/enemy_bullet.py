@@ -28,16 +28,19 @@ class Enemy_Bullet:
     def update(self):
         #生存時間カウント
         self.life_time += 1
+        # 0:等速直進
         if self.type == 0:
             # 位置を更新する
             self.x += self.dx * self.bullet_speed * self.dir
             self.y += self.dy * self.bullet_speed
+        # 1:放物線
         elif self.type == 1:
              # 重力を加算して放物線にする
             self.dy = min(self.dy + GRAVITY, TERMINAL_VELOCITY)
             # 座標を更新
             self.x += self.dx * self.dir
             self.y += self.dy
+        # 2:等速直進(大)
         if self.type == 2:
             # 当たり判定領域
             self.hit_area = (1, 1, 6, 6)

@@ -7,9 +7,9 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃_狙う)
 class E_Maton_ATK_H:
     #定数
-    ARMER = 3
+    ARMER = 5
     WALK_SPEED = 0
-    FIND_DISTANCE = 40
+    FIND_DISTANCE = 80
     enemy_bullets = []     # 敵の弾のリスト
 
     # 敵を初期化してゲームに登録する
