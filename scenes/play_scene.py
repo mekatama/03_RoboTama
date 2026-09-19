@@ -131,22 +131,25 @@ class PlayScene:
             """
 
         # プレイヤーの移動範囲を制限する
-        player.x = min(max(player.x, game.screen_x), 1020)   # mapの全幅-8
+        player.x = min(max(player.x, game.screen_x), 1320)   # mapの全幅-8
  #       player.x = max(max(player.x, game.screen_x), 0)
         player.y = max(player.y, 0)
 
+#        print(game.screen_x)
+        # 現在地(game.screen_x)
         # プレイヤーがスクロール境界を越えたら画面をスクロールする
         if player.x > game.screen_x + SCROLL_BORDER_X:
             last_screen_x = game.screen_x
             # 途中でスクロール停止処理
             if game.isBoss1Kill == False:
-                # 16タイル分以上は右にスクロールさせない
-                # ↑16タイル目は、画面右端に位置する
-                target_x = min(player.x - SCROLL_BORDER_X, 16 * 8)
+                # 80タイルが画面左端に到達したらスクロール停止
+                target_x = min(player.x - SCROLL_BORDER_X, 80 * 8)
+#                target_x = min(player.x - SCROLL_BORDER_X, 768 - 128)
+#                game.screen_x = min(player.x - SCROLL_BORDER_X, 96 * 8)
 #                game.screen_x = min(player.x - SCROLL_BORDER_X, 16 * 8)
-                # スクロール停止時の右端でplayer停止処理(座標、直指定)
-                if player.x > 248:
-                    player.x = 248
+                # スクロール停止時の右端でplayer停止処理(座標、直指定)((タイル数*8)+120)
+                if player.x > 760:
+                    player.x = 760
             else:
                 target_x = min(player.x - SCROLL_BORDER_X, 240 * 8)
 #                game.screen_x = min(player.x - SCROLL_BORDER_X, 240 * 8)

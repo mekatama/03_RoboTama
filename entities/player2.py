@@ -46,6 +46,7 @@ class Player2:
 
     # プレイヤーを更新する
     def update(self):
+        print(self.x)
         # gameover処理
         if self.isDead == True:
             if self.count_dead == 0:
