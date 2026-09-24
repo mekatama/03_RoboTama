@@ -7,9 +7,9 @@ from .item import Item                  # item
 # 敵クラス(固定敵_攻撃なし)
 class E_Boss_1:
     #定数
-    ARMER = 20
-    MOVE_RIGHT = 224    # 移動右端
-    MOVE_LEFT = 128     # 移動左端
+    ARMER = 3
+    MOVE_RIGHT = 736    # 移動右端(96マス目 * 8ドット - 4マス目(boss幅) * 8ドット)
+    MOVE_LEFT = 640     # 移動左端(80マス目 * 8ドット)
     FIRE1 = 10          # 攻撃間隔前半
     FIRE2 = 5           # 攻撃間隔後半
     enemy_bullets = []     # 敵の弾のリスト
