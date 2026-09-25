@@ -1,5 +1,5 @@
 import pyxel
-from entities import Player, Player2, Enemy1, E_Maton, E_Maton_ATK_N, E_Maton_ATK_H, E_Maton_ATK_P, E_Ugokun, E_Noppo, E_Tobun, E_Hakobun, E_Maton_Carry, E_Boss_1
+from entities import Player, Player2, Enemy1, E_Maton, E_Maton_ATK_N, E_Maton_ATK_H, E_Maton_ATK_P, E_Ugokun, E_Noppo, E_Tobun, E_Hakobun, E_Maton_Carry, E_Boss_1, E_Boss_2
 
 from collision import get_tile_type
 from constants import (
@@ -13,6 +13,7 @@ from constants import (
     TILE_ENEMY7_POINT,
     TILE_ENEMY8_POINT,
     TILE_BOSS1_POINT,
+    TILE_BOSS2_POINT,
 )
 
 # 当たり判定用の関数
@@ -97,6 +98,8 @@ class PlayScene:
                     enemies.append(E_Hakobun(game, x, y, 0, -1))
                 elif tile_type == TILE_BOSS1_POINT:  # 出現位置の時
                     enemies.append(E_Boss_1(game, x, y, 0, -1))
+                elif tile_type == TILE_BOSS2_POINT:  # 出現位置の時
+                    enemies.append(E_Boss_2(game, x, y, 0, -1))
                 else:
                     continue
                 # 出現位置タイルを消す

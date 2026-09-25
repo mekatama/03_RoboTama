@@ -23,6 +23,7 @@ TILE_ENEMY6_POINT = 12 # E_Noppo出現位置
 TILE_ENEMY7_POINT = 13 # E_Tobun出現位置
 TILE_ENEMY8_POINT = 14 # E_Hakobun出現位置
 TILE_BOSS1_POINT = 20  # BOSS1出現位置
+TILE_BOSS2_POINT = 21  # BOSS2出現位置
 
 # タイル→タイル種別変換テーブル
 TILE_TO_TILETYPE = {
@@ -49,5 +50,6 @@ TILE_TO_TILETYPE = {
     (0, 16): TILE_ENEMY7_POINT,
     (0, 17): TILE_ENEMY8_POINT,
     (0, 18): TILE_BOSS1_POINT,
+    (0, 19): TILE_BOSS2_POINT,
 }
 # このテーブルにないタイルはTILE_NONEとして判定する

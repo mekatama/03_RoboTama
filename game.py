@@ -28,7 +28,8 @@ class Game:
         self.scene_name = None  # 現在のシーン名
         self.screen_x = 0  # フィールド表示範囲の左端のX座標
         self.score = 0  # 得点
-        self.isBoss1Kill = False    # Boss1死亡flag【仮でtrue】
+        self.isBoss1Kill = False    # Boss1死亡flag
+        self.isBoss2Kill = False    # Boss2死亡flag
         # シーンをタイトル画面に変更する
         self.change_scene("title")
 
