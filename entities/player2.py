@@ -43,10 +43,18 @@ class Player2:
         self.sensor_y = 0       # 近接攻撃判定座標
         self.hit_area = (0, 0, 7, 7)  # 当たり判定の領域 (x1,y1,x2,y2) 
         self.count_dead = 0     # gameover待ちcount
+        self.count_clear = 0    # clear待ちcount
 
     # プレイヤーを更新する
     def update(self):
-        print(self.x)
+        game = self.game
+#        print(self.x)
+        # clear処理
+        if game.isBoss2Kill == True:
+            self.count_clear += 1
+            if self.count_clear > 40:
+                self.game.change_scene("clear")
+
         # gameover処理
         if self.isDead == True:
             if self.count_dead == 0:

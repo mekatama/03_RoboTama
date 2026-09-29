@@ -1,5 +1,5 @@
 import pyxel
-from scenes import GameOverScene, PlayScene, TitleScene
+from scenes import GameOverScene, PlayScene, TitleScene, ClearScene
 from constants import SCROLL_SPEED
 
 # ゲームクラス
@@ -24,6 +24,7 @@ class Game:
             "title": TitleScene(self),
             "play": PlayScene(self),
             "gameover": GameOverScene(self),
+            "clear": ClearScene(self),
         }
         self.scene_name = None  # 現在のシーン名
         self.screen_x = 0  # フィールド表示範囲の左端のX座標
