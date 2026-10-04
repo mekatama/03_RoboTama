@@ -53,8 +53,8 @@ class PlayScene:
         self.game = game
     # プレイ画面を開始する
     def start(self):
-        # 変更前のマップに戻す
-        pyxel.tilemaps[2].blt(0, 0, 3, 0, 0, 256, 16)
+        # 【仮で戻してない】変更前のマップに戻す
+        pyxel.tilemaps[3].blt(0, 0, 4, 0, 0, 256, 16)
         # プレイ画面の状態を初期化する
         game = self.game        # ゲームクラス
         game.score = 0          # スコア

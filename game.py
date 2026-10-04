@@ -10,7 +10,7 @@ class Game:
         pyxel.init(128, 128, title="master")
         # リソースファイルを読み込む
         pyxel.load("assets/my_resource20.pyxres")
-        pyxel.tilemaps[2].blt(0, 0, 0, 0, 0, 256, 16)  # 変更前のマップをコピーする
+        pyxel.tilemaps[4].blt(0, 0, 3, 0, 0, 256, 16)  # 変更前のマップ[3]を未使用[4]にコピーする
         # ゲームの状態を初期化する
         self.player = None          # プレイヤー
         self.player_bullets = []    # 自機の弾のリスト
@@ -44,7 +44,7 @@ class Game:
 
     # フィールドを描画する
     def draw_field(self):
-#        pyxel.bltm(0, 0, 1, self.screen_x, 0, 128, 128)     # 奥BG
+        pyxel.bltm(0, 0, 2, self.screen_x, 0, 128, 128, 0)     # 奥BG
         pyxel.bltm(0, 0, 3, self.screen_x, 0, 128, 128, 0)  # 手前BG(0番抜け色)
 
     # プレイヤーを描画する
@@ -113,14 +113,6 @@ class Game:
 
     # ゲームを更新する
     def update(self):
-        """
-        if self.player is not None:  # プレイヤーが存在する時
-            # playerがgoalしていない
-            if self.player.isGoal == False:
-                if self.is_play == True:
-                    # 強制スクロール
-                    self.screen_x += SCROLL_SPEED
-        """
         # 現在のシーンを更新する
         self.scenes[self.scene_name].update()
 
