@@ -34,6 +34,7 @@ class Game:
         self.cam_x = 0              # 多重スクロール用
         self.old_cam_x = 0          # 多重スクロール用
         self.far_x = 0          # 多重スクロール用(遠景)
+        self.far2_x = 0          # 多重スクロール用(遠景)
          # シーンをタイトル画面に変更する
         self.change_scene("title")
 
@@ -61,12 +62,15 @@ class Game:
         # カメラが右に動いた時（cam_delta > 0）だけ、背景の位置を係数倍して進める
         # カメラが左に戻っている時は cam_delta が 0 になるため、背景の位置も完全にピタッとその場で止まります。
         if cam_delta > 0:
-            self.far_x -= cam_delta * 0.1  # 遠景は0.1倍の速さで動く
+            self.far_x -= cam_delta * 0.1  # 0.1倍の速さで動く
+            self.far2_x -= cam_delta * 0.2 # 0.2倍の速さで動く
         # 次のフレームのために今のカメラ位置を保存
         self.old_cam_x = self.cam_x
 
         draw_x1 = self.far_x
+        draw_x2 = self.far2_x
         pyxel.bltm(draw_x1, 0, 2, self.screen_x, 0, 256, 128, 15)     # 奥BG
+        pyxel.bltm(draw_x2, 0, 4, self.screen_x, 0, 256, 128, 15)     # 奥BG
         pyxel.bltm(0, 0, 3, self.screen_x, 0, 128, 128, 15)  # 手前BG(0番抜け色)
 
     # プレイヤーを描画する
