@@ -10,7 +10,7 @@ class Game:
         pyxel.init(128, 128, title="master")
         # リソースファイルを読み込む
         pyxel.load("assets/my_resource20.pyxres")
-        pyxel.tilemaps[4].blt(0, 0, 3, 0, 0, 256, 16)  # 変更前のマップ[3]を未使用[4]にコピーする
+        pyxel.tilemaps[5].blt(0, 0, 3, 0, 0, 256, 16)  # 変更前のマップ[3]を未使用[5]にコピーする
         # ゲームの状態を初期化する
         self.player = None          # プレイヤー
         self.player_bullets = []    # 自機の弾のリスト
@@ -31,7 +31,10 @@ class Game:
         self.score = 0  # 得点
         self.isBoss1Kill = False    # Boss1死亡flag
         self.isBoss2Kill = False    # Boss2死亡flag
-        # シーンをタイトル画面に変更する
+        self.cam_x = 0              # 多重スクロール用
+        self.old_cam_x = 0          # 多重スクロール用
+        self.far_x = 0          # 多重スクロール用(遠景)
+         # シーンをタイトル画面に変更する
         self.change_scene("title")
 
         # ゲームの実行を開始する
@@ -44,8 +47,27 @@ class Game:
 
     # フィールドを描画する
     def draw_field(self):
-        pyxel.bltm(0, 0, 2, self.screen_x, 0, 128, 128, 0)     # 奥BG
-        pyxel.bltm(0, 0, 3, self.screen_x, 0, 128, 128, 0)  # 手前BG(0番抜け色)
+        # 多重スクロール
+        # プレイヤー追従
+        target_cam_x = self.player.x
+#        target_cam_x = self.player.x - 60
+        if target_cam_x < 0:
+            target_cam_x = 0
+        # 右移動時のみカメラを更新
+        if target_cam_x > self.cam_x:
+            self.cam_x = target_cam_x
+        #この1フレームの間に、カメラが何ピクセル右に動いたかを計算
+        cam_delta = self.cam_x - self.old_cam_x
+        # カメラが右に動いた時（cam_delta > 0）だけ、背景の位置を係数倍して進める
+        # カメラが左に戻っている時は cam_delta が 0 になるため、背景の位置も完全にピタッとその場で止まります。
+        if cam_delta > 0:
+            self.far_x -= cam_delta * 0.1  # 遠景は0.1倍の速さで動く
+        # 次のフレームのために今のカメラ位置を保存
+        self.old_cam_x = self.cam_x
+
+        draw_x1 = self.far_x
+        pyxel.bltm(draw_x1, 0, 2, self.screen_x, 0, 256, 128, 15)     # 奥BG
+        pyxel.bltm(0, 0, 3, self.screen_x, 0, 128, 128, 15)  # 手前BG(0番抜け色)
 
     # プレイヤーを描画する
     def draw_player(self):
