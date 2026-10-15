@@ -250,11 +250,11 @@ class Player2:
             # 4フレーム周期で0と8を交互に繰り返す
             u = pyxel.frame_count  // 4 % 2 * 8
             if self.isUp == True:
-                pyxel.blt(self.x, self.y, 0, 16, 24 + u, 8 * self.dir, 8, 0)
+                pyxel.blt(self.x, self.y, 0, 16, 24 + u, 8 * self.dir, 8, 15)
             if self.isDown == True:
-                pyxel.blt(self.x, self.y, 0, 8, 24 + u, 8 * self.dir, 8, 0)
+                pyxel.blt(self.x, self.y, 0, 8, 24 + u, 8 * self.dir, 8, 15)
             elif self.isDown == False and self.isUp == False:
-                pyxel.blt(self.x, self.y, 0, 0, 24 + u, 8 * self.dir, 8, 0)
+                pyxel.blt(self.x, self.y, 0, 0, 24 + u, 8 * self.dir, 8, 15)
     #        pyxel.text(self.x - 4,  self.y - 6, "HP:%i" %self.hp, 7)
 
             # 残弾数表示

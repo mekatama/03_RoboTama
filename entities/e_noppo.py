@@ -124,7 +124,7 @@ class E_Noppo:
             self.is_damaged = False
             for i in range(1, 15):
                 pyxel.pal(i, 15)    #カラーパレットの色を置き換える
-            pyxel.blt(self.x, self.y - 8, 1, 32 + u, self.type * 8 + 40, 8 * self.dir, 16, 0, 0, 1.3)
+            pyxel.blt(self.x, self.y - 8, 1, 32 + u, self.type * 8 + 40, 8 * self.dir, 16, 15, 0, 1.3)
             pyxel.pal() #カラーパレット元に戻す
         else:
-            pyxel.blt(self.x, self.y - 8, 0, 32 + u, self.type * 8 + 40, 8 * self.dir, 16, 0)
+            pyxel.blt(self.x, self.y - 8, 0, 32 + u, self.type * 8 + 40, 8 * self.dir, 16, 15)

@@ -98,7 +98,7 @@ class E_Ugokun:
             self.is_damaged = False
             for i in range(1, 15):
                 pyxel.pal(i, 15)    #カラーパレットの色を置き換える
-            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 104, 8 * self.dir, 8, 0, 0, 1.3)
+            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 104, 8 * self.dir, 8, 15, 0, 1.3)
             pyxel.pal() #カラーパレット元に戻す
         else:
-            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 104, 8 * self.dir, 8, 0)
+            pyxel.blt(self.x, self.y, 1, 8 + u, self.type * 8 + 104, 8 * self.dir, 8, 15)
