@@ -59,7 +59,9 @@ class PlayScene:
         game = self.game        # ゲームクラス
         game.score = 0          # スコア
         game.screen_x = 0
-        game.player = Player2(game, 16, 54)  # プレイヤー
+        game.player = Player2(game, 1300, 54)  # プレイヤー
+        game.isBoss1Kill = True    # 【デバッグ用】Boss1死亡flag
+#        game.player = Player2(game, 16, 54)  # プレイヤー
         # 敵を出現させる
         self.spawn_enemy(0, 127)    #画面x座標0～127が表示されたら
 
